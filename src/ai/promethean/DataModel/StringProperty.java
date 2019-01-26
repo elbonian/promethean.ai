@@ -1,7 +1,7 @@
 package ai.promethean.DataModel;
 
 public class StringProperty extends Property {
-    private String value;
+    protected String value;
 
     public StringProperty(String _name, String _value){
         super(_name);

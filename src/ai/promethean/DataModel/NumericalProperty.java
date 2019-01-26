@@ -1,7 +1,7 @@
 package ai.promethean.DataModel;
 
 public class NumericalProperty extends Property {
-    private Double value;
+    protected Double value;
 
     public NumericalProperty(String _name, Double _value){
         super(_name);

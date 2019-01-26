@@ -1,7 +1,7 @@
 package ai.promethean.DataModel;
 
 public class BooleanProperty extends Property {
-    private Boolean value;
+    protected Boolean value;
 
     public BooleanProperty(String _name, Boolean _value){
         super(_name);
