@@ -1,18 +1,18 @@
 package ai.promethean.DataModel;
 
-public class NumericalProperty extends Property {
-    private Double value;
+public class StringProperty extends Property {
+    private String value;
 
-    public NumericalProperty(String _name, Double _value){
+    public StringProperty(String _name, String _value){
         super(_name);
         setValue(_value);
     }
 
-    public void setValue(Double _value){
+    public void setValue(String _value){
         this.value=_value;
     }
 
-    public Double getValue(){
+    public String getValue(){
         return this.value;
     }
 
