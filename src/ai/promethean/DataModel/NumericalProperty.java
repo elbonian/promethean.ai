@@ -20,4 +20,9 @@ public class NumericalProperty extends Property {
     public String toString(){
         return "Property Name: "+ super.name + ", Property Value: " + this.value;
     }
+
+    @Override
+    public Boolean equals(Property p) {
+        return p instanceof NumericalProperty && p.getName().equals(this.name) && ((NumericalProperty) p).getValue().equals(this.value);
+    }
 }

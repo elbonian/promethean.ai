@@ -34,4 +34,9 @@ public class Resource {
     public String toString(){
         return "Resource Name: " + this.name + ", Value: " + this.value+ " ";
     }
+
+    public Boolean equals(Resource r){
+        return r.getName().equals(this.name) && r.getValue().equals(this.value);
+
+    }
 }

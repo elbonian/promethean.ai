@@ -18,8 +18,8 @@ public abstract class Property {
         return this.name;
     }
 
-    @Override
-    public String toString(){
-        return "Property Name: " + this.name ;
-    }
+
+    public abstract String toString();
+
+    public abstract Boolean equals(Property p);
 }

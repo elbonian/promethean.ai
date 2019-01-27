@@ -20,4 +20,9 @@ public class StringProperty extends Property {
     public String toString(){
         return "Property Name: "+ super.name + ", Property Value: " + this.value;
     }
+
+    @Override
+    public Boolean equals(Property p) {
+        return p instanceof StringProperty && p.getName().equals(this.name) && ((StringProperty) p).getValue().equals(this.value);
+    }
 }
