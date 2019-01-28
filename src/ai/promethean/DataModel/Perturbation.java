@@ -1,40 +1,31 @@
 package ai.promethean.DataModel;
+
 import java.sql.Time;
 import java.util.*;
 
-public class SystemState {
-    private int UID;
+
+public class Perturbation {
     private Time timeStamp;
     private ArrayList<Resource> resources= new ArrayList<Resource>();
     private ArrayList<Property> properties= new ArrayList<Property>();
 
-    public SystemState(int _UID){
-        setUID(_UID);
+    public Perturbation(){
         timeStamp= new Time(System.currentTimeMillis());
     }
-
-    public SystemState(int _UID, long time){
-        setUID(_UID);
+    public Perturbation(long time){
         timeStamp= new Time(time);
     }
 
-    public void setUID(int _UID){
-        this.UID=_UID;
-    }
-    public int getUID(){
-        return UID;
-    }
-
-    public Time getTimeStamp(){
+    public Time getTimeStamp() {
         return timeStamp;
-    }
-
-    public ArrayList<Resource> getResources() {
-        return resources;
     }
 
     public ArrayList<Property> getProperties() {
         return properties;
+    }
+
+    public ArrayList<Resource> getResources() {
+        return resources;
     }
 
     public void addResource(Resource r){
@@ -60,17 +51,6 @@ public class SystemState {
     public void addProperty(String name, String value){
         properties.add(new StringProperty(name, value));
     }
-
-    //TODO needs more testing
-    public Boolean equals(SystemState systemState){
-        this.sortProperties();
-        this.sortResources();
-        systemState.sortProperties();
-        systemState.sortResources();
-
-        return properties.equals(systemState.getProperties())&& resources.equals(systemState.getResources());
-    }
-
     public void sortProperties(){
         Collections.sort(properties, new SortbyProperty());
     }
@@ -81,8 +61,8 @@ public class SystemState {
 
     @Override
     public String toString() {
-        return "System State UID: " + this.UID + "\n Timestamp: " + this.timeStamp
-                + "\n Properties: " + properties
-                + "\n Resources: " + resources;
+        return "Pertubation Timestamp: " + this.timeStamp
+                + "\n Property Changes: " + properties
+                + "\n Resource Changes: " + resources;
     }
 }
