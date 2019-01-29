@@ -1,12 +1,12 @@
 package ai.promethean.DataModel;
 import java.sql.Time;
-import java.util.ArrayList;
+import java.util.*;
 
 public class SystemState {
     private int UID;
     private Time timeStamp;
-    private ArrayList<Resource> resources;
-    private ArrayList<Property> properties;
+    private ArrayList<Resource> resources= new ArrayList<Resource>();
+    private ArrayList<Property> properties= new ArrayList<Property>();
 
     public SystemState(int _UID){
         setUID(_UID);
@@ -59,5 +59,30 @@ public class SystemState {
 
     public void addProperty(String name, String value){
         properties.add(new StringProperty(name, value));
+    }
+
+    //TODO needs more testing
+    public Boolean equals(SystemState systemState){
+        this.sortProperties();
+        this.sortResources();
+        systemState.sortProperties();
+        systemState.sortResources();
+
+        return properties.equals(systemState.getProperties())&& resources.equals(systemState.getResources());
+    }
+
+    public void sortProperties(){
+        Collections.sort(properties, new SortbyProperty());
+    }
+
+    public void sortResources(){
+        Collections.sort(resources, new SortbyResource());
+    }
+
+    @Override
+    public String toString() {
+        return "System State UID: " + this.UID + "\n Timestamp: " + this.timeStamp
+                + "\n Properties: " + properties
+                + "\n Resources: " + resources;
     }
 }
