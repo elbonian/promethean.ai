@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/Task",
+    "definitions": {
+        "Task": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "UID": {
+                    "type": "integer"
+                },
+                "Duration": {
+                    "type": "integer"
+                },
+                "requirements": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../Condition_schema.json#/Condition"
+                    }
+                },
+                "resources": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../Resource_schema.json#/Resource"
+                    }
+                },
+                "properties": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../Property_schema.json#/Property"
+                    }
+                }
+            },
+            "required": [
+                "Duration",
+                "UID"
+            ],
+            "title": "Task"
+        }
+    }
+}
