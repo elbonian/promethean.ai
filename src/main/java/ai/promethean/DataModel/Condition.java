@@ -1,6 +1,6 @@
 package ai.promethean.DataModel;
 
-import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
+import java.lang.*;
 
 public class Condition {
     private int val1;
@@ -10,6 +10,7 @@ public class Condition {
 
 
     public Condition(int _val1, int _val2, String _operator){
+        //TODO: change val1 to a string and get associated value
         setVal1(_val1);
         setVal2(_val2);
         setOperator(_operator);
@@ -64,8 +65,8 @@ public class Condition {
             return val1 != val2;
         }
         else{
-            //need a valid operator
-            return false;
+            //if not valid operator throw exception
+            throw new IllegalArgumentException();
         }
     }
 }
