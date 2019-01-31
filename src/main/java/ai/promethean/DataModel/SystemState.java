@@ -79,6 +79,25 @@ public class SystemState {
         Collections.sort(resources, new SortbyResource());
     }
 
+    public Boolean containsGoalState(SystemState goal){
+        goal.sortResources();
+        goal.sortProperties();
+        this.sortResources();
+        this.sortProperties();
+
+        for(Resource r: goal.getResources()){
+            if(!this.resources.contains(r)){
+                return false;
+            }
+        }
+        for(Property p: goal.getProperties()){
+            if(!this.properties.contains(p)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
         return "System State UID: " + this.UID + "\n Timestamp: " + this.timeStamp
