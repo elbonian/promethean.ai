@@ -9,7 +9,7 @@
                 "UID": {
                     "type": "integer"
                 },
-                "Time": {
+                "time": {
                     "type": "integer"
                 },
                 "resources": {
@@ -26,7 +26,7 @@
                 }
             },
             "required": [
-                "UID",
+                "UID"
             ],
             "title": "State"
         }

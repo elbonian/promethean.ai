@@ -9,7 +9,7 @@
                 "UID": {
                     "type": "integer"
                 },
-                "Duration": {
+                "duration": {
                     "type": "integer"
                 },
                 "requirements": {
@@ -18,13 +18,13 @@
                         "$ref": "../Condition_schema.json#/Condition"
                     }
                 },
-                "resources": {
+                "resource_impacts": {
                     "type": "array",
                     "items": {
                         "$ref": "../Resource_schema.json#/Resource"
                     }
                 },
-                "properties": {
+                "property_impacts": {
                     "type": "array",
                     "items": {
                         "$ref": "../Property_schema.json#/Property"
