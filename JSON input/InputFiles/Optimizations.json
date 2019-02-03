@@ -1,0 +1,17 @@
+[
+  {
+    "name": "wheelDamage",
+    "isMinimum":true
+  },
+
+  {
+    "name": "fuel",
+    "isMinimum":true
+  },
+
+  {
+    "name": "speed",
+    "isMinimum":false
+  }
+
+]
