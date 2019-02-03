@@ -23,5 +23,5 @@ public class ConditionTest {
     void checkEQ() {assertTrue(c2.evaluate(300));}
     @Test
     void checkNQ() {assertFalse(c2.evaluate(200));}
-    
+
 }
