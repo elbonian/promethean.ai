@@ -1,0 +1,49 @@
+[
+  {
+    "UID": 1,
+    "resources":[
+        {"name": "Time","value":60.0},
+        {"name": "Fuel", "value":100.0}
+      ],
+    "properties": [
+        {"name": "Altitude", "value": 0.0},
+        {"name": "doorOpen", "value": false}
+      ]
+  },
+
+    {
+    "UID": 2,
+      "resources":[
+        {"name": "Time","value":60.0},
+        {"name": "Fuel", "value":100.0}
+      ],
+    "properties": [
+        {"name": "Altitude", "value": 100.0},
+        {"name": "doorOpen", "value": true}
+      ]
+  },
+
+  {
+    "UID": 3,
+    "resources":[
+      {"name": "Fuel","value":30.0},
+      {"name": "wheelHealth", "value":20.0}
+    ],
+    "properties": [
+      {"name": "speed", "value": 10.0},
+      {"name": "doorOpen", "value": true}
+    ]
+  },
+
+  {
+    "UID": 4,
+    "resources":[
+      {"name": "Fuel","value":70.0},
+      {"name": "wheelHealth", "value":40.0}
+    ],
+    "properties": [
+      {"name": "speed", "value": 10.0},
+      {"name": "wheelsDown", "value": true}
+    ]
+  }
+]
