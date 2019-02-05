@@ -1,17 +1,20 @@
 [
   {
-    "name": "wheelDamage",
-    "isMinimum":true
+    "time": 320,
+    "resources": {"name": "Fuel","value":-30.0},
+    "properties": {"name": "Altitude","value":-10.0}
   },
 
   {
-    "name": "fuel",
-    "isMinimum":true
+    "time": 180,
+    "resources": {"name": "wheelHealth","value":-5.0},
+    "properties": {"name": "speed","value":-10.0}
   },
 
   {
-    "name": "speed",
-    "isMinimum":false
+    "time": 320,
+    "resources": {"name": "Fuel","value":10.0},
+    "properties": {"name": "speed","value":18.0}
   }
 
 ]
