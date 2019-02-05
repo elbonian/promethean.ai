@@ -6,6 +6,9 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
+                "title": {
+                    "type": "string"
+                },
                 "UID": {
                     "type": "integer"
                 },
@@ -32,7 +35,8 @@
                 }
             },
             "required": [
-                "Duration",
+                "title",
+                "duration",
                 "UID"
             ],
             "title": "Task"

@@ -6,6 +6,9 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
+                "title": {
+                    "type": "string"
+                },
                 "time": {
                     "type": "integer"
                 },
@@ -22,6 +25,9 @@
                     }
                 }
             },
+               "required": [
+                "title"
+            ],
             "title": "Pertubation"
         }
     }

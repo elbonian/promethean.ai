@@ -6,6 +6,9 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
+                "title": {
+                    "type": "string"
+                },
                 "UID": {
                     "type": "integer"
                 },
@@ -26,6 +29,7 @@
                 }
             },
             "required": [
+                "title",
                 "UID"
             ],
             "title": "State"
