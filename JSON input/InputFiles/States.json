@@ -1,5 +1,6 @@
 [
   {
+    "title": "State",
     "UID": 1,
     "resources":[
         {"name": "Time","value":60.0},
@@ -12,6 +13,7 @@
   },
 
     {
+    "title": "State",
     "UID": 2,
       "resources":[
         {"name": "Time","value":60.0},
@@ -24,6 +26,7 @@
   },
 
   {
+    "title": "State",
     "UID": 3,
     "resources":[
       {"name": "Fuel","value":30.0},
@@ -36,6 +39,7 @@
   },
 
   {
+    "title": "State",
     "UID": 4,
     "resources":[
       {"name": "Fuel","value":70.0},
