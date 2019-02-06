@@ -1,6 +1,24 @@
-  {
-  	"title": "optimization",
+  [
+  	{
+  	"title": "Optimization",
     "name": "wheelDamage",
     "isMinimum":true
+  },
+  	{
+  	"title": "Optimization",
+    "name": "time",
+    "isMinimum":true
+  },
+  	{
+  	"title": "Optimization",
+    "name": "speed",
+    "isMinimum":false
+  },
+    {
+    "title": "State",
+    "UID": 1,
+    "time": 1441
   }
+
+]
 
