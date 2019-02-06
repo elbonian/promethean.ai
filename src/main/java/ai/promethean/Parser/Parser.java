@@ -1,9 +1,8 @@
 package ai.promethean.Parser;
-import ai.promethean.DataModel.BooleanProperty;
-import ai.promethean.DataModel.Optimization;
-import ai.promethean.DataModel.SystemState;
-import com.google.gson.*;
 
+
+import ai.promethean.DataModel.*;
+import com.google.gson.*;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
@@ -47,14 +46,35 @@ public class Parser {
         if (jsonTree.isJsonObject()) {
             JsonObject jsonObject = jsonTree.getAsJsonObject();
 
-            String name = jsonObject.get("name").getAsString();
+            String title= jsonObject.get("title").getAsString();
+            if(title.equalsIgnoreCase("Optimization")) {
+                String name = jsonObject.get("name").getAsString();
+                Boolean isMin = jsonObject.get("isMinimum").getAsBoolean();
 
-            Boolean isMin = jsonObject.get("isMinimum").getAsBoolean();
-
-           System.out.println("name: "+ name);
-            System.out.println("isMinimum: "+ isMin);
-            Optimization o= new Optimization(name, isMin);
-            System.out.println(o);
+                System.out.println("name: " + name);
+                System.out.println("isMinimum: " + isMin);
+                Optimization o = new Optimization(name, isMin);
+                System.out.println(o);
+            }
+            else if(title.equalsIgnoreCase("State")){
+                int UID= jsonObject.get("UID").getAsInt();
+                long time= jsonObject.get("time").getAsLong();
+                SystemState systemState= new SystemState(UID,time);
+                System.out.println(systemState);
+                //TODO resources and properties
+            }
+            else if(title.equalsIgnoreCase("Task")){
+                int UID= jsonObject.get("UID").getAsInt();
+                int duration= jsonObject.get("duration").getAsInt();
+                //TODO requirements, resources and properties
+            }
+            else if(title.equalsIgnoreCase("Perturbation")){
+                long time= jsonObject.get("time").getAsLong();
+                //TODO resources and properties
+            }
+            else{
+                throw new IllegalArgumentException("JSON Object title does not exist");
+            }
 //
 //            if (f2.isJsonObject()) {
 //                JsonObject f2Obj = f2.getAsJsonObject();
