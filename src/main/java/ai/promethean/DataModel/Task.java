@@ -1,6 +1,6 @@
 package ai.promethean.DataModel;
 import java.util.*;
-import java.util.concurrent.locks.Condition;
+import ai.promethean.DataModel.Condition;
 
 public class Task {
     private int UID;
@@ -66,4 +66,17 @@ public class Task {
     }
 
     public void addRequirement(Condition c){ requirements.add(c);}
+
+    public void addRequirement(String name, Double value, String operator){
+        Condition c= new Condition(name, value, operator);
+        requirements.add(c);
+    }
+
+    @Override
+    public String toString() {
+        return "Task UID: " + this.UID + "\n Duration: " + this.duration
+                + "\n Requirements: " + requirements
+                + "\n Properties: " + property_impacts
+                + "\n Resources: " + resource_impacts;
+    }
 }

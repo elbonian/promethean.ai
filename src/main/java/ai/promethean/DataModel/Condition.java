@@ -10,14 +10,14 @@ public class Condition {
 
 
     public Condition(String _name, double _value, String _operator){
-        if (_operator == "==" || _operator == ">" || _operator == ">=" || _operator == "<" || _operator == "<=" || _operator == "!="){
+        if (_operator.equals("==") || _operator.equals(">") || _operator.equals(">=") || _operator.equals("<") || _operator.equals("<=") || _operator.equals("!=")){
             setName(_name);
             setValue(_value);
             setOperator(_operator);
         }
         else{
             //if not valid operator throw exception
-            throw new IllegalArgumentException("Illegal operator argument");
+            throw new IllegalArgumentException("Illegal operator argument"+_operator);
         }
     }
 
@@ -73,5 +73,10 @@ public class Condition {
             //if not valid operator throw exception
             throw new IllegalArgumentException();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Requirement:  " + name +" " +operator+ " " + value;
     }
 }

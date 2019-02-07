@@ -23,7 +23,7 @@
     "duration": 10,
     "requirements":[
       {"name": "Fuel","value":30.0, "operator": ">="},
-      {"name": "doorOpen", "value":false, "operator": "=="}
+      {"name": "doorOpen", "value":0.0, "operator": "=="}
     ],
     "resource_impacts":[
       {"name": "Fuel","value":-30.0}

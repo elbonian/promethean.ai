@@ -91,6 +91,43 @@ public class Parser {
                     int UID = jsonObject.get("UID").getAsInt();
                     int duration = jsonObject.get("duration").getAsInt();
                     //TODO requirements, resources and properties
+                    Task task= new Task(UID,duration);
+                    JsonArray requirements= jsonObject.get("requirements").getAsJsonArray();
+                    for(JsonElement elem: requirements){
+                        JsonObject requirement= elem.getAsJsonObject();
+                        String name= requirement.get("name").getAsString();
+                        Double value= requirement.get("value").getAsDouble();
+                        String operator= requirement.get("operator").getAsString();
+                        task.addRequirement(name, value,operator);
+                    }
+                    JsonArray resources = jsonObject.get("resource_impacts").getAsJsonArray();
+                    for(JsonElement elem: resources){
+                        JsonObject resource= elem.getAsJsonObject();
+                        String name= resource.get("name").getAsString();
+                        Double value= resource.get("value").getAsDouble();
+                        task.addResource(name,value);
+                    }
+
+                    JsonArray properties= jsonObject.get("property_impacts").getAsJsonArray();
+                    for(JsonElement elem: properties){
+                        JsonObject property= elem.getAsJsonObject();
+                        String name= property.get("name").getAsString();
+                        JsonPrimitive value= property.get("value").getAsJsonPrimitive();
+                        if(value.getAsJsonPrimitive().isBoolean()){
+                            task.addProperty(name, value.getAsBoolean());
+                        }
+                        else if(value.getAsJsonPrimitive().isNumber()){
+                            task.addProperty(name, value.getAsDouble());
+                        }
+                        else if(value.getAsJsonPrimitive().isString()){
+                            task.addProperty(name,value.getAsString());
+                        }
+                        else{
+                            throw new IllegalArgumentException("Invalid property type");
+                        }
+                    }
+                    System.out.println(task);
+
                 } else if (title.equalsIgnoreCase("Perturbation")) {
                     long time = jsonObject.get("time").getAsLong();
                     Perturbation perturbation= new Perturbation(time);
