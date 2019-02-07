@@ -32,7 +32,7 @@ public class Parser {
             }
 
         }
-        System.out.println(json);
+       // System.out.println(json);
     }
 
 
@@ -47,7 +47,7 @@ public class Parser {
             for(JsonElement j: jsonArray) {
                 JsonObject jsonObject= j.getAsJsonObject();
                 String title = jsonObject.get("title").getAsString();
-                
+
                 if (title.equalsIgnoreCase("Optimization")) {
                     String name = jsonObject.get("name").getAsString();
                     Boolean isMin = jsonObject.get("isMinimum").getAsBoolean();
@@ -58,8 +58,34 @@ public class Parser {
                     int UID = jsonObject.get("UID").getAsInt();
                     long time = jsonObject.get("time").getAsLong();
                     SystemState systemState = new SystemState(UID, time);
+
+                    JsonArray resources = jsonObject.get("resources").getAsJsonArray();
+                    for(JsonElement elem: resources){
+                        JsonObject resource= elem.getAsJsonObject();
+                        String name= resource.get("name").getAsString();
+                        Double value= resource.get("value").getAsDouble();
+                        systemState.addResource(name,value);
+                    }
+
+                    JsonArray properties= jsonObject.get("properties").getAsJsonArray();
+                    for(JsonElement elem: properties){
+                        JsonObject property= elem.getAsJsonObject();
+                        String name= property.get("name").getAsString();
+                        JsonPrimitive value= property.get("value").getAsJsonPrimitive();
+                        if(value.getAsJsonPrimitive().isBoolean()){
+                            systemState.addProperty(name, value.getAsBoolean());
+                        }
+                        else if(value.getAsJsonPrimitive().isNumber()){
+                            systemState.addProperty(name, value.getAsDouble());
+                        }
+                        else if(value.getAsJsonPrimitive().isString()){
+                            systemState.addProperty(name,value.getAsString());
+                        }
+                        else{
+                            throw new IllegalArgumentException("Invalid property type");
+                        }
+                    }
                     System.out.println(systemState);
-                    //TODO resources and properties
 
                 } else if (title.equalsIgnoreCase("Task")) {
                     int UID = jsonObject.get("UID").getAsInt();
@@ -67,18 +93,40 @@ public class Parser {
                     //TODO requirements, resources and properties
                 } else if (title.equalsIgnoreCase("Perturbation")) {
                     long time = jsonObject.get("time").getAsLong();
+                    Perturbation perturbation= new Perturbation(time);
                     //TODO resources and properties
+                    JsonArray resources = jsonObject.get("resources").getAsJsonArray();
+                    for(JsonElement elem: resources){
+                        JsonObject resource= elem.getAsJsonObject();
+                        String name= resource.get("name").getAsString();
+                        Double value= resource.get("value").getAsDouble();
+                        perturbation.addResource(name,value);
+                    }
+
+                    JsonArray properties= jsonObject.get("properties").getAsJsonArray();
+                    for(JsonElement elem: properties){
+                        JsonObject property= elem.getAsJsonObject();
+                        String name= property.get("name").getAsString();
+                        JsonPrimitive value= property.get("value").getAsJsonPrimitive();
+                        if(value.getAsJsonPrimitive().isBoolean()){
+                            perturbation.addProperty(name, value.getAsBoolean());
+                        }
+                        else if(value.getAsJsonPrimitive().isNumber()){
+                            perturbation.addProperty(name, value.getAsDouble());
+                        }
+                        else if(value.getAsJsonPrimitive().isString()){
+                            perturbation.addProperty(name,value.getAsString());
+                        }
+                        else{
+                            throw new IllegalArgumentException("Invalid property type");
+                        }
+                    }
+                    System.out.println(perturbation);
+
                 } else {
                     throw new IllegalArgumentException("JSON Object title does not exist");
                 }
             }
-//
-//            if (f2.isJsonObject()) {
-//                JsonObject f2Obj = f2.getAsJsonObject();
-//
-//                JsonElement f3 = f2Obj.get("f3");
-//                System.out.println("f3: "+ f3);
-//            }
 
         }
     }

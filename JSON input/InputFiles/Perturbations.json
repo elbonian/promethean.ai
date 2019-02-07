@@ -2,22 +2,27 @@
   {
     "title": "perturbation",
     "time": 320,
-    "resources": {"name": "Fuel","value":-30.0},
-    "properties": {"name": "Altitude","value":-10.0}
+    "resources": [{"name": "Fuel","value":-30.0}],
+    "properties": [{"name": "Altitude","value":-10.0}]
   },
-
+  {
+    "title": "perturbation",
+    "time": 1300,
+    "resources": [{"name": "wheelHealth","value":-5.0}],
+    "properties": [{"name": "speed","value":"High"}]
+  },
   {
     "title": "perturbation",
     "time": 180,
-    "resources": {"name": "wheelHealth","value":-5.0},
-    "properties": {"name": "speed","value":-10.0}
+    "resources": [{"name": "wheelHealth","value":-5.0}],
+    "properties": [{"name": "doorOpen","value":false}]
   },
 
   {
     "title": "perturbation",
     "time": 320,
-    "resources": {"name": "Fuel","value":10.0},
-    "properties": {"name": "speed","value":18.0}
+    "resources": [{"name": "Fuel","value":10.0}],
+    "properties": [{"name": "speed","value":18.0}]
   }
 
 ]

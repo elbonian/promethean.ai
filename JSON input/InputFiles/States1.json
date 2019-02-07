@@ -1,7 +1,15 @@
 [
-  {
-    "title": "State",
+{
+   "title": "State",
     "UID": 1,
-    "time": 1441
+    "time": 1440,
+    "resources":[
+        {"name": "Time","value":60.0},
+        {"name": "Fuel", "value":100.0}
+      ],
+    "properties": [
+        {"name": "Altitude", "value": 0.0},
+        {"name": "doorOpen", "value": false}
+      ]
   }
 ]
