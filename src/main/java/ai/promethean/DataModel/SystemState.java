@@ -7,6 +7,8 @@ public class SystemState {
     private Time timeStamp;
     private ArrayList<Resource> resources= new ArrayList<Resource>();
     private ArrayList<Property> properties= new ArrayList<Property>();
+    private SystemState previousState;
+    private Task previousTask;
 
     public SystemState(int _UID){
         setUID(_UID);
@@ -35,6 +37,23 @@ public class SystemState {
 
     public ArrayList<Property> getProperties() {
         return properties;
+    }
+
+    public void setPreviousState(SystemState previousState) {
+        this.previousState = previousState;
+    }
+
+    public SystemState getPreviousState() {
+
+        return previousState;
+    }
+
+    public void setPreviousTask(Task previousTask) {
+        this.previousTask = previousTask;
+    }
+
+    public Task getPreviousTask() {
+        return previousTask;
     }
 
     public void addResource(Resource r){

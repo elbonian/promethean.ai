@@ -77,6 +77,6 @@ public class Condition {
 
     @Override
     public String toString() {
-        return "Requirement:  " + name +" " +operator+ " " + value;
+        return "Requirement: " + name +" " +operator+ " " + value;
     }
 }

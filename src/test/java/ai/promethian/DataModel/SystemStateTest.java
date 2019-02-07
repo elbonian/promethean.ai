@@ -1,9 +1,6 @@
 package ai.promethian.DataModel;
 
-import ai.promethean.DataModel.BooleanProperty;
-import ai.promethean.DataModel.NumericalProperty;
-import ai.promethean.DataModel.Resource;
-import ai.promethean.DataModel.SystemState;
+import ai.promethean.DataModel.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,6 +10,7 @@ public class SystemStateTest {
     NumericalProperty np= new NumericalProperty("Altitude", 1000.0);
     BooleanProperty bp= new BooleanProperty("DoorOpen", false);
     SystemState goal= new SystemState(2);
+    Task t= new Task(22, 1000);
 
     @Test
     void checkUID(){assertTrue(s.getUID()==1);}
@@ -96,7 +94,28 @@ public class SystemStateTest {
         assertFalse(s.containsGoalState(goal));
     }
 
+    @Test
+    void checkNullPrevSystemState(){
+        assertTrue(s.getPreviousState()==null);
+    }
 
+    @Test
+    void checkNullPrevTask(){
+        assertTrue(s.getPreviousTask()==null);
+    }
+
+    @Test
+
+    void checkValidPrevSystemState(){
+        goal.setPreviousState(s);
+        assertTrue(goal.getPreviousState().getUID()==1);
+    }
+
+    @Test
+    void checkValidPrevTask(){
+        s.setPreviousTask(t);
+        assertTrue(s.getPreviousTask().getUID()==22);
+    }
 
 
 }
