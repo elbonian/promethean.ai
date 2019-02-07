@@ -12,7 +12,7 @@ public class Task {
 
     public Task(int _UID, int _duration){
         setUID(_UID);
-        setDuation(_duration);
+        setDuration(_duration);
     }
 
     public void  setUID(int _UID){
@@ -23,7 +23,7 @@ public class Task {
         return this.UID;
     }
 
-    public void setDuation(int _duration){
+    public void setDuration(int _duration){
         this.duration=_duration;
     }
 
