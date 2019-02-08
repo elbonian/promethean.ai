@@ -1,19 +1,36 @@
 package ai.promethean.Planner;
 
-import java.util.*;
+import ai.promethean.DataModel.Optimization;
 import ai.promethean.DataModel.SystemState;
-import ai.promethean.GraphManagement.GraphManager;
+import ai.promethean.DataModel.TaskDictionary;
 
-public class AStar {
+import java.util.ArrayList;
 
-   public static void AStar(SystemState startState, SystemState endState) {
+public class AStar extends Algorithm {
+    private GraphManager graph;
+    private Double ceiling;
+
+    public AStar(SystemState goalState) {
+        this.graph = new GraphManager(goalState);
+    }
+
+    public SystemState run(SystemState initialState,
+                           SystemState goalState,
+                           TaskDictionary tasks,
+                           ArrayList<Optimization> optimizations) {
+
        boolean found = false;
+       if (initialState.equals(goalState)) { found = true; }
+
+       graph.addNeighbors(initialState);
+
        while(!found /*|| ceiling check*/) {
-           SystemState currentState = GraphManager.poll();
-           if (currentState.equals(endState)) {
-               found = true;
-           }
-           GraphManager.addNeighbors(currentState);
+           SystemState currentState = graph.poll();
+           if (currentState.equals(goalState)) { found = true; }
+           graph.addNeighbors(currentState);
        }
-   }
+       // TODO: Return runtimeGoalState
+       return null;
+    }
+
 }
