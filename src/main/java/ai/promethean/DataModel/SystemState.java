@@ -7,8 +7,11 @@ public class SystemState {
     private Time timeStamp;
     private ArrayList<Resource> resources= new ArrayList<Resource>();
     private ArrayList<Property> properties= new ArrayList<Property>();
+
+    //Members for graph-search in planning
     private SystemState previousState;
     private Task previousTask;
+    private int gValue=-1;
 
     public SystemState(int _UID){
         setUID(_UID);
@@ -20,6 +23,22 @@ public class SystemState {
         timeStamp= new Time(time);
     }
 
+    public SystemState(int _UID, boolean isGoal){
+        setUID(_UID);
+        timeStamp= new Time(System.currentTimeMillis());
+        if(!isGoal){
+            setgValue(0);
+        }
+    }
+
+    public SystemState(int _UID, long time, boolean isGoal){
+        setUID(_UID);
+        timeStamp= new Time(time);
+        if(!isGoal){
+            setgValue(0);
+        }
+    }
+
     public void setUID(int _UID){
         this.UID=_UID;
     }
@@ -29,6 +48,14 @@ public class SystemState {
 
     public Time getTimeStamp(){
         return timeStamp;
+    }
+
+    public void setgValue(int gValue) {
+        this.gValue = gValue;
+    }
+
+    public int getgValue() {
+        return gValue;
     }
 
     public ArrayList<Resource> getResources() {
@@ -120,6 +147,7 @@ public class SystemState {
     @Override
     public String toString() {
         return "System State UID: " + this.UID + "\n Timestamp: " + this.timeStamp
+                + "\n G-Value: " + gValue
                 + "\n Properties: " + properties
                 + "\n Resources: " + resources;
     }

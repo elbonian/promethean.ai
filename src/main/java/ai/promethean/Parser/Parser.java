@@ -56,7 +56,8 @@ public class Parser {
                 } else if (title.equalsIgnoreCase("State")) {
                     int UID = jsonObject.get("UID").getAsInt();
                     long time = jsonObject.get("time").getAsLong();
-                    SystemState systemState = new SystemState(UID, time);
+                    boolean isGoal= jsonObject.get("isGoal").getAsBoolean();
+                    SystemState systemState = new SystemState(UID, time,isGoal);
 
                     JsonArray resources = jsonObject.get("resources").getAsJsonArray();
                     for(JsonElement elem: resources){

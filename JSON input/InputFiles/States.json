@@ -3,6 +3,7 @@
     "title": "State",
     "UID": 1,
     "time": 1440,
+    "isGoal": false,
     "resources":[
         {"name": "Time","value":60.0},
         {"name": "Fuel", "value":100.0}
@@ -17,6 +18,7 @@
     "title": "State",
     "UID": 2,
     "time": 1440,
+    "isGoal": true,
       "resources":[
         {"name": "Time","value":60.0},
         {"name": "Fuel", "value":100.0}
@@ -32,6 +34,7 @@
     "title": "State",
     "UID": 3,
     "time": 1440,
+    "isGoal": false,
     "resources":[
       {"name": "Fuel","value":30.0},
       {"name": "wheelHealth", "value":20.0}
@@ -46,6 +49,7 @@
     "title": "State",
     "UID": 4,
     "time": 1440,
+    "isGoal": true,
     "resources":[
       {"name": "Fuel","value":70.0},
       {"name": "wheelHealth", "value":40.0}

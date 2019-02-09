@@ -117,5 +117,22 @@ public class SystemStateTest {
         assertTrue(s.getPreviousTask().getUID()==22);
     }
 
+    @Test
+    void checkUndefinedGValue(){
+        assertTrue(s.getgValue()==-1);
+    }
+
+    @Test
+    void checkDefinedGValue(){
+        SystemState s1= new SystemState(20,false);
+        assertTrue(s1.getgValue()==0);
+    }
+
+    @Test
+    void checkGoalGValue(){
+        SystemState s1= new SystemState(21,true);
+        assertTrue(s1.getgValue()==-1);
+    }
+
 
 }
