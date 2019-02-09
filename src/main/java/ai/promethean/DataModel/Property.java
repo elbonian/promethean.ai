@@ -22,4 +22,8 @@ public abstract class Property {
     public abstract String toString();
 
     public abstract Boolean equals(Property p);
+
+    public abstract Object getValue();
+
+
 }

@@ -12,6 +12,7 @@ public class NumericalProperty extends Property {
         this.value=_value;
     }
 
+    @Override
     public Double getValue(){
         return this.value;
     }

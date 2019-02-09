@@ -42,6 +42,24 @@ public class Task {
         return requirements;
     }
 
+    public Resource getResource(String name){
+        for(Resource r: resource_impacts){
+            if(r.getName().equals(name)){
+                return r;
+            }
+        }
+        return null;
+    }
+
+    public Property getProperty(String name){
+        for(Property p: property_impacts){
+            if(p.getName().equals(name)){
+                return p;
+            }
+        }
+        return null;
+    }
+
     public void addResource(Resource r){
         resource_impacts.add(r);
     }

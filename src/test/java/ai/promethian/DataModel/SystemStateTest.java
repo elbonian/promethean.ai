@@ -134,5 +134,33 @@ public class SystemStateTest {
         assertTrue(s1.getgValue()==-1);
     }
 
+    @Test
+    void checkGetResource(){
+        s.addResource(r);
+        assertTrue(s.getResource("Time").getValue()==1000.0);
+    }
+
+    @Test
+    void checkGetNullResource(){
+        assertTrue(s.getResource("Time")==null);
+    }
+
+    @Test
+    void checkGetProperty(){
+        s.addProperty(bp);
+        assertTrue(s.getProperty("DoorOpen").getValue().equals(false));
+    }
+
+    @Test
+    void checkGetProperty1(){
+        s.addProperty(np);
+        assertTrue(s.getProperty("Altitude").getValue().equals(1000.0));
+    }
+
+    @Test
+    void checkGetPropertyNull(){
+        assertTrue(s.getProperty("Altitude")==null);
+    }
+    
 
 }

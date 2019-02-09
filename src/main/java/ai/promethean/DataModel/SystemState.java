@@ -66,6 +66,24 @@ public class SystemState {
         return properties;
     }
 
+    public Resource getResource(String name){
+        for(Resource r: resources){
+            if(r.getName().equals(name)){
+                return r;
+            }
+        }
+        return null;
+    }
+
+    public Property getProperty(String name){
+        for(Property p: properties){
+            if(p.getName().equals(name)){
+                return p;
+            }
+        }
+        return null;
+    }
+
     public void setPreviousState(SystemState previousState) {
         this.previousState = previousState;
     }

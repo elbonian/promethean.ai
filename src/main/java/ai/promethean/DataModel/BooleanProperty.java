@@ -12,6 +12,7 @@ public class BooleanProperty extends Property {
         this.value=_value;
     }
 
+    @Override
     public Boolean getValue(){
         return this.value;
     }

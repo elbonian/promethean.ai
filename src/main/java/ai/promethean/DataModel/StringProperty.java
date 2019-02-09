@@ -8,10 +8,12 @@ public class StringProperty extends Property {
         setValue(_value);
     }
 
+
     public void setValue(String _value){
         this.value=_value;
     }
 
+    @Override
     public String getValue(){
         return this.value;
     }
