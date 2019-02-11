@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.everit-org.json-schema:org.everit.json.schema:1.11.0'
+    //implementation 'com.github.everit-org.json-schema:org.everit.json.schema:1.11.0'
     implementation 'com.github.java-json-tools:json-schema-validator:2.2.8'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0'
     testCompile 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
@@ -21,7 +21,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     compile group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
 
-    compile group: 'org.everit.json', name: 'org.everit.json.schema', version: '1.11.0'
+    //compile group: 'org.everit.json', name: 'org.everit.json.schema', version: '1.11.0'
 
     // https://mvnrepository.com/artifact/com.github.fge/json-schema-validator
     compile group: 'com.github.fge', name: 'json-schema-validator', version: '2.2.6'
