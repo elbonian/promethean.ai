@@ -1,6 +1,6 @@
 package ai.promethean.DataModel;
 
-public class BooleanCondition extends AbstractCondition {
+public class BooleanCondition extends Condition {
     protected Boolean value;
 
     public BooleanCondition(String _name, String _operator, Boolean _value){
@@ -23,7 +23,7 @@ public class BooleanCondition extends AbstractCondition {
     }
 
     @Override
-    public Boolean evaluate(Object val1) {
+    public boolean evaluate(Object val1) {
         if(val1 instanceof Boolean){
             if (this.operator.equals("=="))
             {

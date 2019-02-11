@@ -60,6 +60,15 @@ public class Task {
         return null;
     }
 
+    public Condition getRequirement(String name){
+        for(Condition c: requirements){
+            if(c.getName().equals(name)){
+                return c;
+            }
+        }
+        return null;
+    }
+
     public void addResource(Resource r){
         resource_impacts.add(r);
     }
@@ -86,7 +95,15 @@ public class Task {
     public void addRequirement(Condition c){ requirements.add(c);}
 
     public void addRequirement(String name, Double value, String operator){
-        Condition c= new Condition(name, value, operator);
+        NumericalCondition c= new NumericalCondition(name, operator,value);
+        requirements.add(c);
+    }
+    public void addRequirement(String name, Boolean value, String operator){
+        BooleanCondition c= new BooleanCondition(name, operator,value);
+        requirements.add(c);
+    }
+    public void addRequirement(String name, String value, String operator){
+        StringCondition c= new StringCondition(name, operator,value);
         requirements.add(c);
     }
 
