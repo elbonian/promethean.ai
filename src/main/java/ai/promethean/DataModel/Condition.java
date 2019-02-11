@@ -9,6 +9,7 @@ public class Condition {
     private String operator;
 
 
+
     public Condition(String _name, double _value, String _operator){
         if (_operator.equals("==") || _operator.equals(">") || _operator.equals(">=") || _operator.equals("<") || _operator.equals("<=") || _operator.equals("!=")){
             setName(_name);

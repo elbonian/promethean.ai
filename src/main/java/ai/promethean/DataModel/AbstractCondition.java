@@ -4,6 +4,9 @@ public abstract class AbstractCondition {
     protected String name;
     protected String operator;
 
+    public AbstractCondition(String _name){
+        setName(_name);
+    }
     public AbstractCondition(String _name,  String _operator){
         if (_operator.equals("==") || _operator.equals(">") || _operator.equals(">=") || _operator.equals("<") || _operator.equals("<=") || _operator.equals("!=")){
             setName(_name);
@@ -32,4 +35,6 @@ public abstract class AbstractCondition {
     }
 
     public abstract Boolean evaluate(Object val1);
+
+
 }
