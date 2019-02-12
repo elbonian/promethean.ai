@@ -21,8 +21,9 @@ public class Main {
 
         Parser p= new Parser("C:\\Users\\Sam\\Dropbox\\CSCI4308_Senior_Projects\\promethean.ai\\JSON input\\InputFiles\\All.json", true);
         ArrayList<Object> objects = p.parse();
+        System.out.println(objects);
         //System.out.println(objects.get(0));
-        System.out.println(objects.get(11));
+        //System.out.println(objects.get(11));
 
         //String input = "C:\\Users\\Sam\\Dropbox\\CSCI4308_Senior_Projects\\promethean.ai\\JSON input\\InputFiles\\Perturbations1.json";
         //String schema = "C:\\Users\\Sam\\Dropbox\\CSCI4308_Senior_Projects\\promethean.ai\\JSON input\\Schemas\\Perturbation_schema.json";

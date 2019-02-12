@@ -13,7 +13,7 @@ public class Parser {
     private String json;
     //ArrayLists are mutable objects so we don't need a setter
     private ArrayList<Object> parsedObjects = new ArrayList<Object>();
-    private ArrayList<Object> taskDictionary = new ArrayList<Object>();
+    private TaskDictionary taskDictionary = new TaskDictionary();
 
 
     public Parser(){
@@ -96,7 +96,8 @@ public class Parser {
                     int duration = jsonObject.get("duration").getAsInt();
                     //TODO requirements, resources and properties
                     Task task= new Task(UID,duration);
-                    taskDictionary.add(task);
+                    taskDictionary.addTask(task);
+
                     JsonArray requirements= jsonObject.get("requirements").getAsJsonArray();
                     for(JsonElement elem: requirements){
                         JsonObject requirement= elem.getAsJsonObject();
@@ -172,6 +173,7 @@ public class Parser {
             }
 
         }
+
         parsedObjects.add(taskDictionary);
         return parsedObjects;
     }
