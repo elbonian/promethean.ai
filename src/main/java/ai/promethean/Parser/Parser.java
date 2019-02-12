@@ -14,7 +14,8 @@ public class Parser {
     //ArrayLists are mutable objects so we don't need a setter
     private ArrayList<Object> parsedObjects = new ArrayList<Object>();
     private TaskDictionary taskDictionary = new TaskDictionary();
-
+    private StaticOptimizations optimizationList =  new StaticOptimizations();
+    private ArrayList<Object> perturbationList =  new ArrayList<Object>();
 
     public Parser(){
         setJson("");
@@ -54,7 +55,7 @@ public class Parser {
                     String name = jsonObject.get("name").getAsString();
                     Boolean isMin = jsonObject.get("isMinimum").getAsBoolean();
                     Optimization o = new Optimization(name, isMin);
-                    parsedObjects.add(o);
+                    optimizationList.addOptimization(o);
                     //System.out.println(o);
 
                 } else if (title.equalsIgnoreCase("State")) {
@@ -137,7 +138,7 @@ public class Parser {
                 } else if (title.equalsIgnoreCase("Perturbation")) {
                     long time = jsonObject.get("time").getAsLong();
                     Perturbation perturbation= new Perturbation(time);
-                    parsedObjects.add(perturbation);
+                    perturbationList.add(perturbation);
                     //TODO resources and properties
                     JsonArray resources = jsonObject.get("resources").getAsJsonArray();
                     for(JsonElement elem: resources){
@@ -173,8 +174,9 @@ public class Parser {
             }
 
         }
-
         parsedObjects.add(taskDictionary);
+        parsedObjects.add(optimizationList);
+        parsedObjects.add(perturbationList);
         return parsedObjects;
     }
 }
