@@ -6,10 +6,14 @@ import com.google.gson.*;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
+import java.util.*;
 
 public class Parser {
     private JsonParser parser = new JsonParser();
     private String json;
+    //ArrayLists are mutable objects so we don't need a setter
+    private ArrayList<Object> parsedObjects = new ArrayList<Object>();
+    private ArrayList<Object> taskDictionary = new ArrayList<Object>();
 
 
     public Parser(){
@@ -34,12 +38,11 @@ public class Parser {
         }
     }
 
-
     public void setJson(String _json){
         this.json=_json;
     }
 
-    public void parse() {
+    public ArrayList<Object> parse() {
         JsonElement jsonTree = parser.parse(json);
         JsonArray jsonArray = jsonTree.getAsJsonArray();
         if (jsonTree.isJsonArray()) {
@@ -50,15 +53,16 @@ public class Parser {
                 if (title.equalsIgnoreCase("Optimization")) {
                     String name = jsonObject.get("name").getAsString();
                     Boolean isMin = jsonObject.get("isMinimum").getAsBoolean();
-
                     Optimization o = new Optimization(name, isMin);
-                    System.out.println(o);
+                    parsedObjects.add(o);
+                    //System.out.println(o);
+
                 } else if (title.equalsIgnoreCase("State")) {
                     int UID = jsonObject.get("UID").getAsInt();
                     long time = jsonObject.get("time").getAsLong();
                     boolean isGoal= jsonObject.get("isGoal").getAsBoolean();
                     SystemState systemState = new SystemState(UID, time,isGoal);
-
+                    parsedObjects.add(systemState);
                     JsonArray resources = jsonObject.get("resources").getAsJsonArray();
                     for(JsonElement elem: resources){
                         JsonObject resource= elem.getAsJsonObject();
@@ -85,13 +89,14 @@ public class Parser {
                             throw new IllegalArgumentException("Invalid property type");
                         }
                     }
-                    System.out.println(systemState);
+                    //System.out.println(systemState);
 
                 } else if (title.equalsIgnoreCase("Task")) {
                     int UID = jsonObject.get("UID").getAsInt();
                     int duration = jsonObject.get("duration").getAsInt();
                     //TODO requirements, resources and properties
                     Task task= new Task(UID,duration);
+                    taskDictionary.add(task);
                     JsonArray requirements= jsonObject.get("requirements").getAsJsonArray();
                     for(JsonElement elem: requirements){
                         JsonObject requirement= elem.getAsJsonObject();
@@ -126,11 +131,12 @@ public class Parser {
                             throw new IllegalArgumentException("Invalid property type");
                         }
                     }
-                    System.out.println(task);
+                    //System.out.println(task);
 
                 } else if (title.equalsIgnoreCase("Perturbation")) {
                     long time = jsonObject.get("time").getAsLong();
                     Perturbation perturbation= new Perturbation(time);
+                    parsedObjects.add(perturbation);
                     //TODO resources and properties
                     JsonArray resources = jsonObject.get("resources").getAsJsonArray();
                     for(JsonElement elem: resources){
@@ -158,7 +164,7 @@ public class Parser {
                             throw new IllegalArgumentException("Invalid property type");
                         }
                     }
-                    System.out.println(perturbation);
+                    //System.out.println(perturbation);
 
                 } else {
                     throw new IllegalArgumentException("JSON Object title does not exist");
@@ -166,5 +172,7 @@ public class Parser {
             }
 
         }
+        parsedObjects.add(taskDictionary);
+        return parsedObjects;
     }
 }

@@ -1,0 +1,155 @@
+[
+  {
+    "title": "State",
+    "UID": 1,
+    "time": 1440,
+    "isGoal": false,
+    "resources":[
+      {"name": "Time","value":60.0},
+      {"name": "Fuel", "value":100.0}
+    ],
+    "properties": [
+      {"name": "Altitude", "value": 0.0},
+      {"name": "doorOpen", "value": false}
+    ]
+  },
+
+  {
+    "title": "State",
+    "UID": 2,
+    "time": 1440,
+    "isGoal": true,
+    "resources":[
+      {"name": "Time","value":60.0},
+      {"name": "Fuel", "value":100.0}
+    ],
+    "properties": [
+      {"name": "Altitude", "value": 100.0},
+      {"name": "doorOpen", "value": true},
+      {"name": "WindSpeed", "value": "High"}
+    ]
+  },
+
+  {
+    "title": "State",
+    "UID": 3,
+    "time": 1440,
+    "isGoal": false,
+    "resources":[
+      {"name": "Fuel","value":30.0},
+      {"name": "wheelHealth", "value":20.0}
+    ],
+    "properties": [
+      {"name": "speed", "value": 10.0},
+      {"name": "doorOpen", "value": true}
+    ]
+  },
+
+  {
+    "title": "State",
+    "UID": 4,
+    "time": 1440,
+    "isGoal": true,
+    "resources":[
+      {"name": "Fuel","value":70.0},
+      {"name": "wheelHealth", "value":40.0}
+    ],
+    "properties": [
+      {"name": "speed", "value": 10.0},
+      {"name": "wheelsDown", "value": true}
+    ]
+  },
+
+  {
+    "title": "task",
+    "UID": 1,
+    "duration": 20,
+    "requirements":[
+      {"name": "Fuel","value":60.0, "operator": ">"},
+      {"name": "Altitude", "value":100.0, "operator": "=="}
+    ],
+    "resource_impacts":[
+      {"name": "Fuel","value":-60.0}
+    ],
+    "property_impacts": [
+      {"name": "Altitude", "value": -40.0}
+    ]
+  },
+
+
+
+  {
+    "title": "task",
+    "UID": 2,
+    "duration": 10,
+    "requirements":[
+      {"name": "Fuel","value":30.0, "operator": ">="},
+      {"name": "doorOpen", "value":0.0, "operator": "=="}
+    ],
+    "resource_impacts":[
+      {"name": "Fuel","value":-30.0}
+    ],
+    "property_impacts": [
+      {"name": "doorOpen", "value":true}
+    ]
+  },
+
+
+  {
+    "title": "task",
+    "UID": 3,
+    "duration": 100,
+    "requirements":[
+      {"name": "wheelHealth","value":30.0, "operator": ">="},
+      {"name": "Speed", "value":20.0, "operator": "<"}
+    ],
+    "resource_impacts":[
+      {"name": "wheelHealth","value":-10.0}
+    ],
+    "property_impacts": [
+      {"name": "Speed", "value":10.0}
+    ]
+  },
+
+  {
+    "title": "Optimization",
+    "name": "wheelDamage",
+    "isMinimum":true
+  },
+  {
+    "title": "Optimization",
+    "name": "time",
+    "isMinimum":true
+  },
+  {
+    "title": "Optimization",
+    "name": "speed",
+    "isMinimum":false
+  },
+
+  {
+    "title": "perturbation",
+    "time": 320,
+    "resources": [{"name": "Fuel","value":-30.0}],
+    "properties": [{"name": "Altitude","value":-10.0}]
+  },
+  {
+    "title": "perturbation",
+    "time": 1300,
+    "resources": [{"name": "wheelHealth","value":-5.0}],
+    "properties": [{"name": "speed","value":"High"}]
+  },
+  {
+    "title": "perturbation",
+    "time": 180,
+    "resources": [{"name": "wheelHealth","value":-5.0}],
+    "properties": [{"name": "doorOpen","value":false}]
+  },
+
+  {
+    "title": "perturbation",
+    "time": 320,
+    "resources": [{"name": "Fuel","value":10.0}],
+    "properties": [{"name": "speed","value":18.0}]
+  }
+]
