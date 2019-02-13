@@ -154,34 +154,39 @@ public class Parser {
                     //System.out.println(task);
 
                 } else if (title.equalsIgnoreCase("Perturbation")) {
-                    long time = jsonObject.get("time").getAsLong();
-                    Perturbation perturbation= new Perturbation(time);
-
-                    //TODO resources and properties
-                    JsonArray resources = jsonObject.get("resources").getAsJsonArray();
-                    for(JsonElement elem: resources){
-                        JsonObject resource= elem.getAsJsonObject();
-                        String name= resource.get("name").getAsString();
-                        Double value= resource.get("value").getAsDouble();
-                        perturbation.addResource(name,value);
+                    Perturbation perturbation;
+                    if(jsonObject.get("time")!=null) {
+                        long time = jsonObject.get("time").getAsLong();
+                        perturbation = new Perturbation(time);
+                    }
+                    else{
+                        perturbation= new Perturbation();
                     }
 
-                    JsonArray properties= jsonObject.get("properties").getAsJsonArray();
-                    for(JsonElement elem: properties){
-                        JsonObject property= elem.getAsJsonObject();
-                        String name= property.get("name").getAsString();
-                        JsonPrimitive value= property.get("value").getAsJsonPrimitive();
-                        if(value.getAsJsonPrimitive().isBoolean()){
-                            perturbation.addProperty(name, value.getAsBoolean());
+                    if(jsonObject.get("resources")!=null) {
+                        JsonArray resources = jsonObject.get("resources").getAsJsonArray();
+                        for (JsonElement elem : resources) {
+                            JsonObject resource = elem.getAsJsonObject();
+                            String name = resource.get("name").getAsString();
+                            Double value = resource.get("value").getAsDouble();
+                            perturbation.addResource(name, value);
                         }
-                        else if(value.getAsJsonPrimitive().isNumber()){
-                            perturbation.addProperty(name, value.getAsDouble());
-                        }
-                        else if(value.getAsJsonPrimitive().isString()){
-                            perturbation.addProperty(name,value.getAsString());
-                        }
-                        else{
-                            throw new IllegalArgumentException("Invalid property type");
+                    }
+                    if(jsonObject.get("properties")!=null) {
+                        JsonArray properties = jsonObject.get("properties").getAsJsonArray();
+                        for (JsonElement elem : properties) {
+                            JsonObject property = elem.getAsJsonObject();
+                            String name = property.get("name").getAsString();
+                            JsonPrimitive value = property.get("value").getAsJsonPrimitive();
+                            if (value.getAsJsonPrimitive().isBoolean()) {
+                                perturbation.addProperty(name, value.getAsBoolean());
+                            } else if (value.getAsJsonPrimitive().isNumber()) {
+                                perturbation.addProperty(name, value.getAsDouble());
+                            } else if (value.getAsJsonPrimitive().isString()) {
+                                perturbation.addProperty(name, value.getAsString());
+                            } else {
+                                throw new IllegalArgumentException("Invalid property type");
+                            }
                         }
                     }
                     perturbationList.add(perturbation);
