@@ -18,4 +18,13 @@ public class TaskDictionary {
     public Task findTask(Task t){
         return TaskDictionary.get(t.getUID());
     }
+
+    @Override
+    public String toString() {
+        String printOut= "Task Dictionary: \n";
+        for(Task t: TaskDictionary.values()){
+            printOut=printOut+ t;
+        }
+        return printOut;
+    }
 }

@@ -23,7 +23,7 @@
     "duration": 10,
     "requirements":[
       {"name": "Fuel","value":30.0, "operator": ">="},
-      {"name": "doorOpen", "value":0.0, "operator": "=="}
+      {"name": "doorOpen", "value":false, "operator": "=="}
     ],
     "resource_impacts":[
       {"name": "Fuel","value":-30.0}
@@ -40,7 +40,7 @@
     "duration": 100,
     "requirements":[
       {"name": "wheelHealth","value":30.0, "operator": ">="},
-      {"name": "Speed", "value":20.0, "operator": "<"}
+      {"name": "Speed", "value":"High", "operator": "!="}
     ],
     "resource_impacts":[
       {"name": "wheelHealth","value":-10.0}

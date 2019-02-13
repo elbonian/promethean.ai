@@ -11,4 +11,13 @@ public class StaticOptimizations {
     public ArrayList<Optimization> getOptimizations() {
         return Optimizations;
     }
+
+    @Override
+    public String toString() {
+        String printOut= "Static Optimizations: \n";
+        for(Optimization o: Optimizations){
+            printOut=printOut+ o + "\n";
+        }
+        return printOut;
+    }
 }

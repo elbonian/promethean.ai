@@ -16,12 +16,15 @@ public class Main {
 	// write your code here
         //System.out.println("Hello World");
         //Input File here:
-        //Parser p= new Parser("C:\\Users\\Taylor\\Desktop\\promethean.ai\\JSON input\\InputFiles\\States.json", true);
-        //p.parse();
-
-        Parser p= new Parser("C:\\Users\\Sam\\Dropbox\\CSCI4308_Senior_Projects\\promethean.ai\\JSON input\\InputFiles\\All.json", true);
+        Parser p= new Parser("C:\\Users\\Taylor\\Desktop\\promethean.ai\\JSON input\\InputFiles\\All.json", true);
         ArrayList<Object> objects = p.parse();
-        System.out.println(objects);
+        for(Object o: objects){
+            System.out.println(o);
+        }
+
+       // Parser p= new Parser("C:\\Users\\Sam\\Dropbox\\CSCI4308_Senior_Projects\\promethean.ai\\JSON input\\InputFiles\\All.json", true);
+        //ArrayList<Object> objects = p.parse();
+        //System.out.println(objects);
         //System.out.println(objects.get(0));
         //System.out.println(objects.get(11));
 
