@@ -3,6 +3,7 @@
    "title": "State",
     "UID": 1,
     "time": 1440,
+    "isGoal": false,
     "resources":[
         {"name": "Time","value":60.0},
         {"name": "Fuel", "value":100.0}

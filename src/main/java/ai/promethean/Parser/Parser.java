@@ -48,153 +48,218 @@ public class Parser {
         JsonArray jsonArray = jsonTree.getAsJsonArray();
         if (jsonTree.isJsonArray()) {
             for(JsonElement j: jsonArray) {
-                JsonObject jsonObject= j.getAsJsonObject();
-                String title = jsonObject.get("title").getAsString();
+                JsonObject jsonObject = j.getAsJsonObject();
+                if (jsonObject.get("title").getAsJsonPrimitive().isString()) {
+                    String title = jsonObject.get("title").getAsString();
 
-                if (title.equalsIgnoreCase("Optimization")) {
-                    String name = jsonObject.get("name").getAsString();
-                    Boolean isMin = jsonObject.get("isMinimum").getAsBoolean();
-                    Optimization o = new Optimization(name, isMin);
-                    optimizationList.addOptimization(o);
-                    //System.out.println(o);
-
-                } else if (title.equalsIgnoreCase("State")) {
-                    int UID = jsonObject.get("UID").getAsInt();
-                    JsonElement time = jsonObject.get("time");
-                    boolean isGoal= jsonObject.get("isGoal").getAsBoolean();
-                    SystemState systemState;
-                    if(time==null){
-                         systemState= new SystemState(UID, isGoal);
-                    }
-                    else {
-                        systemState = new SystemState(UID, time.getAsLong(), isGoal);
-                    }
-                    if(jsonObject.get("resources")!=null) {
-                        JsonArray resources = jsonObject.get("resources").getAsJsonArray();
-                        for (JsonElement elem : resources) {
-                            JsonObject resource = elem.getAsJsonObject();
-                            String name = resource.get("name").getAsString();
-                            Double value = resource.get("value").getAsDouble();
-                            systemState.addResource(name, value);
-                        }
-                    }
-
-                    if(jsonObject.get("properties")!=null) {
-                        JsonArray properties = jsonObject.get("properties").getAsJsonArray();
-                        for (JsonElement elem : properties) {
-                            JsonObject property = elem.getAsJsonObject();
-                            String name = property.get("name").getAsString();
-                            JsonPrimitive value = property.get("value").getAsJsonPrimitive();
-                            if (value.getAsJsonPrimitive().isBoolean()) {
-                                systemState.addProperty(name, value.getAsBoolean());
-                            } else if (value.getAsJsonPrimitive().isNumber()) {
-                                systemState.addProperty(name, value.getAsDouble());
-                            } else if (value.getAsJsonPrimitive().isString()) {
-                                systemState.addProperty(name, value.getAsString());
-                            } else {
-                                throw new IllegalArgumentException("Invalid property type");
+                    if (title.equalsIgnoreCase("Optimization")) {
+                        if (jsonObject.get("name").getAsJsonPrimitive().isString()) {
+                            String name = jsonObject.get("name").getAsString();
+                            if (jsonObject.get("isMinimum").getAsJsonPrimitive().isBoolean()) {
+                                Boolean isMin = jsonObject.get("isMinimum").getAsBoolean();
+                                Optimization o = new Optimization(name, isMin);
+                                optimizationList.addOptimization(o);
+                            }
+                            else{
+                                throw new IllegalArgumentException("JSON Object isMinimum is invalid type");
                             }
                         }
-                    }
-                    parsedObjects.add(systemState);
-                    //System.out.println(systemState);
+                        else{
+                            throw new IllegalArgumentException("JSON Object name is invalid type");
+                        }
 
-                } else if (title.equalsIgnoreCase("Task")) {
-                    int UID = jsonObject.get("UID").getAsInt();
-                    int duration = jsonObject.get("duration").getAsInt();
-                    Task task= new Task(UID,duration);
+                    } else if (title.equalsIgnoreCase("State")) {
+                        if (jsonObject.get("UID").getAsJsonPrimitive().isNumber()) {
+                            int UID = jsonObject.get("UID").getAsInt();
+                                JsonElement time = jsonObject.get("time");
+                            if (jsonObject.get("isGoal").getAsJsonPrimitive().isBoolean()) {
+                                boolean isGoal = jsonObject.get("isGoal").getAsBoolean();
+                                SystemState systemState;
+                                if (time == null) {
+                                    systemState = new SystemState(UID, isGoal);
+                                } else if (time.getAsJsonPrimitive().isNumber()) {
+                                    systemState = new SystemState(UID, time.getAsLong(), isGoal);
+                                } else {
+                                    throw new IllegalArgumentException("JSON Object State time is invalid type");
+                                }
+                                if (jsonObject.get("resources") != null) {
+                                    JsonArray resources = jsonObject.get("resources").getAsJsonArray();
+                                    for (JsonElement elem : resources) {
+                                        JsonObject resource = elem.getAsJsonObject();
+                                        if (resource.get("name").getAsJsonPrimitive().isString() &&resource.get("value").getAsJsonPrimitive().isNumber() ) {
+                                            String name = resource.get("name").getAsString();
+                                            Double value = resource.get("value").getAsDouble();
+                                            systemState.addResource(name, value);
+                                        }
+                                        else {
+                                            throw new IllegalArgumentException("JSON Object State Resource is invalid type");
+                                        }
+                                    }
+                                }
 
-                    if(jsonObject.get("requirements")!=null) {
-                        JsonArray requirements = jsonObject.get("requirements").getAsJsonArray();
-                        for (JsonElement elem : requirements) {
-                            JsonObject requirement = elem.getAsJsonObject();
-                            String name = requirement.get("name").getAsString();
-                            String operator = requirement.get("operator").getAsString();
-                            JsonPrimitive value = requirement.get("value").getAsJsonPrimitive();
-                            if (value.getAsJsonPrimitive().isBoolean()) {
-                                task.addRequirement(name, value.getAsBoolean(), operator);
-                            } else if (value.getAsJsonPrimitive().isNumber()) {
-                                task.addRequirement(name, value.getAsDouble(), operator);
-                            } else if (value.getAsJsonPrimitive().isString()) {
-                                task.addRequirement(name, value.getAsString(), operator);
-                            } else {
-                                throw new IllegalArgumentException("Invalid requirement type");
+                                if (jsonObject.get("properties") != null) {
+                                    JsonArray properties = jsonObject.get("properties").getAsJsonArray();
+                                    for (JsonElement elem : properties) {
+                                        JsonObject property = elem.getAsJsonObject();
+                                        if (property.get("name").getAsJsonPrimitive().isString()){
+                                            String name = property.get("name").getAsString();
+                                            JsonPrimitive value = property.get("value").getAsJsonPrimitive();
+                                            if (value.getAsJsonPrimitive().isBoolean()) {
+                                                systemState.addProperty(name, value.getAsBoolean());
+                                            } else if (value.getAsJsonPrimitive().isNumber()) {
+                                                systemState.addProperty(name, value.getAsDouble());
+                                            } else if (value.getAsJsonPrimitive().isString()) {
+                                                systemState.addProperty(name, value.getAsString());
+                                            } else {
+                                                throw new IllegalArgumentException("Invalid property type");
+                                            }
+                                        }
+                                        else {
+                                            throw new IllegalArgumentException("Invalid State Property name type");
+                                        }
+                                    }
+                                }
+                                parsedObjects.add(systemState);
                             }
-
-                        }
-                    }
-                    if(jsonObject.get("resource_impacts")!=null) {
-                        JsonArray resources = jsonObject.get("resource_impacts").getAsJsonArray();
-                        for (JsonElement elem : resources) {
-                            JsonObject resource = elem.getAsJsonObject();
-                            String name = resource.get("name").getAsString();
-                            Double value = resource.get("value").getAsDouble();
-                            task.addResource(name, value);
-                        }
-                    }
-
-                    if(jsonObject.get("property_impacts")!=null) {
-                        JsonArray properties = jsonObject.get("property_impacts").getAsJsonArray();
-                        for (JsonElement elem : properties) {
-                            JsonObject property = elem.getAsJsonObject();
-                            String name = property.get("name").getAsString();
-                            JsonPrimitive value = property.get("value").getAsJsonPrimitive();
-                            if (value.getAsJsonPrimitive().isBoolean()) {
-                                task.addProperty(name, value.getAsBoolean());
-                            } else if (value.getAsJsonPrimitive().isNumber()) {
-                                task.addProperty(name, value.getAsDouble());
-                            } else if (value.getAsJsonPrimitive().isString()) {
-                                task.addProperty(name, value.getAsString());
-                            } else {
-                                throw new IllegalArgumentException("Invalid property type");
-                            }
-                        }
-                    }
-                    taskDictionary.addTask(task);
-                    //System.out.println(task);
-
-                } else if (title.equalsIgnoreCase("Perturbation")) {
-                    Perturbation perturbation;
-                    if(jsonObject.get("time")!=null) {
-                        long time = jsonObject.get("time").getAsLong();
-                        perturbation = new Perturbation(time);
-                    }
-                    else{
-                        perturbation= new Perturbation();
-                    }
-
-                    if(jsonObject.get("resources")!=null) {
-                        JsonArray resources = jsonObject.get("resources").getAsJsonArray();
-                        for (JsonElement elem : resources) {
-                            JsonObject resource = elem.getAsJsonObject();
-                            String name = resource.get("name").getAsString();
-                            Double value = resource.get("value").getAsDouble();
-                            perturbation.addResource(name, value);
-                        }
-                    }
-                    if(jsonObject.get("properties")!=null) {
-                        JsonArray properties = jsonObject.get("properties").getAsJsonArray();
-                        for (JsonElement elem : properties) {
-                            JsonObject property = elem.getAsJsonObject();
-                            String name = property.get("name").getAsString();
-                            JsonPrimitive value = property.get("value").getAsJsonPrimitive();
-                            if (value.getAsJsonPrimitive().isBoolean()) {
-                                perturbation.addProperty(name, value.getAsBoolean());
-                            } else if (value.getAsJsonPrimitive().isNumber()) {
-                                perturbation.addProperty(name, value.getAsDouble());
-                            } else if (value.getAsJsonPrimitive().isString()) {
-                                perturbation.addProperty(name, value.getAsString());
-                            } else {
-                                throw new IllegalArgumentException("Invalid property type");
+                            else{
+                                throw new IllegalArgumentException("JSON Object State isGoal is invalid type");
                             }
                         }
-                    }
-                    perturbationList.add(perturbation);
-                    //System.out.println(perturbation);
+                        else{
+                            throw new IllegalArgumentException("JSON Object State UID is invalid type");
+                        }
 
-                } else {
-                    throw new IllegalArgumentException("JSON Object title does not exist");
+                    } else if (title.equalsIgnoreCase("Task")) {
+                        if (jsonObject.get("UID").getAsJsonPrimitive().isNumber() &&jsonObject.get("duration").getAsJsonPrimitive().isNumber()){
+                            int UID = jsonObject.get("UID").getAsInt();
+                            int duration = jsonObject.get("duration").getAsInt();
+                            Task task = new Task(UID, duration);
+
+                            if (jsonObject.get("requirements") != null) {
+                                JsonArray requirements = jsonObject.get("requirements").getAsJsonArray();
+                                for (JsonElement elem : requirements) {
+                                    JsonObject requirement = elem.getAsJsonObject();
+                                    if (requirement.get("name").getAsJsonPrimitive().isString() && requirement.get("operator").getAsJsonPrimitive().isString() ) {
+                                        String name = requirement.get("name").getAsString();
+                                        String operator = requirement.get("operator").getAsString();
+                                        JsonPrimitive value = requirement.get("value").getAsJsonPrimitive();
+                                        if (value.getAsJsonPrimitive().isBoolean()) {
+                                            task.addRequirement(name, value.getAsBoolean(), operator);
+                                        } else if (value.getAsJsonPrimitive().isNumber()) {
+                                            task.addRequirement(name, value.getAsDouble(), operator);
+                                        } else if (value.getAsJsonPrimitive().isString()) {
+                                            task.addRequirement(name, value.getAsString(), operator);
+                                        } else {
+                                            throw new IllegalArgumentException("Invalid Task requirement value type");
+                                        }
+                                    }
+                                    else {
+                                        throw new IllegalArgumentException("Invalid Task requirement name/operator type");
+                                    }
+
+                                }
+                            }
+                            if (jsonObject.get("resource_impacts") != null) {
+                                JsonArray resources = jsonObject.get("resource_impacts").getAsJsonArray();
+                                for (JsonElement elem : resources) {
+                                    JsonObject resource = elem.getAsJsonObject();
+                                    if (resource.get("name").getAsJsonPrimitive().isString() &&resource.get("value").getAsJsonPrimitive().isNumber()) {
+                                        String name = resource.get("name").getAsString();
+                                        Double value = resource.get("value").getAsDouble();
+                                        task.addResource(name, value);
+                                    }
+                                    else {
+                                        throw new IllegalArgumentException("Invalid Task Resource name/value type");
+                                    }
+                                }
+                            }
+
+                            if (jsonObject.get("property_impacts") != null) {
+                                JsonArray properties = jsonObject.get("property_impacts").getAsJsonArray();
+                                for (JsonElement elem : properties) {
+                                    JsonObject property = elem.getAsJsonObject();
+                                    if (property.get("name").getAsJsonPrimitive().isString()) {
+                                        String name = property.get("name").getAsString();
+                                        JsonPrimitive value = property.get("value").getAsJsonPrimitive();
+                                        if (value.getAsJsonPrimitive().isBoolean()) {
+                                            task.addProperty(name, value.getAsBoolean());
+                                        } else if (value.getAsJsonPrimitive().isNumber()) {
+                                            task.addProperty(name, value.getAsDouble());
+                                        } else if (value.getAsJsonPrimitive().isString()) {
+                                            task.addProperty(name, value.getAsString());
+                                        } else {
+                                            throw new IllegalArgumentException("Invalid Task Property value type");
+                                        }
+                                    }
+                                    else {
+                                        throw new IllegalArgumentException("Invalid Task Property name type");
+                                    }
+                                }
+                            }
+                            taskDictionary.addTask(task);
+                        }
+                        else{
+                            throw new IllegalArgumentException("JSON Object Task UID/Duration invalid type");
+                        }
+
+                    } else if (title.equalsIgnoreCase("Perturbation")) {
+                        Perturbation perturbation;
+                        if (jsonObject.get("time") == null) {
+                            perturbation = new Perturbation();
+                        } else if(jsonObject.get("time").getAsJsonPrimitive().isNumber()){
+                            long time = jsonObject.get("time").getAsLong();
+                            perturbation = new Perturbation(time);
+                        }
+                        else{
+                            throw new IllegalArgumentException("JSON Object Perturbation Time invalid type");
+                        }
+
+                        if (jsonObject.get("resources") != null) {
+                            JsonArray resources = jsonObject.get("resources").getAsJsonArray();
+                            for (JsonElement elem : resources) {
+                                JsonObject resource = elem.getAsJsonObject();
+                                if (resource.get("name").getAsJsonPrimitive().isString() &&resource.get("value").getAsJsonPrimitive().isNumber()) {
+                                    String name = resource.get("name").getAsString();
+                                    Double value = resource.get("value").getAsDouble();
+                                    perturbation.addResource(name, value);
+                                }
+                                else{
+                                    throw new IllegalArgumentException("JSON Object Perturbation Resource name/value invalid type");
+                                }
+                            }
+                        }
+                        if (jsonObject.get("properties") != null) {
+                            JsonArray properties = jsonObject.get("properties").getAsJsonArray();
+                            for (JsonElement elem : properties) {
+                                JsonObject property = elem.getAsJsonObject();
+                                if (property.get("name").getAsJsonPrimitive().isString()) {
+                                    String name = property.get("name").getAsString();
+                                    JsonPrimitive value = property.get("value").getAsJsonPrimitive();
+                                    if (value.getAsJsonPrimitive().isBoolean()) {
+                                        perturbation.addProperty(name, value.getAsBoolean());
+                                    } else if (value.getAsJsonPrimitive().isNumber()) {
+                                        perturbation.addProperty(name, value.getAsDouble());
+                                    } else if (value.getAsJsonPrimitive().isString()) {
+                                        perturbation.addProperty(name, value.getAsString());
+                                    } else {
+                                        throw new IllegalArgumentException("Invalid Perturbation Property Value type");
+                                    }
+                                }
+                                else {
+                                    throw new IllegalArgumentException("Invalid Perturbation Property Name type");
+                                }
+                            }
+                        }
+                        perturbationList.add(perturbation);
+
+                    } else {
+                        throw new IllegalArgumentException("JSON Object title does not exist");
+                    }
                 }
+                else{
+                    throw new IllegalArgumentException("JSON Object title is invalid type");
+                }
+
             }
 
         }
