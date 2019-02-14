@@ -6,7 +6,7 @@ import ai.promethean.DataModel.TaskDictionary;
 
 import java.util.ArrayList;
 
-public class AStar extends Algorithm {
+public class AStar implements Algorithm {
     private GraphManager graph;
     private Double ceiling;
 
