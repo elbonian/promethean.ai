@@ -43,8 +43,7 @@ public class Condition {
         return operator;
     }
 
-
-    public boolean evaluate(double val1){
+    public boolean evaluate(Double val1){
         if (this.operator.equals("=="))
         {
             return val1 == this.value;

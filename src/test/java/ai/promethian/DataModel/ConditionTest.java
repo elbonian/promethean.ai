@@ -12,16 +12,16 @@ public class ConditionTest {
     private Condition c2 = new Condition("Fuel", 300, ">=");
 
     @Test
-    void checkGreater() { assertTrue(c.evaluate(150));}
+    void checkGreater() { assertTrue(c.evaluate(150.0));}
     @Test
-    void checkGreaterFalse() { assertFalse(c.evaluate(50));}
+    void checkGreaterFalse() { assertFalse(c.evaluate(50.0));}
     @Test
-    void checkLess() { assertTrue(c1.evaluate(500));}
+    void checkLess() { assertTrue(c1.evaluate(500.0));}
     @Test
-    void checkGreaterEq() { assertTrue(c2.evaluate(500));}
+    void checkGreaterEq() { assertTrue(c2.evaluate(500.0));}
     @Test
-    void checkEQ() {assertTrue(c2.evaluate(300));}
+    void checkEQ() {assertTrue(c2.evaluate(300.0));}
     @Test
-    void checkNQ() {assertFalse(c2.evaluate(200));}
+    void checkNQ() {assertFalse(c2.evaluate(200.0));}
     
 }

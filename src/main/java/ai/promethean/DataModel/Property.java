@@ -3,9 +3,6 @@ package ai.promethean.DataModel;
 public abstract class Property {
     protected String name;
 
-    public Property(){
-        setName("");
-    }
     public Property(String _name){
         setName(_name);
     }
@@ -17,7 +14,6 @@ public abstract class Property {
     public String getName(){
         return this.name;
     }
-
 
     public abstract String toString();
 
