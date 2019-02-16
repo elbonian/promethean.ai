@@ -3,10 +3,6 @@ package ai.promethean.GraphManagement;
 import ai.promethean.DataModel.*;
 import ai.promethean.Planner.OptimizationWeightMap;
 
-import java.util.ArrayList;
-import java.util.Map;
-
-
 public class Heuristic {
 
     public static Double f_value(SystemState currentState, SystemState goalState, Double g_value) {
@@ -19,10 +15,8 @@ public class Heuristic {
 
     public static Double h_value(SystemState goalState, SystemState currentState) {
         Double squaredSum = 0.0;
-        ArrayList<String> currentPropertyNames  = currentState.getProperties().getKeys();
-        for (String currentPropertyName: currentPropertyNames) {
-            Property currentProperty = currentState.getProperty(currentPropertyName);
-            Property goalProperty = goalState.getProperty(currentPropertyName);
+        for (Property currentProperty : currentState.getProperties()) {
+            Property goalProperty = goalState.getProperty(currentProperty.getName());
             if (currentProperty instanceof NumericalProperty && goalProperty != null) {
                 squaredSum += (Math.pow(((NumericalProperty) currentProperty).getValue() - ((NumericalProperty) goalProperty).getValue(),2));
             } else if (goalProperty != null) {

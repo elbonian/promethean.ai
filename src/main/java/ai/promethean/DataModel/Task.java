@@ -59,9 +59,7 @@ public class Task {
     public Double calculateTaskWeight(OptimizationWeightMap map) {
         Double squaredSum = this.duration * map.getOptimizationWeightMap().get("Duration");
         // Translate the
-        ArrayList<String> propertyNames = this.propertyMap.getKeys();
-        for (String propertyName: propertyNames) {
-            Property property = this.propertyMap.getProperty(propertyName);
+        for (Property property : this.property_impacts) {
             if (property instanceof NumericalProperty) {
                 if (map.getOptimizationWeightMap().get(property.getName()) != null) {
                     squaredSum += (Math.pow(((NumericalProperty) property).getValue(),2)) * map.getOptimizationWeightMap().get(property.getName());
