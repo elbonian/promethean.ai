@@ -18,4 +18,8 @@ public class TaskDictionary {
     public Task findTask(Task t){
         return TaskDictionary.get(t.getUID());
     }
+
+    public Task getTask(Integer i) { return TaskDictionary.get(i); }
+
+    public int size() { return TaskDictionary.size(); }
 }
