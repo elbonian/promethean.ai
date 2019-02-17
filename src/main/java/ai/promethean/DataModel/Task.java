@@ -2,6 +2,10 @@ package ai.promethean.DataModel;
 
 import java.util.*;
 
+import ai.promethean.DataModel.Condition;
+import ai.promethean.Planner.OptimizationWeightMap;
+
+
 public class Task {
     private int UID;
     private int duration;
@@ -50,5 +54,23 @@ public class Task {
         property_impacts.add(new StringProperty(name, value));
     }
 
-    public void addRequirement(ai.promethean.DataModel.Condition c) { requirements.add(c); }
+    public void addRequirement(Condition c){ requirements.add(c);}
+
+    public Double calculateTaskWeight(OptimizationWeightMap map) {
+        Double squaredSum = this.duration * map.getOptimizationWeightMap().get("Duration");
+        // Translate the
+        for (Property property : this.property_impacts) {
+            if (property instanceof NumericalProperty) {
+                if (map.getOptimizationWeightMap().get(property.getName()) != null) {
+                    squaredSum += (Math.pow(((NumericalProperty) property).getValue(),2)) * map.getOptimizationWeightMap().get(property.getName());
+                } else {
+                    squaredSum += (Math.pow(((NumericalProperty) property).getValue(), 2));
+                }
+            } else {
+                squaredSum += 1.0;
+            }
+        }
+        return Math.sqrt(squaredSum);
+    }
+
 }
