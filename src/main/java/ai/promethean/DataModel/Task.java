@@ -6,13 +6,12 @@ public class Task {
     private int UID;
     private int duration;
 
-    private ArrayList<Resource> resource_impacts=new ArrayList<Resource>();
     private ArrayList<Property> property_impacts=new ArrayList<Property>();
     private ArrayList<Condition> requirements=new ArrayList<Condition>();
 
     public Task(int _UID, int _duration){
         setUID(_UID);
-        setDuation(_duration);
+        setDuration(_duration);
     }
 
     public void  setUID(int _UID){
@@ -23,7 +22,7 @@ public class Task {
         return this.UID;
     }
 
-    public void setDuation(int _duration){
+    public void setDuration(int _duration){
         this.duration=_duration;
     }
 
@@ -31,9 +30,6 @@ public class Task {
         return this.duration;
     }
 
-    public ArrayList<Resource> getResource_impacts() {
-        return resource_impacts;
-    }
 
     public ArrayList<Property> getProperty_impacts() {
         return property_impacts;
@@ -42,14 +38,6 @@ public class Task {
         return requirements;
     }
 
-    public Resource getResource(String name){
-        for(Resource r: resource_impacts){
-            if(r.getName().equals(name)){
-                return r;
-            }
-        }
-        return null;
-    }
 
     public Property getProperty(String name){
         for(Property p: property_impacts){
@@ -67,13 +55,6 @@ public class Task {
             }
         }
         return null;
-    }
-
-    public void addResource(Resource r){
-        resource_impacts.add(r);
-    }
-
-    public void addResource(String name, Double value){resource_impacts.add(new Resource(name,value));
     }
 
     public void addProperty(Property p){
@@ -111,7 +92,6 @@ public class Task {
     public String toString() {
         return "Task UID: " + this.UID + "\n Duration: " + this.duration
                 + "\n Requirements: " + requirements
-                + "\n Properties: " + property_impacts
-                + "\n Resources: " + resource_impacts;
+                + "\n Properties: " + property_impacts;
     }
 }

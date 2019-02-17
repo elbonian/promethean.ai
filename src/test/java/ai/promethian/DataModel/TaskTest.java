@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TaskTest {
     private Task t1= new Task(1, 10);
-    private Resource r= new Resource("Time",1000.0);
     private NumericalProperty np= new NumericalProperty("Altitude", 1000.0);
     private BooleanProperty bp= new BooleanProperty("DoorOpen", false);
     private BooleanCondition bc= new BooleanCondition("DoorOpen", "==", false);
@@ -14,16 +13,6 @@ public class TaskTest {
     @Test
     void checkEquals() { assertEquals(t1.getDuration(),(10));}
 
-    @Test
-    void checkGetResource(){
-        t1.addResource(r);
-        assertTrue(t1.getResource("Time").getValue()==1000.0);
-    }
-
-    @Test
-    void checkGetNullResource(){
-        assertTrue(t1.getResource("Time")==null);
-    }
 
     @Test
     void checkGetProperty(){

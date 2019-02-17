@@ -18,12 +18,6 @@
                         "$ref": "../Condition_schema.json#/Condition"
                     }
                 },
-                "resource_impacts": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "../Resource_schema.json#/Resource"
-                    }
-                },
                 "property_impacts": {
                     "type": "array",
                     "items": {

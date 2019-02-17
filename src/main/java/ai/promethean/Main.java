@@ -1,12 +1,8 @@
 package ai.promethean;
-import ai.promethean.DataModel.*;
 import ai.promethean.Parser.Parser;
-import ai.promethean.Parser.ValidateSchema;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 
 import java.io.IOException;
-import ai.promethean.Parser.ValidationUtils;
-import java.io.File;
 import java.util.ArrayList;
 
 
@@ -21,17 +17,6 @@ public class Main {
         for(Object o: objects){
             System.out.println(o);
         }
-
-       // Parser p= new Parser("C:\\Users\\Sam\\Dropbox\\CSCI4308_Senior_Projects\\promethean.ai\\JSON input\\InputFiles\\All.json", true);
-        //ArrayList<Object> objects = p.parse();
-        //System.out.println(objects);
-        //System.out.println(objects.get(0));
-        //System.out.println(objects.get(11));
-
-        //String input = "C:\\Users\\Sam\\Dropbox\\CSCI4308_Senior_Projects\\promethean.ai\\JSON input\\InputFiles\\Perturbations1.json";
-        //String schema = "C:\\Users\\Sam\\Dropbox\\CSCI4308_Senior_Projects\\promethean.ai\\JSON input\\Schemas\\Perturbation_schema.json";
-        //ValidateSchema v = new ValidateSchema(input, schema);
-        //v.validate();
 
     }
 }

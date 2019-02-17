@@ -12,12 +12,6 @@
                 "isGoal": {
                     "type": "boolean"
                 },
-                "resources": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "../Resource_schema.json#/Resource"
-                    }
-                },
                 "properties": {
                     "type": "array",
                     "items": {

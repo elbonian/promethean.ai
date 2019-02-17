@@ -76,21 +76,6 @@ public class Parser {
                                 SystemState systemState;
                                 systemState = new SystemState(UID, isGoal);
 
-                                if (jsonObject.get("resources") != null) {
-                                    JsonArray resources = jsonObject.get("resources").getAsJsonArray();
-                                    for (JsonElement elem : resources) {
-                                        JsonObject resource = elem.getAsJsonObject();
-                                        if (resource.get("name").getAsJsonPrimitive().isString() &&resource.get("value").getAsJsonPrimitive().isNumber() ) {
-                                            String name = resource.get("name").getAsString();
-                                            Double value = resource.get("value").getAsDouble();
-                                            systemState.addResource(name, value);
-                                        }
-                                        else {
-                                            throw new IllegalArgumentException("JSON Object State Resource is invalid type");
-                                        }
-                                    }
-                                }
-
                                 if (jsonObject.get("properties") != null) {
                                     JsonArray properties = jsonObject.get("properties").getAsJsonArray();
                                     for (JsonElement elem : properties) {
@@ -153,20 +138,6 @@ public class Parser {
 
                                 }
                             }
-                            if (jsonObject.get("resource_impacts") != null) {
-                                JsonArray resources = jsonObject.get("resource_impacts").getAsJsonArray();
-                                for (JsonElement elem : resources) {
-                                    JsonObject resource = elem.getAsJsonObject();
-                                    if (resource.get("name").getAsJsonPrimitive().isString() &&resource.get("value").getAsJsonPrimitive().isNumber()) {
-                                        String name = resource.get("name").getAsString();
-                                        Double value = resource.get("value").getAsDouble();
-                                        task.addResource(name, value);
-                                    }
-                                    else {
-                                        throw new IllegalArgumentException("Invalid Task Resource name/value type");
-                                    }
-                                }
-                            }
 
                             if (jsonObject.get("property_impacts") != null) {
                                 JsonArray properties = jsonObject.get("property_impacts").getAsJsonArray();
@@ -208,20 +179,6 @@ public class Parser {
                             throw new IllegalArgumentException("JSON Object Perturbation Time invalid type");
                         }
 
-                        if (jsonObject.get("resources") != null) {
-                            JsonArray resources = jsonObject.get("resources").getAsJsonArray();
-                            for (JsonElement elem : resources) {
-                                JsonObject resource = elem.getAsJsonObject();
-                                if (resource.get("name").getAsJsonPrimitive().isString() &&resource.get("value").getAsJsonPrimitive().isNumber()) {
-                                    String name = resource.get("name").getAsString();
-                                    Double value = resource.get("value").getAsDouble();
-                                    perturbation.addResource(name, value);
-                                }
-                                else{
-                                    throw new IllegalArgumentException("JSON Object Perturbation Resource name/value invalid type");
-                                }
-                            }
-                        }
                         if (jsonObject.get("properties") != null) {
                             JsonArray properties = jsonObject.get("properties").getAsJsonArray();
                             for (JsonElement elem : properties) {
