@@ -114,17 +114,17 @@
   {
     "title": "Optimization",
     "name": "wheelDamage",
-    "isMinimum":true
+    "type":"min"
   },
   {
     "title": "Optimization",
     "name": "time",
-    "isMinimum":true
+    "type":"Minimization"
   },
   {
     "title": "Optimization",
     "name": "speed",
-    "isMinimum":false
+    "type":"Maximize"
   },
 
   {

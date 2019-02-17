@@ -12,13 +12,13 @@
                 "name": {
                     "type": "string"
                 },
-                "isMinimum": {
-                    "type": "boolean"
+                "type": {
+                    "type": "string"
                 }
             },
             "required": [
                 "title",
-                "isMinimum",
+                "type",
                 "name"
             ],
             "title": "Optimization"

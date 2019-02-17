@@ -55,13 +55,16 @@ public class Parser {
                     if (title.equalsIgnoreCase("Optimization")) {
                         if (jsonObject.get("name").getAsJsonPrimitive().isString()) {
                             String name = jsonObject.get("name").getAsString();
-                            if (jsonObject.get("isMinimum").getAsJsonPrimitive().isBoolean()) {
-                                Boolean isMin = jsonObject.get("isMinimum").getAsBoolean();
-                                Optimization o = new Optimization(name, isMin);
+                            if (jsonObject.get("type").getAsString().toLowerCase().contains("min")) {
+                                Optimization o = new Optimization(name, true);
                                 optimizationList.addOptimization(o);
                             }
+                             else  if (jsonObject.get("type").getAsString().toLowerCase().contains("max")) {
+                                  Optimization o = new Optimization(name, false);
+                                    optimizationList.addOptimization(o);
+                                 }
                             else{
-                                throw new IllegalArgumentException("JSON Object isMinimum is invalid type");
+                                throw new IllegalArgumentException("JSON Object Optimization type is invalid (must be a minimum or maximum)");
                             }
                         }
                         else{

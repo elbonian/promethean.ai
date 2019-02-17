@@ -1,0 +1,97 @@
+{
+  "intialState": {
+    "properties": [
+      {"name": "speed", "value": 10.0},
+      {"name": "doorOpen", "value": true},
+      {"name": "Fuel","value":30.0},
+      {"name": "wheelHealth", "value":20.0}
+    ]
+  },
+  "goalState": {
+    "properties": [
+      {"name": "speed", "value": 10.0, "inequality": "<="},
+      {"name": "wheelsDown", "value": true, "inequality": "=="},
+      {"name": "Fuel","value":70.0, "inequality": ">="},
+      {"name": "wheelHealth", "value":40.0, "inequality": ">"}
+    ]
+  },
+  "tasks": [
+    {
+      "duration": 20,
+      "requirements":[
+        {"name": "Fuel","value":60.0, "operator": ">"},
+        {"name": "Altitude", "value":100.0, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "Altitude", "type": "delta","value": -40.0},
+        {"name": "Fuel","type": "delta", "value":-60.0}
+      ]
+    },
+    {
+      "duration": 10,
+      "requirements":[
+        {"name": "Fuel","value":30.0, "operator": ">="},
+        {"name": "doorOpen", "value":0.0, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "doorOpen", "type": "assignment", "value":true},
+        {"name": "Fuel", "type": "delta", "value":-30.0}
+      ]
+    },
+    {
+      "duration": 100,
+      "requirements":[
+        {"name": "wheelHealth","value":30.0, "operator": ">="},
+        {"name": "Speed", "value":20.0, "operator": "<"}
+      ],
+      "property_impacts": [
+        {"name": "Speed", "type":"assignment", "value":10.0},
+        {"name": "wheelHealth", "type": "delta", "value":-10.0}
+      ]
+    }
+  ],
+  "optimizations": [
+    {
+      "name": "wheelHealth",
+      "type": "maximization"
+    },
+    {
+      "name": "time",
+      "type": "minimization"
+    },
+    {
+      "name": "energy",
+      "isMinimum": "minimization"
+    }
+  ],
+  "perturbations": [
+    {
+      "time": 320,
+      "property_impacts": [
+        {"name": "Altitude", "type": "delta", "value":-10.0},
+        {"name": "Fuel", "type": "delta", "value":-30.0}
+      ]
+    },
+    {
+      "time": 1300,
+      "property_impacts": [
+        {"name": "speed", "type": "assignment", "value":5.0},
+        {"name": "wheelHealth", "type": "delta", "value":-5.0}
+      ]
+    },
+    {
+      "time": 180,
+      "property_impacts": [
+        {"name": "doorOpen", "type": "assignment", "value":false},
+        {"name": "wheelHealth", "type": "delta", "value":-5.0}
+      ]
+    },
+    {
+      "time": 320,
+      "property_impacts": [
+        {"name": "speed", "type": "delta","value":6.0},
+        {"name": "Fuel", "type": "delta", "value":10.0}
+      ]
+    }
+  ]
+}
