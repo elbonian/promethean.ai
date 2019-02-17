@@ -9,9 +9,6 @@
                 "title": {
                     "type": "string"
                 },
-                "UID": {
-                    "type": "integer"
-                },
                 "duration": {
                     "type": "integer"
                 },
@@ -36,8 +33,7 @@
             },
             "required": [
                 "title",
-                "duration",
-                "UID"
+                "duration"
             ],
             "title": "Task"
         }

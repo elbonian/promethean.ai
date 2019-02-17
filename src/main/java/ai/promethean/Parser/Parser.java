@@ -71,17 +71,11 @@ public class Parser {
                     } else if (title.equalsIgnoreCase("State")) {
                         if (jsonObject.get("UID").getAsJsonPrimitive().isNumber()) {
                             int UID = jsonObject.get("UID").getAsInt();
-                                JsonElement time = jsonObject.get("time");
                             if (jsonObject.get("isGoal").getAsJsonPrimitive().isBoolean()) {
                                 boolean isGoal = jsonObject.get("isGoal").getAsBoolean();
                                 SystemState systemState;
-                                if (time == null) {
-                                    systemState = new SystemState(UID, isGoal);
-                                } else if (time.getAsJsonPrimitive().isNumber()) {
-                                    systemState = new SystemState(UID, time.getAsLong(), isGoal);
-                                } else {
-                                    throw new IllegalArgumentException("JSON Object State time is invalid type");
-                                }
+                                systemState = new SystemState(UID, isGoal);
+
                                 if (jsonObject.get("resources") != null) {
                                     JsonArray resources = jsonObject.get("resources").getAsJsonArray();
                                     for (JsonElement elem : resources) {
@@ -207,7 +201,7 @@ public class Parser {
                         if (jsonObject.get("time") == null) {
                             perturbation = new Perturbation();
                         } else if(jsonObject.get("time").getAsJsonPrimitive().isNumber()){
-                            long time = jsonObject.get("time").getAsLong();
+                            int time = jsonObject.get("time").getAsInt();
                             perturbation = new Perturbation(time);
                         }
                         else{

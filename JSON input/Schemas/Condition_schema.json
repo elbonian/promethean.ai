@@ -6,9 +6,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "title": {
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -16,11 +13,14 @@
                     "type": "string"
                 },
                 "value": {
-                    "type": "number"
+                    "type":  [
+                        "boolean",
+                        "string",
+                        "number"
+                        ]
                 }
             },
             "required": [
-                "title",
                 "name",
                 "operator",
                 "value"

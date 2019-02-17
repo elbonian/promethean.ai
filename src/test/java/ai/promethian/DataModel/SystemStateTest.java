@@ -16,7 +16,7 @@ public class SystemStateTest {
     void checkUID(){assertTrue(s.getUID()==1);}
 
     @Test
-    void checkTimeExists(){assertTrue(s.getTimeStamp()!=null);}
+    void checkTimeExists(){assertTrue(s.getTime()==0);}
 
     @Test
     void checkResource(){assertTrue(s.getResources().size()==0);}

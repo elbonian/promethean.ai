@@ -1,41 +1,42 @@
 package ai.promethean.DataModel;
-import java.sql.Time;
 import java.util.*;
 
 public class SystemState {
     private int UID;
-    private Time timeStamp;
+    private int time;
     private ArrayList<Resource> resources= new ArrayList<Resource>();
     private ArrayList<Property> properties= new ArrayList<Property>();
 
     //Members for graph-search in planning
     private SystemState previousState;
     private Task previousTask;
-    private int gValue=-1;
+    private double gValue=-1;
 
     public SystemState(int _UID){
         setUID(_UID);
-        timeStamp= new Time(System.currentTimeMillis());
     }
 
-    public SystemState(int _UID, long time){
+    public SystemState(int _UID, int time){
         setUID(_UID);
-        timeStamp= new Time(time);
+        setTime(time);
+    }
+
+    public void setTime(int time) {
+        this.time = time;
     }
 
     public SystemState(int _UID, boolean isGoal){
         setUID(_UID);
-        timeStamp= new Time(System.currentTimeMillis());
         if(!isGoal){
-            setgValue(0);
+            setgValue(0.0);
         }
     }
 
-    public SystemState(int _UID, long time, boolean isGoal){
+    public SystemState(int _UID, int time, boolean isGoal){
         setUID(_UID);
-        timeStamp= new Time(time);
+        setTime(time);
         if(!isGoal){
-            setgValue(0);
+            setgValue(0.0);
         }
     }
 
@@ -46,15 +47,15 @@ public class SystemState {
         return UID;
     }
 
-    public Time getTimeStamp(){
-        return timeStamp;
+    public int getTime(){
+        return time;
     }
 
-    public void setgValue(int gValue) {
+    public void setgValue(double gValue) {
         this.gValue = gValue;
     }
 
-    public int getgValue() {
+    public double getgValue() {
         return gValue;
     }
 
@@ -164,7 +165,7 @@ public class SystemState {
 
     @Override
     public String toString() {
-        return "System State UID: " + this.UID + "\n Timestamp: " + this.timeStamp
+        return "System State UID: " + this.UID + "\n Time: " + this.time
                 + "\n G-Value: " + gValue
                 + "\n Properties: " + properties
                 + "\n Resources: " + resources;

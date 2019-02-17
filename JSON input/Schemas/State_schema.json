@@ -9,12 +9,6 @@
                 "title": {
                     "type": "string"
                 },
-                "UID": {
-                    "type": "integer"
-                },
-                "time": {
-                    "type": "integer"
-                },
                 "isGoal": {
                     "type": "boolean"
                 },
@@ -33,7 +27,6 @@
             },
             "required": [
                 "title",
-                "UID",
                 "isGoal"
             ],
             "title": "State"

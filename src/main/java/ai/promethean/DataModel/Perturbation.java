@@ -5,19 +5,23 @@ import java.util.*;
 
 
 public class Perturbation {
-    private Time timeStamp;
+    private int time;
     private ArrayList<Resource> resources= new ArrayList<Resource>();
     private ArrayList<Property> properties= new ArrayList<Property>();
 
     public Perturbation(){
-        timeStamp= new Time(System.currentTimeMillis());
+        setTime(0);
     }
-    public Perturbation(long time){
-        timeStamp= new Time(time);
+    public Perturbation(int time){
+        setTime(time);
     }
 
-    public Time getTimeStamp() {
-        return timeStamp;
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public int getTime() {
+        return time;
     }
 
     public ArrayList<Property> getProperties() {
@@ -79,7 +83,7 @@ public class Perturbation {
 
     @Override
     public String toString() {
-        return "Pertubation Timestamp: " + this.timeStamp
+        return "Pertubation Time: " + this.time
                 + "\n Property Changes: " + properties
                 + "\n Resource Changes: " + resources;
     }

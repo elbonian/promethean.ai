@@ -6,9 +6,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "title": {
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -21,7 +18,6 @@
                 }
             },
             "required": [
-                "title",
                 "name",
                 "value"
             ],
