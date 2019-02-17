@@ -13,7 +13,7 @@ public class Heuristic {
         return currentTask.calculateTaskWeight(map) + currentState.getgValue();
     }
 
-    public static Double h_value(SystemState goalState, SystemState currentState) {
+    private static Double h_value(SystemState goalState, SystemState currentState) {
         Double squaredSum = 0.0;
         for (Property currentProperty : currentState.getProperties()) {
             Property goalProperty = goalState.getProperty(currentProperty.getName());

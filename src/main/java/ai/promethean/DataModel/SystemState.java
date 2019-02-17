@@ -10,7 +10,7 @@ public class SystemState {
     //Members for graph-search in planning
     private SystemState previousState;
     private Task previousTask;
-    private int gValue=-1;
+    private Double gValue = 0.0;
 
     public SystemState(int _UID){
         setUID(_UID);
@@ -22,20 +22,32 @@ public class SystemState {
         timeStamp= new Time(time);
     }
 
-    public SystemState(int _UID, boolean isGoal){
+    public SystemState(int _UID, boolean isGoal, Double gVal){
         setUID(_UID);
         timeStamp= new Time(System.currentTimeMillis());
         if(!isGoal){
-            setgValue(0);
+            setgValue(0.0);
         }
     }
 
-    public SystemState(int _UID, long time, boolean isGoal){
+    public SystemState(int _UID, long time, boolean isGoal, Double gVal){
         setUID(_UID);
         timeStamp= new Time(time);
         if(!isGoal){
-            setgValue(0);
+            setgValue(0.0);
         }
+    }
+
+    public SystemState(int _UID, Double gValue){
+        setUID(_UID);
+        timeStamp= new Time(System.currentTimeMillis());
+        setgValue(gValue);
+    }
+
+    public SystemState(int _UID, long time, Double gVal){
+        setUID(_UID);
+        timeStamp= new Time(time);
+        setgValue(gVal);
     }
 
     public void setUID(int _UID){
@@ -50,11 +62,11 @@ public class SystemState {
         return timeStamp;
     }
 
-    public void setgValue(int gValue) {
+    public void setgValue(Double gValue) {
         this.gValue = gValue;
     }
 
-    public int getgValue() {
+    public Double getgValue() {
         return gValue;
     }
 
