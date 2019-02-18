@@ -5,7 +5,7 @@ import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
 import java.util.ArrayList;
 
-public class TestConstants {
+public class PropertyTestConstants {
     public static NumericalProperty getNumericProperty1() {
         return new NumericalProperty("NumProperty1",1.2343);
     }
@@ -74,44 +74,5 @@ public class TestConstants {
         return returnList;
     }
 
-    public static SystemState getFullState() {
-        SystemState returnState = new SystemState(1);
-        for (Property property: getAllTestProperties()) {
-            returnState.addProperty(property);
-        }
-        return returnState;
-    }
 
-    public static SystemState getNumericState() {
-        SystemState returnState = new SystemState(1);
-        for (Property property: getAllNumericProperties()) {
-            returnState.addProperty(property);
-        }
-        return returnState;
-    }
-
-    public static SystemState getBooleanState() {
-        SystemState returnState = new SystemState(1);
-        for (Property property: getAllBooleanProperties()) {
-            returnState.addProperty(property);
-        }
-        return returnState;
-    }
-
-    public static SystemState getStringState() {
-        SystemState returnState = new SystemState(1);
-        for (Property property: getAllStringProperties()) {
-            returnState.addProperty(property);
-        }
-        return returnState;
-    }
-
-    public static ArrayList<SystemState> getAllTestStates() {
-        ArrayList<SystemState> returnList = new ArrayList<>();
-        returnList.add(getFullState());
-        returnList.add(getNumericState());
-        returnList.add(getBooleanState());
-        returnList.add(getStringState());
-        return returnList;
-    }
 }

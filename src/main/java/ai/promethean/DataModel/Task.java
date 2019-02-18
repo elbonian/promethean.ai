@@ -50,5 +50,7 @@ public class Task {
         property_impacts.add(new StringProperty(name, value));
     }
 
+    public void addProperty(Property property) { property_impacts.add(property); }
+
     public void addRequirement(ai.promethean.DataModel.Condition c) { requirements.add(c); }
 }
