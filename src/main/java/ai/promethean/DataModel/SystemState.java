@@ -87,14 +87,24 @@ public class SystemState {
         return previousTask;
     }
 
+    public void addProperty(String name, Boolean value, boolean isDelta) {
+        properties.addProperty(name, value, isDelta);
+    }
+
     public void addProperty(String name, Boolean value) {
         properties.addProperty(name, value);
+    }
+
+    public void addProperty(String name, Double value, boolean isDelta) {
+        properties.addProperty(name, value,isDelta);
     }
 
     public void addProperty(String name, Double value) {
         properties.addProperty(name, value);
     }
-
+    public void addProperty(String name, String value, boolean isDelta) {
+        properties.addProperty(name, value, isDelta);
+    }
     public void addProperty(String name, String value) {
         properties.addProperty(name, value);
     }

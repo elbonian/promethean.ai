@@ -53,6 +53,18 @@ public class Perturbation {
     public void addProperty(String name, String value){
         property_impacts.add(new StringProperty(name, value));
     }
+    public void addProperty(String name, Boolean value, boolean isDelta){
+        property_impacts.add(new BooleanProperty(name, value,isDelta));
+    }
+
+    public void addProperty(String name, Double value, boolean isDelta){
+        property_impacts.add(new NumericalProperty(name, value,isDelta));
+    }
+
+    public void addProperty(String name, String value, boolean isDelta){
+        property_impacts.add(new StringProperty(name, value,isDelta));
+    }
+
     public void sortProperties(){
         Collections.sort(property_impacts, new SortbyProperty());
     }

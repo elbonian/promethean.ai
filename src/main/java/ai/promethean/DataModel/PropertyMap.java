@@ -12,6 +12,14 @@ public class PropertyMap {
      * @param   name    The name of the property being added
      * @param   value   The boolean value associated with the propertyZ
      */
+    public void addProperty(String name, Boolean value, boolean isDelta) {
+        Property new_prop = new BooleanProperty(name, value,isDelta);
+        if(property_map.containsKey(name)) {
+            property_map.replace(name, new_prop);
+        } else {
+            property_map.put(name, new_prop);
+        }
+    }
     public void addProperty(String name, Boolean value) {
         Property new_prop = new BooleanProperty(name, value);
         if(property_map.containsKey(name)) {
@@ -23,6 +31,14 @@ public class PropertyMap {
 
     /* Add a Property with a Double value
      */
+    public void addProperty(String name, Double value, boolean isDelta) {
+        Property new_prop = new NumericalProperty(name, value, isDelta);
+        if(property_map.containsKey(name)) {
+            property_map.replace(name, new_prop);
+        } else {
+            property_map.put(name, new_prop);
+        }
+    }
     public void addProperty(String name, Double value) {
         Property new_prop = new NumericalProperty(name, value);
         if(property_map.containsKey(name)) {
@@ -34,6 +50,14 @@ public class PropertyMap {
 
     /* Add a Property with a String value
      */
+    public void addProperty(String name, String value, boolean isDelta) {
+        Property new_prop = new StringProperty(name, value, isDelta);
+        if(property_map.containsKey(name)) {
+            property_map.replace(name, new_prop);
+        } else {
+            property_map.put(name, new_prop);
+        }
+    }
     public void addProperty(String name, String value) {
         Property new_prop = new StringProperty(name, value);
         if(property_map.containsKey(name)) {
@@ -92,7 +116,10 @@ public class PropertyMap {
     public String toString() {
         String printOut="";
         for(Property p : property_map.values()){
-            printOut=printOut + "\n Name: "+ p.getName() + "Value: " + p.getValue();
+            printOut=printOut + "\n Name: "+ p.getName();
+            if(p.getIsDelta()) printOut=printOut+" Type: Delta";
+            else printOut=printOut+" Type: Assignment";
+            printOut=printOut+ " Value: " + p.getValue();
         }
         return printOut;
     }

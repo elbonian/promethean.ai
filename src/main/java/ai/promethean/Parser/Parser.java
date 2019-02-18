@@ -85,13 +85,23 @@ public class Parser {
                                         JsonObject property = elem.getAsJsonObject();
                                         if (property.get("name").getAsJsonPrimitive().isString()){
                                             String name = property.get("name").getAsString();
+                                            boolean isDelta;
+                                            if (property.get("type") ==null || property.get("type").getAsString().toLowerCase().contains("assign")) {
+                                                isDelta=false;
+                                            }
+                                            else if (property.get("type").getAsString().toLowerCase().contains("delta")) {
+                                                isDelta=true;
+                                            }
+                                            else {
+                                                throw new IllegalArgumentException("Invalid property type (must be an assignment or delta)");
+                                            }
                                             JsonPrimitive value = property.get("value").getAsJsonPrimitive();
                                             if (value.getAsJsonPrimitive().isBoolean()) {
-                                                systemState.addProperty(name, value.getAsBoolean());
+                                                systemState.addProperty(name, value.getAsBoolean(), isDelta);
                                             } else if (value.getAsJsonPrimitive().isNumber()) {
-                                                systemState.addProperty(name, value.getAsDouble());
+                                                systemState.addProperty(name, value.getAsDouble(),isDelta);
                                             } else if (value.getAsJsonPrimitive().isString()) {
-                                                systemState.addProperty(name, value.getAsString());
+                                                systemState.addProperty(name, value.getAsString(),isDelta);
                                             } else {
                                                 throw new IllegalArgumentException("Invalid property type");
                                             }
@@ -148,15 +158,25 @@ public class Parser {
                                     JsonObject property = elem.getAsJsonObject();
                                     if (property.get("name").getAsJsonPrimitive().isString()) {
                                         String name = property.get("name").getAsString();
+                                        boolean isDelta;
+                                        if (property.get("type") ==null || property.get("type").getAsString().toLowerCase().contains("assign")) {
+                                            isDelta=false;
+                                        }
+                                        else if (property.get("type").getAsString().toLowerCase().contains("delta")) {
+                                            isDelta=true;
+                                        }
+                                        else {
+                                            throw new IllegalArgumentException("Invalid property type (must be an assignment or delta)");
+                                        }
                                         JsonPrimitive value = property.get("value").getAsJsonPrimitive();
                                         if (value.getAsJsonPrimitive().isBoolean()) {
-                                            task.addProperty(name, value.getAsBoolean());
+                                            task.addProperty(name, value.getAsBoolean(), isDelta);
                                         } else if (value.getAsJsonPrimitive().isNumber()) {
-                                            task.addProperty(name, value.getAsDouble());
+                                            task.addProperty(name, value.getAsDouble(),isDelta);
                                         } else if (value.getAsJsonPrimitive().isString()) {
-                                            task.addProperty(name, value.getAsString());
+                                            task.addProperty(name, value.getAsString(),isDelta);
                                         } else {
-                                            throw new IllegalArgumentException("Invalid Task Property value type");
+                                            throw new IllegalArgumentException("Invalid property type");
                                         }
                                     }
                                     else {
@@ -188,15 +208,25 @@ public class Parser {
                                 JsonObject property = elem.getAsJsonObject();
                                 if (property.get("name").getAsJsonPrimitive().isString()) {
                                     String name = property.get("name").getAsString();
+                                    boolean isDelta;
+                                    if (property.get("type") ==null || property.get("type").getAsString().toLowerCase().contains("assign")) {
+                                        isDelta=false;
+                                    }
+                                    else if (property.get("type").getAsString().toLowerCase().contains("delta")) {
+                                        isDelta=true;
+                                    }
+                                    else {
+                                        throw new IllegalArgumentException("Invalid property type (must be an assignment or delta)");
+                                    }
                                     JsonPrimitive value = property.get("value").getAsJsonPrimitive();
                                     if (value.getAsJsonPrimitive().isBoolean()) {
-                                        perturbation.addProperty(name, value.getAsBoolean());
+                                        perturbation.addProperty(name, value.getAsBoolean(), isDelta);
                                     } else if (value.getAsJsonPrimitive().isNumber()) {
-                                        perturbation.addProperty(name, value.getAsDouble());
+                                        perturbation.addProperty(name, value.getAsDouble(),isDelta);
                                     } else if (value.getAsJsonPrimitive().isString()) {
-                                        perturbation.addProperty(name, value.getAsString());
+                                        perturbation.addProperty(name, value.getAsString(),isDelta);
                                     } else {
-                                        throw new IllegalArgumentException("Invalid Perturbation Property Value type");
+                                        throw new IllegalArgumentException("Invalid property type");
                                     }
                                 }
                                 else {

@@ -75,6 +75,7 @@ public class SystemStateTest {
     void checkGetPropertyNull(){
         assertTrue(s.getProperty("Altitude")==null);
     }
+
     
 
 }
