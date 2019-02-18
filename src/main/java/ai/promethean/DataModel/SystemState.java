@@ -7,6 +7,11 @@ public class SystemState {
     private Time timeStamp;
     private PropertyMap properties = new PropertyMap();
 
+    //Members for graph-search in planning
+    private SystemState previousState;
+    private Task previousTask;
+    private Double gValue = 0.0;
+
     public SystemState(int _UID){
         setUID(_UID);
         timeStamp= new Time(System.currentTimeMillis());
@@ -15,6 +20,34 @@ public class SystemState {
     public SystemState(int _UID, long time){
         setUID(_UID);
         timeStamp= new Time(time);
+    }
+
+    public SystemState(int _UID, boolean isGoal, Double gVal){
+        setUID(_UID);
+        timeStamp= new Time(System.currentTimeMillis());
+        if(!isGoal){
+            setgValue(0.0);
+        }
+    }
+
+    public SystemState(int _UID, long time, boolean isGoal, Double gVal){
+        setUID(_UID);
+        timeStamp= new Time(time);
+        if(!isGoal){
+            setgValue(0.0);
+        }
+    }
+
+    public SystemState(int _UID, Double gValue){
+        setUID(_UID);
+        timeStamp= new Time(System.currentTimeMillis());
+        setgValue(gValue);
+    }
+
+    public SystemState(int _UID, long time, Double gVal){
+        setUID(_UID);
+        timeStamp= new Time(time);
+        setgValue(gVal);
     }
 
     public void setUID(int _UID){
@@ -29,12 +62,38 @@ public class SystemState {
         return timeStamp;
     }
 
+    public void setgValue(Double gValue) {
+        this.gValue = gValue;
+    }
+
+    public Double getgValue() {
+        return gValue;
+    }
+
     public ArrayList<Property> getProperties() {
         ArrayList<Property> property_list = new ArrayList<>();
         for (String key : properties.getKeys()) {
             property_list.add(properties.getProperty(key));
         }
         return property_list;
+    }
+
+
+    public void setPreviousState(SystemState previousState) {
+        this.previousState = previousState;
+    }
+
+    public SystemState getPreviousState() {
+
+        return previousState;
+    }
+
+    public void setPreviousTask(Task previousTask) {
+        this.previousTask = previousTask;
+    }
+
+    public Task getPreviousTask() {
+        return previousTask;
     }
 
     public PropertyMap getPropertyMap() { return properties; }
@@ -76,6 +135,7 @@ public class SystemState {
     @Override
     public String toString() {
         return "System State UID: " + this.UID + "\n Timestamp: " + this.timeStamp
+                + "\n G-Value: " + gValue
                 + "\n Properties: " + properties;
     }
 }
