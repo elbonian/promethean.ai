@@ -5,7 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class TaskTest {
-    private Task t1= new Task(1, 10);
+    private Task t1= new Task( 10);
+    private Task t2= new Task(100);
     private NumericalProperty np= new NumericalProperty("Altitude", 1000.0);
     private BooleanProperty bp= new BooleanProperty("DoorOpen", false);
     private BooleanCondition bc= new BooleanCondition("DoorOpen", "==", false);

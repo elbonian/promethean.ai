@@ -26,7 +26,7 @@ public class TaskDictionary {
     public String toString() {
         String printOut= "Task Dictionary: \n";
         for(Task t: TaskDictionary.values()){
-            printOut=printOut+ t;
+            printOut=printOut+ t + "\n";
         }
         return printOut;
     }

@@ -1,7 +1,6 @@
 [
   {
     "title": "State",
-    "UID": 1,
     "time": 1440,
     "isGoal": false,
     "properties": [
@@ -22,7 +21,6 @@
 
   {
     "title": "State",
-    "UID": 3,
     "time": 1440,
     "isGoal": false,
     "properties": [
@@ -33,7 +31,6 @@
 
   {
     "title": "State",
-    "UID": 4,
     "time": 1440,
     "isGoal": true,
     "properties": [
@@ -44,7 +41,6 @@
 
   {
     "title": "task",
-    "UID": 1,
     "duration": 20,
     "requirements":[
       {"name": "Fuel","value":60.0, "inequality": ">"},
@@ -59,7 +55,6 @@
 
   {
     "title": "task",
-    "UID": 2,
     "duration": 10,
     "requirements":[
       {"name": "Fuel","value":30.0, "inequality": ">="},
@@ -73,7 +68,6 @@
 
   {
     "title": "task",
-    "UID": 3,
     "duration": 100,
     "requirements":[
       {"name": "wheelHealth","value":30.0, "inequality": ">="},

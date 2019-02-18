@@ -1,22 +1,24 @@
 package ai.promethean.DataModel;
 import java.util.*;
+import java.util.concurrent.atomic.*;
 
 public class SystemState {
     private int UID;
+    private static AtomicInteger ID_GENERATOR = new AtomicInteger(1);
     private int time;
     private PropertyMap properties = new PropertyMap();
 
     //Members for graph-search in planning
     private SystemState previousState;
     private Task previousTask;
-    private double gValue=-1;
+    private double gValue=0.0;
 
-    public SystemState(int _UID){
-        setUID(_UID);
+    public SystemState(){
+        setUID();
     }
 
-    public SystemState(int _UID, int time){
-        setUID(_UID);
+    public SystemState(int time){
+        setUID();
         setTime(time);
     }
 
@@ -24,23 +26,9 @@ public class SystemState {
         this.time = time;
     }
 
-    public SystemState(int _UID, boolean isGoal){
-        setUID(_UID);
-        if(!isGoal){
-            setgValue(0.0);
-        }
-    }
+    private void setUID(){
 
-    public SystemState(int _UID, int time, boolean isGoal){
-        setUID(_UID);
-        setTime(time);
-        if(!isGoal){
-            setgValue(0.0);
-        }
-    }
-
-    public void setUID(int _UID){
-        this.UID=_UID;
+        this.UID=ID_GENERATOR.getAndIncrement();
     }
     public int getUID(){
         return UID;

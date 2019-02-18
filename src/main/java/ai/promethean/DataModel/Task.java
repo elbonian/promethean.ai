@@ -1,21 +1,24 @@
 package ai.promethean.DataModel;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import ai.promethean.DataModel.Condition;
 
 public class Task {
     private int UID;
+    private static AtomicInteger ID_GENERATOR = new AtomicInteger(1);
     private int duration;
 
     private ArrayList<Property> property_impacts=new ArrayList<Property>();
     private ArrayList<Condition> requirements=new ArrayList<Condition>();
 
-    public Task(int _UID, int _duration){
-        setUID(_UID);
+    public Task( int _duration){
+        setUID();
         setDuration(_duration);
     }
 
-    public void  setUID(int _UID){
-        this.UID=_UID;
+    private void  setUID(){
+        this.UID=ID_GENERATOR.getAndIncrement();
     }
 
     public int getUID(){
