@@ -110,6 +110,10 @@ public class SystemState {
         properties.addProperty(name, value);
     }
 
+    public void addProperty(Property property) {
+        properties.addProperty(property);
+    }
+
     public Property getProperty(String name) {
         return properties.getProperty(name);
     }

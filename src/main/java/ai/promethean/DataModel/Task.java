@@ -54,7 +54,9 @@ public class Task {
         property_impacts.add(new StringProperty(name, value));
     }
 
-    public void addRequirement(Condition c){ requirements.add(c);}
+    public void addProperty(Property property) { property_impacts.add(property); }
+
+    public void addRequirement(ai.promethean.DataModel.Condition c) { requirements.add(c); }
 
     public Double calculateTaskWeight(OptimizationWeightMap map) {
         Double squaredSum = this.duration * map.getOptimizationWeightMap().get("Duration");

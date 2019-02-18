@@ -43,6 +43,14 @@ public class PropertyMap {
         }
     }
 
+    public void addProperty(Property property) {
+        if(property_map.containsKey(property.getName())) {
+            property_map.replace(property.getName(),property);
+        } else {
+            property_map.put(property.getName(),property);
+        }
+    }
+
     /* Returns the private property_map to be used to compare two PropertyMaps
      */
     private Map<String, Property> getPropertyMap() {

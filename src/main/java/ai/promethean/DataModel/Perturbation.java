@@ -35,6 +35,8 @@ public class Perturbation {
         property_impacts.add(new StringProperty(name, value));
     }
 
+    public void addProperty(Property property) { property_impacts.add(property); }
+
     @Override
     public String toString() {
         return "Pertubation Timestamp: " + this.timeStamp
