@@ -1,5 +1,5 @@
 {
-  "intialState": {
+  "intial_state": {
     "properties": [
       {"name": "speed", "value": 10.0},
       {"name": "doorOpen", "value": true},
