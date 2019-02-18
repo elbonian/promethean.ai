@@ -3,6 +3,7 @@ package ai.promethean.GraphManagement;
 import ai.promethean.DataModel.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.PriorityQueue;
 
 public class GraphManager {
@@ -55,9 +56,59 @@ public class GraphManager {
         // TODO: Enqueue to frontier
     }
 
+    private static ArrayList<Property> mergeProperties(ArrayList<Property> previousProperties,
+                                                ArrayList<Property> nextProperties) {
+        HashMap<String, Property> affectedProperties = new HashMap<>();
+
+        for (Property property : previousProperties) {
+            String name = property.getName();
+            affectedProperties.put(name, property);
+        }
+
+        for (Property property: nextProperties) {
+            String propertyName = property.getName();
+
+            if (affectedProperties.containsKey(propertyName)) {
+                if (property instanceof NumericalProperty) {
+                    NumericalProperty oldProperty = (NumericalProperty) affectedProperties.get(propertyName);
+
+                    Double value = oldProperty.getValue() + ((NumericalProperty) property).getValue();
+                    Property updatedProperty = new NumericalProperty(propertyName, value);
+                    affectedProperties.replace(propertyName, updatedProperty);
+                } else {
+                    affectedProperties.replace(propertyName, property);
+                }
+            } else {
+                affectedProperties.put(propertyName, property);
+            }
+        }
+
+        ArrayList<Property> finalProperties = new ArrayList<>();
+
+        for (String propertyName: affectedProperties.keySet()) {
+            finalProperties.add(affectedProperties.get(propertyName));
+        }
+
+        return finalProperties;
+    }
+
     private static SystemState createState(SystemState previousState, Task task) {
-        // TODO: Build and return a new SystemState object
-        return null;
+        ArrayList<Property> properties = previousState.getProperties();
+        ArrayList<Property> taskProperties = task.getProperty_impacts();
+
+        ArrayList<Property> mergedProperties = GraphManager.mergeProperties(properties, taskProperties);
+
+        // TODO: Change UID generation
+        long previousTime = previousState.getTimeStamp().getTime();
+        long nextTime = previousTime + task.getDuration();
+
+        SystemState nextState = new SystemState(previousState.getUID() + 1, nextTime);
+
+        for (Property property: mergedProperties) {
+            nextState.addProperty(property);
+        }
+
+        return nextState;
     }
 
     public static SystemState poll() {
