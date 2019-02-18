@@ -9,7 +9,7 @@
                 "name": {
                     "type": "string"
                 },
-                "operator": {
+                "inequality": {
                     "type": "string"
                 },
                 "value": {

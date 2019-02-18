@@ -71,7 +71,8 @@ public class Parser {
                             throw new IllegalArgumentException("JSON Object name is invalid type");
                         }
 
-                    } else if (title.equalsIgnoreCase("State")) {
+                    }
+                    else if (title.equalsIgnoreCase("State")) {
                         if (jsonObject.get("UID").getAsJsonPrimitive().isNumber()) {
                             int UID = jsonObject.get("UID").getAsInt();
                             if (jsonObject.get("isGoal").getAsJsonPrimitive().isBoolean()) {
@@ -121,7 +122,35 @@ public class Parser {
                             throw new IllegalArgumentException("JSON Object State UID is invalid type");
                         }
 
-                    } else if (title.equalsIgnoreCase("Task")) {
+                    } else if(title.equalsIgnoreCase("GoalState")){
+                        GoalState goalState= new GoalState();
+                        if (jsonObject.get("requirements") != null) {
+                            JsonArray requirements = jsonObject.get("requirements").getAsJsonArray();
+                            for (JsonElement elem : requirements) {
+                                JsonObject requirement = elem.getAsJsonObject();
+                                if (requirement.get("name").getAsJsonPrimitive().isString() && requirement.get("inequality").getAsJsonPrimitive().isString() ) {
+                                    String name = requirement.get("name").getAsString();
+                                    String operator = requirement.get("inequality").getAsString();
+                                    JsonPrimitive value = requirement.get("value").getAsJsonPrimitive();
+                                    if (value.getAsJsonPrimitive().isBoolean()) {
+                                        goalState.addRequirement(name, value.getAsBoolean(), operator);
+                                    } else if (value.getAsJsonPrimitive().isNumber()) {
+                                        goalState.addRequirement(name, value.getAsDouble(), operator);
+                                    } else if (value.getAsJsonPrimitive().isString()) {
+                                        goalState.addRequirement(name, value.getAsString(), operator);
+                                    } else {
+                                        throw new IllegalArgumentException("Invalid Task requirement value type");
+                                    }
+                                }
+                                else {
+                                    throw new IllegalArgumentException("Invalid Task requirement name/inequality type");
+                                }
+
+                            }
+                        }
+                        parsedObjects.add(goalState);
+                    }
+                    else if (title.equalsIgnoreCase("Task")) {
                         if (jsonObject.get("UID").getAsJsonPrimitive().isNumber() &&jsonObject.get("duration").getAsJsonPrimitive().isNumber()){
                             int UID = jsonObject.get("UID").getAsInt();
                             int duration = jsonObject.get("duration").getAsInt();
@@ -131,9 +160,9 @@ public class Parser {
                                 JsonArray requirements = jsonObject.get("requirements").getAsJsonArray();
                                 for (JsonElement elem : requirements) {
                                     JsonObject requirement = elem.getAsJsonObject();
-                                    if (requirement.get("name").getAsJsonPrimitive().isString() && requirement.get("operator").getAsJsonPrimitive().isString() ) {
+                                    if (requirement.get("name").getAsJsonPrimitive().isString() && requirement.get("inequality").getAsJsonPrimitive().isString() ) {
                                         String name = requirement.get("name").getAsString();
-                                        String operator = requirement.get("operator").getAsString();
+                                        String operator = requirement.get("inequality").getAsString();
                                         JsonPrimitive value = requirement.get("value").getAsJsonPrimitive();
                                         if (value.getAsJsonPrimitive().isBoolean()) {
                                             task.addRequirement(name, value.getAsBoolean(), operator);
@@ -146,7 +175,7 @@ public class Parser {
                                         }
                                     }
                                     else {
-                                        throw new IllegalArgumentException("Invalid Task requirement name/operator type");
+                                        throw new IllegalArgumentException("Invalid Task requirement name/inequality type");
                                     }
 
                                 }

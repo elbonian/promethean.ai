@@ -11,14 +11,12 @@
   },
 
   {
-    "title": "State",
-    "UID": 2,
-    "time": 1440,
-    "isGoal": true,
-    "properties": [
-      {"name": "Altitude", "value": 100.0 , "type": "delta"},
-      {"name": "doorOpen", "value": true, "type": "assignment"},
-      {"name": "WindSpeed", "value": "High", "type": "ASSIGNMENT"}
+    "title": "GoalState",
+    "requirements": [
+      {"name": "speed", "value": 10.0, "inequality": "<="},
+      {"name": "wheelsDown", "value": true, "inequality": "=="},
+      {"name": "Fuel","value":70.0, "inequality": ">="},
+      {"name": "wheelHealth", "value":40.0, "inequality": ">"}
     ]
   },
 
@@ -49,8 +47,8 @@
     "UID": 1,
     "duration": 20,
     "requirements":[
-      {"name": "Fuel","value":60.0, "operator": ">"},
-      {"name": "Altitude", "value":100.0, "operator": "=="}
+      {"name": "Fuel","value":60.0, "inequality": ">"},
+      {"name": "Altitude", "value":100.0, "inequality": "=="}
     ],
     "property_impacts": [
       {"name": "Altitude", "value": -40.0}
@@ -64,8 +62,8 @@
     "UID": 2,
     "duration": 10,
     "requirements":[
-      {"name": "Fuel","value":30.0, "operator": ">="},
-      {"name": "doorOpen", "value":0.0, "operator": "=="}
+      {"name": "Fuel","value":30.0, "inequality": ">="},
+      {"name": "doorOpen", "value":0.0, "inequality": "=="}
     ],
     "property_impacts": [
       {"name": "doorOpen", "value":true}
@@ -78,8 +76,8 @@
     "UID": 3,
     "duration": 100,
     "requirements":[
-      {"name": "wheelHealth","value":30.0, "operator": ">="},
-      {"name": "Speed", "value":20.0, "operator": "<"}
+      {"name": "wheelHealth","value":30.0, "inequality": ">="},
+      {"name": "Speed", "value":20.0, "inequality": "<"}
     ],
     "property_impacts": [
       {"name": "Speed", "value":10.0}
