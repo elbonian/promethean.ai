@@ -55,16 +55,20 @@ public class Parser {
                     if (title.equalsIgnoreCase("Optimization")) {
                         if (jsonObject.get("name").getAsJsonPrimitive().isString()) {
                             String name = jsonObject.get("name").getAsString();
-                            if (jsonObject.get("type").getAsString().toLowerCase().contains("min")) {
-                                Optimization o = new Optimization(name, true);
-                                optimizationList.addOptimization(o);
-                            }
-                             else  if (jsonObject.get("type").getAsString().toLowerCase().contains("max")) {
-                                  Optimization o = new Optimization(name, false);
+                            if(jsonObject.get("priority").getAsJsonPrimitive().isNumber()) {
+                                int priority= jsonObject.get("priority").getAsInt();
+                                if (jsonObject.get("type").getAsString().toLowerCase().contains("min")) {
+                                    Optimization o = new Optimization(name, true, priority);
                                     optimizationList.addOptimization(o);
-                                 }
-                            else{
-                                throw new IllegalArgumentException("JSON Object Optimization type is invalid (must be a minimum or maximum)");
+                                } else if (jsonObject.get("type").getAsString().toLowerCase().contains("max")) {
+                                    Optimization o = new Optimization(name, false, priority);
+                                    optimizationList.addOptimization(o);
+                                } else {
+                                    throw new IllegalArgumentException("JSON Object Optimization type is invalid (must be a minimum or maximum)");
+                                }
+                            }
+                            else {
+                                throw new IllegalArgumentException("JSON Object Optimization Priority must be a number");
                             }
                         }
                         else{
@@ -276,6 +280,7 @@ public class Parser {
             }
 
         }
+        optimizationList.sortOptimizations();
         parsedObjects.add(taskDictionary);
         parsedObjects.add(optimizationList);
         parsedObjects.add(perturbationList);

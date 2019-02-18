@@ -87,16 +87,19 @@
   {
     "title": "Optimization",
     "name": "wheelDamage",
+    "priority": 6,
     "type":"min"
   },
   {
     "title": "Optimization",
     "name": "time",
+    "priority": 2,
     "type":"Minimization"
   },
   {
     "title": "Optimization",
     "name": "speed",
+    "priority": 1,
     "type":"Maximize"
   },
 

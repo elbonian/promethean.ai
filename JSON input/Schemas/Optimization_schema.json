@@ -14,11 +14,15 @@
                 },
                 "type": {
                     "type": "string"
+                },
+                "type": {
+                    "priority": "integer"
                 }
             },
             "required": [
                 "title",
                 "type",
+                "priority",
                 "name"
             ],
             "title": "Optimization"

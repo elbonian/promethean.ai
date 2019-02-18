@@ -12,6 +12,10 @@ public class StaticOptimizations {
         return Optimizations;
     }
 
+    public void sortOptimizations() {
+        Collections.sort(Optimizations, new SortbyOptimization());
+    }
+
     @Override
     public String toString() {
         String printOut= "Static Optimizations: \n";
