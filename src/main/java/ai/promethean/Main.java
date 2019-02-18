@@ -1,6 +1,5 @@
 package ai.promethean;
 import ai.promethean.Parser.*;
-import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,7 +7,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, ProcessingException {
+    public static void main(String[] args) throws IOException {
 	// write your code here
         System.out.println("Hello World");
         //Input File here:
