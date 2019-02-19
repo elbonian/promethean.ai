@@ -1,6 +1,7 @@
 package ai.promethean.GraphManagement;
 
 import ai.promethean.DataModel.*;
+import ai.promethean.Planner.OptimizationWeightMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ public class GraphManager {
     private static SystemState initState;
     private static SystemState goalState;
     private static TaskDictionary taskDict;
+    private static OptimizationWeightMap optimizationMap;
 
     public GraphManager() {
 
@@ -56,53 +58,34 @@ public class GraphManager {
         // TODO: Enqueue to frontier
     }
 
-    private static ArrayList<Property> mergeProperties(ArrayList<Property> previousProperties,
-                                                ArrayList<Property> nextProperties) {
-        HashMap<String, Property> affectedProperties = new HashMap<>();
+    private static SystemState createState(SystemState previousState, Task task) {
 
-        for (Property property : previousProperties) {
-            String name = property.getName();
-            affectedProperties.put(name, property);
-        }
+        ArrayList<Property> nextProperties = task.getProperty_impacts();
+        ArrayList<Property> mergedProperties = new ArrayList<>();
+        PropertyMap affectedProperties = previousState.getPropertyMap();
 
         for (Property property: nextProperties) {
             String propertyName = property.getName();
 
-            if (affectedProperties.containsKey(propertyName)) {
-                if (property instanceof NumericalProperty) {
-                    NumericalProperty oldProperty = (NumericalProperty) affectedProperties.get(propertyName);
+            if (property instanceof NumericalProperty) {
+                NumericalProperty oldProperty = (NumericalProperty) affectedProperties.getProperty(propertyName);
 
-                    Double value = oldProperty.getValue() + ((NumericalProperty) property).getValue();
-                    Property updatedProperty = new NumericalProperty(propertyName, value);
-                    affectedProperties.replace(propertyName, updatedProperty);
-                } else {
-                    affectedProperties.replace(propertyName, property);
-                }
+                Double value = oldProperty.getValue() + ((NumericalProperty) property).getValue();
+                Property updatedProperty = new NumericalProperty(propertyName, value);
+                mergedProperties.add(updatedProperty);
             } else {
-                affectedProperties.put(propertyName, property);
+                mergedProperties.add(property);
             }
         }
 
-        ArrayList<Property> finalProperties = new ArrayList<>();
-
-        for (String propertyName: affectedProperties.keySet()) {
-            finalProperties.add(affectedProperties.get(propertyName));
-        }
-
-        return finalProperties;
-    }
-
-    private static SystemState createState(SystemState previousState, Task task) {
-        ArrayList<Property> properties = previousState.getProperties();
-        ArrayList<Property> taskProperties = task.getProperty_impacts();
-
-        ArrayList<Property> mergedProperties = GraphManager.mergeProperties(properties, taskProperties);
-
-        // TODO: Change UID generation
         long previousTime = previousState.getTimeStamp().getTime();
         long nextTime = previousTime + task.getDuration();
+        double gVal = previousState.getgValue() + task.calculateTaskWeight(optimizationMap);
 
-        SystemState nextState = new SystemState(previousState.getUID() + 1, nextTime);
+        // TODO: Change UID generation
+        SystemState nextState = new SystemState(previousState.getUID() + 1, nextTime, gVal);
+        nextState.setPreviousState(previousState);
+        nextState.setPreviousTask(task);
 
         for (Property property: mergedProperties) {
             nextState.addProperty(property);
