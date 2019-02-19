@@ -71,6 +71,6 @@ public class Perturbation {
     @Override
     public String toString() {
         return "Pertubation Time: " + this.time
-                + "\n Property Changes: " + property_impacts;
+                + "\n Property Changes: " + property_impacts + "\n";
     }
 }

@@ -11,12 +11,11 @@ public class Main {
 	// write your code here
         System.out.println("Hello World");
         //Input File here:
-        //Parser p= new Parser("C:\\Users\\Taylor\\Desktop\\promethean.ai\\JSON input\\InputFiles\\All.json", true);
-        //Parser1 p= new Parser1("C:\\Users\\Taylor\\Desktop\\promethean.ai\\JSON input\\InputFiles\\Sample_Json_new.json", true);
-       // ArrayList<Object> objects = p.parse();
-        //for(Object o: objects){
-          //  System.out.println(o);
-       // }
+        Parser p= new Parser("C:\\Users\\Taylor\\Desktop\\promethean.ai\\JSON input\\InputFiles\\Sample_Json_new.json", true);
+        ArrayList<Object> objects = p.parse();
+        for(Object o: objects){
+           System.out.println(o);
+        }
 
     }
 }

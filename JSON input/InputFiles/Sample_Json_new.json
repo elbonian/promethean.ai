@@ -1,5 +1,5 @@
 {
-  "intial_state": {
+  "initial_state": {
     "properties": [
       {"name": "speed", "value": 10.0},
       {"name": "doorOpen", "value": true},
@@ -7,12 +7,12 @@
       {"name": "wheelHealth", "value":20.0}
     ]
   },
-  "goalState": {
-    "properties": [
-      {"name": "speed", "value": 10.0, "inequality": "<="},
-      {"name": "wheelsDown", "value": true, "inequality": "=="},
-      {"name": "Fuel","value":70.0, "inequality": ">="},
-      {"name": "wheelHealth", "value":40.0, "inequality": ">"}
+  "goal_state": {
+    "requirements": [
+      {"name": "speed", "value": 10.0, "operator": "<="},
+      {"name": "wheelsDown", "value": true, "operator": "=="},
+      {"name": "Fuel","value":70.0, "operator": ">="},
+      {"name": "wheelHealth", "value":40.0, "operator": ">"}
     ]
   },
   "tasks": [
@@ -53,15 +53,18 @@
   "optimizations": [
     {
       "name": "wheelHealth",
+      "priority": 6,
       "type": "maximization"
     },
     {
       "name": "time",
+      "priority": 2,
       "type": "minimization"
     },
     {
       "name": "energy",
-      "isMinimum": "minimization"
+      "priority": 1,
+      "type": "min"
     }
   ],
   "perturbations": [
