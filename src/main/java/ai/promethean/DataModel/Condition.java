@@ -36,5 +36,4 @@ public abstract class Condition {
 
     public abstract boolean evaluate(Object val1);
     public abstract Object getValue();
-
 }

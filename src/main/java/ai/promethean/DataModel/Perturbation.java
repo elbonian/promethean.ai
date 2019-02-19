@@ -68,7 +68,6 @@ public class Perturbation {
         Collections.sort(property_impacts, new SortbyProperty());
     }
 
-
     @Override
     public String toString() {
         return "Pertubation Time: " + this.time

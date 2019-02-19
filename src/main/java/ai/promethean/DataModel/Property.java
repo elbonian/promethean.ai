@@ -8,6 +8,7 @@ public abstract class Property {
         setName("");
         setDelta(false);
     }
+
     public Property(String _name){
         setName(_name);
         setDelta(false);

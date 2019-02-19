@@ -30,6 +30,7 @@ public class SystemState {
 
         this.UID=ID_GENERATOR.getAndIncrement();
     }
+
     public int getUID(){
         return UID;
     }
@@ -112,11 +113,7 @@ public class SystemState {
         systemState.sortProperties();
         return properties.equals(systemState.getProperties());
     }
-
-*/
-
-
-
+    */
 
     @Override
     public String toString() {

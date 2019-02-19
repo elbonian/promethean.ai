@@ -20,6 +20,7 @@ public class PropertyMap {
             property_map.put(name, new_prop);
         }
     }
+
     public void addProperty(String name, Boolean value) {
         Property new_prop = new BooleanProperty(name, value);
         if(property_map.containsKey(name)) {
@@ -39,6 +40,7 @@ public class PropertyMap {
             property_map.put(name, new_prop);
         }
     }
+
     public void addProperty(String name, Double value) {
         Property new_prop = new NumericalProperty(name, value);
         if(property_map.containsKey(name)) {
@@ -58,6 +60,7 @@ public class PropertyMap {
             property_map.put(name, new_prop);
         }
     }
+
     public void addProperty(String name, String value) {
         Property new_prop = new StringProperty(name, value);
         if(property_map.containsKey(name)) {
