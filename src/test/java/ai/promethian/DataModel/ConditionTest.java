@@ -1,6 +1,5 @@
 package ai.promethian.DataModel;
 
-
 import ai.promethean.DataModel.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -98,5 +97,4 @@ public class ConditionTest {
             StringCondition sc1= new StringCondition("DoorClosed", ">", "High");
         });
     }
-
 }

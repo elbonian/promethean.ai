@@ -33,14 +33,12 @@ public class Task {
         return this.duration;
     }
 
-
     public ArrayList<Property> getProperty_impacts() {
         return property_impacts;
     }
     public ArrayList<Condition> getRequirements(){
         return requirements;
     }
-
 
     public Property getProperty(String name){
         for(Property p: property_impacts){
@@ -87,7 +85,6 @@ public class Task {
     public void addProperty(String name, String value){
         property_impacts.add(new StringProperty(name, value));
     }
-
 
     public void addRequirement(Condition c){ requirements.add(c);}
 

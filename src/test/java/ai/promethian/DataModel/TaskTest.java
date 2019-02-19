@@ -14,7 +14,6 @@ public class TaskTest {
     @Test
     void checkEquals() { assertEquals(t1.getDuration(),(10));}
 
-
     @Test
     void checkGetProperty(){
         t1.addProperty(bp);

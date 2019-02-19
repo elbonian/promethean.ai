@@ -37,5 +37,4 @@ public class OptimizationTest {
         assertTrue(oList.getOptimizations().get(0).getPriority()==5);
     }
 
-
 }
