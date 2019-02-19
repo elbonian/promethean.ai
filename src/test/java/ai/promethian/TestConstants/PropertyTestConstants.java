@@ -1,7 +1,6 @@
 package ai.promethian.TestConstants;
 
 import ai.promethean.DataModel.*;
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
 import java.util.ArrayList;
 
