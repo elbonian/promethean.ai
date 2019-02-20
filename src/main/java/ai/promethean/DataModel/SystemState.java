@@ -1,74 +1,53 @@
 package ai.promethean.DataModel;
-import java.sql.Time;
 import java.util.*;
+import java.util.concurrent.atomic.*;
 
 public class SystemState {
     private int UID;
-    private Time timeStamp;
+    private static AtomicInteger ID_GENERATOR = new AtomicInteger(1);
+    private int time;
     private PropertyMap properties = new PropertyMap();
 
     //Members for graph-search in planning
     private SystemState previousState;
     private Task previousTask;
-    private Double gValue = 0.0;
+    private double gValue=0.0;
 
-    public SystemState(int _UID){
-        setUID(_UID);
-        timeStamp= new Time(System.currentTimeMillis());
+    public SystemState(){
+        setUID();
     }
 
-    public SystemState(int _UID, long time){
-        setUID(_UID);
-        timeStamp= new Time(time);
+    public SystemState(int time){
+        setUID();
+        setTime(time);
     }
 
-    public SystemState(int _UID, boolean isGoal, Double gVal){
-        setUID(_UID);
-        timeStamp= new Time(System.currentTimeMillis());
-        if(!isGoal){
-            setgValue(0.0);
-        }
+    public void setTime(int time) {
+        this.time = time;
     }
 
-    public SystemState(int _UID, long time, boolean isGoal, Double gVal){
-        setUID(_UID);
-        timeStamp= new Time(time);
-        if(!isGoal){
-            setgValue(0.0);
-        }
-    }
+    private void setUID(){
 
-    public SystemState(int _UID, Double gValue){
-        setUID(_UID);
-        timeStamp= new Time(System.currentTimeMillis());
-        setgValue(gValue);
-    }
-
-    public SystemState(int _UID, long time, Double gVal){
-        setUID(_UID);
-        timeStamp= new Time(time);
-        setgValue(gVal);
-    }
-
-    public void setUID(int _UID){
-        this.UID=_UID;
+        this.UID=ID_GENERATOR.getAndIncrement();
     }
 
     public int getUID(){
         return UID;
     }
 
-    public Time getTimeStamp(){
-        return timeStamp;
+    public int getTime(){
+        return time;
     }
 
-    public void setgValue(Double gValue) {
+    public void setgValue(double gValue) {
         this.gValue = gValue;
     }
 
-    public Double getgValue() {
+    public double getgValue() {
         return gValue;
     }
+
+
 
     public ArrayList<Property> getProperties() {
         ArrayList<Property> property_list = new ArrayList<>();
@@ -78,6 +57,7 @@ public class SystemState {
         return property_list;
     }
 
+    public PropertyMap getPropertyMap() { return properties; }
 
     public void setPreviousState(SystemState previousState) {
         this.previousState = previousState;
@@ -96,11 +76,12 @@ public class SystemState {
         return previousTask;
     }
 
-    public PropertyMap getPropertyMap() { return properties; }
+
 
     public void addProperty(String name, Boolean value) {
         properties.addProperty(name, value);
     }
+
 
     public void addProperty(String name, Double value) {
         properties.addProperty(name, value);
@@ -110,31 +91,26 @@ public class SystemState {
         properties.addProperty(name, value);
     }
 
-    public void addProperty(Property property) {
-        properties.addProperty(property);
+    public void addProperty(Property p) {
+        properties.addProperty(p);
     }
 
     public Property getProperty(String name) {
         return properties.getProperty(name);
     }
 
-    /*
+/*
     //TODO needs more testing
     public Boolean equals(SystemState systemState){
         this.sortProperties();
-        this.sortResources();
         systemState.sortProperties();
-        systemState.sortResources();
-
-        return properties.equals(systemState.getProperties())&& resources.equals(systemState.getResources());
+        return properties.equals(systemState.getProperties());
     }
     */
 
-    // public void sortProperties(){ Collections.sort(properties, new SortbyProperty()); }
-
     @Override
     public String toString() {
-        return "System State UID: " + this.UID + "\n Timestamp: " + this.timeStamp
+        return "System State UID: " + this.UID + "\n Time: " + this.time
                 + "\n G-Value: " + gValue
                 + "\n Properties: " + properties;
     }

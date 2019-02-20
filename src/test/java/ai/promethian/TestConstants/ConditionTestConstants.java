@@ -1,33 +1,34 @@
 package ai.promethian.TestConstants;
 
 import ai.promethean.DataModel.Condition;
+import ai.promethean.DataModel.NumericalCondition;
 
 import java.util.ArrayList;
 
 public class ConditionTestConstants {
 
     public static Condition getEqualsTestCondition() {
-        return new Condition("NumProperty1",123.123,"==");
+        return new NumericalCondition("NumProperty1","==", 123.123);
     }
 
     public static Condition getGreaterThanTestCondition() {
-        return new Condition("NumProperty2",123.123,">");
+        return new NumericalCondition("NumProperty2", "<", 123.123);
     }
 
     public static Condition getGreaterThanEqualToCondition() {
-        return new Condition("NumProperty2", 123.123, ">=");
+        return new NumericalCondition("NumProperty2", ">=", 123.123);
     }
 
     public static Condition getLessThanTestCondition() {
-        return new Condition("NumProperty3", 123.123, "<");
+        return new NumericalCondition("NumProperty3", "<", 123.123);
     }
 
     public static Condition getLessThanEqualTestCondition() {
-        return new Condition("NumProperty3", 123.123, "<=");
+        return new NumericalCondition("NumProperty3", "<=", 123.123);
     }
 
     public static Condition getNotEqualTestCondition() {
-        return new Condition("NumProperty1", 123.123, "!=");
+        return new NumericalCondition("NumProperty1", "!=", 123.123);
     }
 
     public static ArrayList<Condition> getAllTestConditions() {

@@ -28,7 +28,6 @@ public class GraphManager {
             // I love IntelliJ
             for (Condition condition : requirements) {
                 String name = condition.getName();
-                double value = condition.getValue();
                 Object state_value = state.getProperty(name);
                 // ISSUE: condition.evaluate only does Doubles, extending props will break this
                 // Extend after merging other changes to handle different inputs

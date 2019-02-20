@@ -1,13 +1,14 @@
 package ai.promethean;
-import ai.promethean.DataModel.*;
-import ai.promethean.GraphManagement.GraphManager;
+import ai.promethean.Parser.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class Main {
 
-    public static void main(String[] args) {
-        GraphManager manager = new GraphManager();
-        System.out.println("Testing graph manager");
-        System.out.println(manager);
+    public static void main(String[] args) throws IOException {
+	// write your code here
+        System.out.println("Hello World");
     }
 }

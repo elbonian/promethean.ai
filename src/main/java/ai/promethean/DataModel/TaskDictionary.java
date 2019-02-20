@@ -22,4 +22,13 @@ public class TaskDictionary {
     public Task getTask(Integer i) { return TaskDictionary.get(i); }
 
     public int size() { return TaskDictionary.size(); }
+
+    @Override
+    public String toString() {
+        String printOut= "Task Dictionary: \n";
+        for(Task t: TaskDictionary.values()){
+            printOut=printOut+ t + "\n";
+        }
+        return printOut;
+    }
 }

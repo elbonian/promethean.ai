@@ -1,9 +1,11 @@
 package ai.promethian.DataModel;
 
 import ai.promethean.DataModel.BooleanProperty;
+import ai.promethean.DataModel.StringCondition;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BooleanPropertyTest {
@@ -27,4 +29,25 @@ public class BooleanPropertyTest {
     void checkNotEqualsName(){assertFalse(bp.equals(bp2));}
     @Test
     void checkNotEqualsBool(){assertFalse(bp.equals(bp3));}
+
+    @Test
+    void checkDelta(){assertFalse(bp.getType());}
+
+    @Test
+    void checkChangeDelta(){
+        BooleanProperty bp5= new BooleanProperty("doorClosed", false, true);
+        assertTrue(bp5.getType());
+    }
+    @Test
+    void checkExceptionImpacts(){
+        assertThrows(IllegalArgumentException.class, () -> {
+            bp.applyPropertyImpactOnto(bp2);
+        });
+    }
+
+    @Test
+    void checkApplyImpacts(){
+        BooleanProperty bp6= new BooleanProperty("test", false,true);
+        assertTrue(bp.applyPropertyImpactOnto(bp6).getValue());
+    }
 }

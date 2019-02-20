@@ -11,4 +11,17 @@ public class StaticOptimizations {
     public ArrayList<Optimization> getOptimizations() {
         return Optimizations;
     }
+
+    public void sortOptimizations() {
+        Collections.sort(Optimizations, new SortbyOptimization());
+    }
+
+    @Override
+    public String toString() {
+        String printOut= "Static Optimizations: \n";
+        for(Optimization o: Optimizations){
+            printOut=printOut+ o + "\n";
+        }
+        return printOut;
+    }
 }

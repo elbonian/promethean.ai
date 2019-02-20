@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/GoalState",
+    "definitions": {
+        "GoalState": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "requirements": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../Condition_schema.json#/Condition"
+                   }
+            },
+            "title": "GoalState"
+        }
+    }
+}

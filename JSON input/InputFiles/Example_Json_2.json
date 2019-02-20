@@ -1,0 +1,77 @@
+{
+  "initial_state": {
+    "properties": [
+      {"name": "speed", "value": 0.0},
+      {"name": "Fuel","value":100.0},
+      {"name": "wheelHealth", "value":20.0},
+      {"name": "wheelsDown", "value": false},
+      {"name": "windLevel", "value": "High"},
+      {"name": "XPosition", "value": 0.0},
+      {"name": "YPosition", "value": -10.0}
+    ]
+  },
+  "goal_state": {
+    "requirements": [
+      {"name": "speed", "value": 0.0, "operator": "=="},
+      {"name": "wheelsDown", "value": true, "operator": "=="},
+      {"name": "Fuel","value":20.0, "operator": ">="},
+      {"name": "wheelHealth", "value":40.0, "operator": ">"},
+      {"name": "XPosition", "value": 20.0, "operator": "=="},
+      {"name": "YPosition", "value": 0.0, "operator": "=="}
+    ]
+  },
+  "tasks": [
+    {
+      "duration": 5,
+      "requirements":[
+        {"name": "Fuel","value":5.0, "operator": ">"},
+        {"name": "wheelsDown", "value":false, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "wheelsDown", "type": "assignment","value": true},
+        {"name": "Fuel","type": "delta", "value":-10.0}
+      ]
+    },
+    {
+      "duration": 10,
+      "requirements":[
+        {"name": "Fuel","value":10.0, "operator": ">="}
+      ],
+      "property_impacts": [
+        {"name": "speed", "type": "delta", "value":10.0},
+        {"name": "Fuel", "type": "delta", "value":-10.0}
+      ]
+    },
+        {
+      "duration": 10,
+      "requirements":[
+        {"name": "Fuel","value":10.0, "operator": ">="}
+      ],
+      "property_impacts": [
+        {"name": "speed", "type": "delta", "value":-10.0},
+        {"name": "Fuel", "type": "delta", "value":-10.0}
+      ]
+    },
+    {
+      "duration": 30,
+      "requirements":[
+        {"name": "Fuel","value":10.0, "operator": ">="},
+        {"name": "Speed", "value":10.0, "operator": ">="}
+      ],
+      "property_impacts": [
+        {"name": "XPosition", "type":"delta", "value":10.0},
+        {"name": "YPosition", "type": "delta", "value":10.0}
+      ]
+    },
+    {
+      "duration": 10,
+      "requirements":[
+        {"name": "Fuel","value":90.0, "operator": "<"},
+        {"name": "Speed", "value":0.0, "operator": ">="}
+      ],
+      "property_impacts": [
+        {"name": "Fuel", "type":"delta", "value":10.0}
+      ]
+    }
+  ]
+}
