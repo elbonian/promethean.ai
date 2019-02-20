@@ -6,16 +6,16 @@ public abstract class Property {
     protected boolean isDelta;
     public Property(){
         setName("");
-        setDelta(false);
+        setType(false);
     }
 
     public Property(String _name){
         setName(_name);
-        setDelta(false);
+        setType(false);
     }
     public Property(String _name, boolean _delta){
         setName(_name);
-        setDelta(_delta);
+        setType(_delta);
     }
     public void setName(String _name){
         this.name=_name;
@@ -25,11 +25,11 @@ public abstract class Property {
         return this.name;
     }
 
-    public boolean getIsDelta() {
+    public boolean getType() {
         return isDelta;
     }
 
-    public void setDelta(boolean delta) {
+    public void setType(boolean delta) {
         isDelta = delta;
     }
 

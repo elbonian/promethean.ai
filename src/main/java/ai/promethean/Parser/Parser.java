@@ -48,77 +48,69 @@ public class Parser {
         JsonElement jsonTree = parser.parse(json);
         if (jsonTree.isJsonObject()) {
             JsonObject jsonObject = jsonTree.getAsJsonObject();
-            JsonArray optimizations= jsonObject.get("optimizations").getAsJsonArray();
-            if(optimizations.isJsonArray()) {
-                for (JsonElement op : optimizations) {
-                    JsonObject optimization = op.getAsJsonObject();
-                    if (optimization.get("name").getAsJsonPrimitive().isString()) {
-                        String name = optimization.get("name").getAsString();
-                        if (optimization.get("priority").getAsJsonPrimitive().isNumber()) {
-                            int priority = optimization.get("priority").getAsInt();
-                            if (optimization.get("type").getAsString().toLowerCase().contains("min")) {
-                                Optimization o = new Optimization(name, true, priority);
-                                optimizationList.addOptimization(o);
-                            } else if (optimization.get("type").getAsString().toLowerCase().contains("max")) {
-                                Optimization o = new Optimization(name, false, priority);
-                                optimizationList.addOptimization(o);
+            if (jsonObject.get("optimizations") != null) {
+                JsonArray optimizations = jsonObject.get("optimizations").getAsJsonArray();
+                if (optimizations.isJsonArray()) {
+                    for (JsonElement op : optimizations) {
+                        JsonObject optimization = op.getAsJsonObject();
+                        if (optimization.get("name").getAsJsonPrimitive().isString()) {
+                            String name = optimization.get("name").getAsString();
+                            if (optimization.get("priority").getAsJsonPrimitive().isNumber()) {
+                                int priority = optimization.get("priority").getAsInt();
+                                if (optimization.get("type").getAsString().toLowerCase().contains("min")) {
+                                    Optimization o = new Optimization(name, true, priority);
+                                    optimizationList.addOptimization(o);
+                                } else if (optimization.get("type").getAsString().toLowerCase().contains("max")) {
+                                    Optimization o = new Optimization(name, false, priority);
+                                    optimizationList.addOptimization(o);
+                                } else {
+                                    throw new IllegalArgumentException("JSON Object Optimization type is invalid (must be a minimum or maximum)");
+                                }
                             } else {
-                                throw new IllegalArgumentException("JSON Object Optimization type is invalid (must be a minimum or maximum)");
+                                throw new IllegalArgumentException("JSON Object Optimization Priority must be a number");
                             }
                         } else {
-                            throw new IllegalArgumentException("JSON Object Optimization Priority must be a number");
+                            throw new IllegalArgumentException("JSON Object name is invalid type");
                         }
-                    } else {
-                        throw new IllegalArgumentException("JSON Object name is invalid type");
                     }
+                } else {
+                    throw new IllegalArgumentException("JSON optimizations must be an array");
                 }
-            }
-            else{
-                throw new IllegalArgumentException("JSON optimizations must be an array");
+                optimizationList.sortOptimizations();
+                parsedObjects.add(optimizationList);
             }
 
-            JsonObject initialState= jsonObject.get("initial_state").getAsJsonObject();
-            SystemState systemState=new SystemState();
+            JsonObject initialState = jsonObject.get("initial_state").getAsJsonObject();
+            SystemState systemState = new SystemState();
             if (initialState.get("properties") != null) {
                 JsonArray properties = initialState.get("properties").getAsJsonArray();
                 for (JsonElement elem : properties) {
                     JsonObject property = elem.getAsJsonObject();
-                    if (property.get("name").getAsJsonPrimitive().isString()){
+                    if (property.get("name").getAsJsonPrimitive().isString()) {
                         String name = property.get("name").getAsString();
-                        boolean isDelta;
-                        if (property.get("type") ==null || property.get("type").getAsString().toLowerCase().contains("assign")) {
-                            isDelta=false;
-                        }
-                        else if (property.get("type").getAsString().toLowerCase().contains("delta")) {
-                            isDelta=true;
-                        }
-                        else {
-                            throw new IllegalArgumentException("Invalid property type (must be an assignment or delta)");
-                        }
                         JsonPrimitive value = property.get("value").getAsJsonPrimitive();
                         if (value.getAsJsonPrimitive().isBoolean()) {
-                            systemState.addProperty(name, value.getAsBoolean(), isDelta);
+                            systemState.addProperty(name, value.getAsBoolean());
                         } else if (value.getAsJsonPrimitive().isNumber()) {
-                            systemState.addProperty(name, value.getAsDouble(),isDelta);
+                            systemState.addProperty(name, value.getAsDouble());
                         } else if (value.getAsJsonPrimitive().isString()) {
-                            systemState.addProperty(name, value.getAsString(),isDelta);
+                            systemState.addProperty(name, value.getAsString());
                         } else {
                             throw new IllegalArgumentException("Invalid property type");
                         }
-                    }
-                    else {
+                    } else {
                         throw new IllegalArgumentException("Invalid State Property name type");
                     }
                 }
             }
             parsedObjects.add(systemState);
-            JsonObject gs= jsonObject.get("goal_state").getAsJsonObject();
-            GoalState goalState= new GoalState();
+            JsonObject gs = jsonObject.get("goal_state").getAsJsonObject();
+            GoalState goalState = new GoalState();
             if (gs.get("requirements") != null) {
                 JsonArray requirements = gs.get("requirements").getAsJsonArray();
                 for (JsonElement elem : requirements) {
                     JsonObject requirement = elem.getAsJsonObject();
-                    if (requirement.get("name").getAsJsonPrimitive().isString() && requirement.get("operator").getAsJsonPrimitive().isString() ) {
+                    if (requirement.get("name").getAsJsonPrimitive().isString() && requirement.get("operator").getAsJsonPrimitive().isString()) {
                         String name = requirement.get("name").getAsString();
                         String operator = requirement.get("operator").getAsString();
                         JsonPrimitive value = requirement.get("value").getAsJsonPrimitive();
@@ -131,26 +123,25 @@ public class Parser {
                         } else {
                             throw new IllegalArgumentException("Invalid Task requirement value type");
                         }
-                    }
-                    else {
+                    } else {
                         throw new IllegalArgumentException("Invalid Task requirement name/operator type");
                     }
                 }
             }
             parsedObjects.add(goalState);
 
-            JsonArray tasks= jsonObject.get("tasks").getAsJsonArray();
-            if(tasks.isJsonArray()) {
+            JsonArray tasks = jsonObject.get("tasks").getAsJsonArray();
+            if (tasks.isJsonArray()) {
                 for (JsonElement taski : tasks) {
                     JsonObject t = taski.getAsJsonObject();
-                    if (t.get("duration").getAsJsonPrimitive().isNumber()){
+                    if (t.get("duration").getAsJsonPrimitive().isNumber()) {
                         int duration = t.get("duration").getAsInt();
                         Task task = new Task(duration);
                         if (t.get("requirements") != null) {
                             JsonArray requirements = t.get("requirements").getAsJsonArray();
                             for (JsonElement elem : requirements) {
                                 JsonObject requirement = elem.getAsJsonObject();
-                                if (requirement.get("name").getAsJsonPrimitive().isString() && requirement.get("operator").getAsJsonPrimitive().isString() ) {
+                                if (requirement.get("name").getAsJsonPrimitive().isString() && requirement.get("operator").getAsJsonPrimitive().isString()) {
                                     String name = requirement.get("name").getAsString();
                                     String operator = requirement.get("operator").getAsString();
                                     JsonPrimitive value = requirement.get("value").getAsJsonPrimitive();
@@ -163,8 +154,7 @@ public class Parser {
                                     } else {
                                         throw new IllegalArgumentException("Invalid Task requirement value type");
                                     }
-                                }
-                                else {
+                                } else {
                                     throw new IllegalArgumentException("Invalid Task requirement name/operator type");
                                 }
 
@@ -178,86 +168,79 @@ public class Parser {
                                 if (property.get("name").getAsJsonPrimitive().isString()) {
                                     String name = property.get("name").getAsString();
                                     boolean isDelta;
-                                    if (property.get("type") ==null || property.get("type").getAsString().toLowerCase().contains("assign")) {
-                                        isDelta=false;
-                                    }
-                                    else if (property.get("type").getAsString().toLowerCase().contains("delta")) {
-                                        isDelta=true;
-                                    }
-                                    else {
+                                    if (property.get("type") == null || property.get("type").getAsString().toLowerCase().contains("assign")) {
+                                        isDelta = false;
+                                    } else if (property.get("type").getAsString().toLowerCase().contains("delta")) {
+                                        isDelta = true;
+                                    } else {
                                         throw new IllegalArgumentException("Invalid property type (must be an assignment or delta)");
                                     }
                                     JsonPrimitive value = property.get("value").getAsJsonPrimitive();
                                     if (value.getAsJsonPrimitive().isBoolean()) {
                                         task.addProperty(name, value.getAsBoolean(), isDelta);
                                     } else if (value.getAsJsonPrimitive().isNumber()) {
-                                        task.addProperty(name, value.getAsDouble(),isDelta);
+                                        task.addProperty(name, value.getAsDouble(), isDelta);
                                     } else if (value.getAsJsonPrimitive().isString()) {
-                                        task.addProperty(name, value.getAsString(),isDelta);
+                                        task.addProperty(name, value.getAsString(), isDelta);
                                     } else {
                                         throw new IllegalArgumentException("Invalid property type");
                                     }
-                                }
-                                else {
+                                } else {
                                     throw new IllegalArgumentException("Invalid Task Property name type");
                                 }
                             }
                         }
                         taskDictionary.addTask(task);
-                    }
-                    else{
+                    } else {
                         throw new IllegalArgumentException("JSON Object Task Duration invalid type");
                     }
                 }
+                parsedObjects.add(taskDictionary);
             }
+            if(jsonObject.get("perturbations")!=null){
+                JsonArray perturbations = jsonObject.get("perturbations").getAsJsonArray();
+                if (perturbations.isJsonArray()) {
+                    for (JsonElement pert : perturbations) {
+                        JsonObject p = pert.getAsJsonObject();
+                        int time = p.get("time").getAsInt();
+                        Perturbation perturbation = new Perturbation(time);
 
-            JsonArray perturbations= jsonObject.get("perturbations").getAsJsonArray();
-            if(perturbations.isJsonArray()) {
-                for (JsonElement pert : perturbations) {
-                    JsonObject p = pert.getAsJsonObject();
-                    int time = p.get("time").getAsInt();
-                    Perturbation perturbation = new Perturbation(time);
-
-                    if (p.get("property_impacts") != null) {
-                        JsonArray properties = p.get("property_impacts").getAsJsonArray();
-                        for (JsonElement elem : properties) {
-                            JsonObject property = elem.getAsJsonObject();
-                            if (property.get("name").getAsJsonPrimitive().isString()) {
-                                String name = property.get("name").getAsString();
-                                boolean isDelta;
-                                if (property.get("type") ==null || property.get("type").getAsString().toLowerCase().contains("assign")) {
-                                    isDelta=false;
-                                }
-                                else if (property.get("type").getAsString().toLowerCase().contains("delta")) {
-                                    isDelta=true;
-                                }
-                                else {
-                                    throw new IllegalArgumentException("Invalid property type (must be an assignment or delta)");
-                                }
-                                JsonPrimitive value = property.get("value").getAsJsonPrimitive();
-                                if (value.getAsJsonPrimitive().isBoolean()) {
-                                    perturbation.addProperty(name, value.getAsBoolean(), isDelta);
-                                } else if (value.getAsJsonPrimitive().isNumber()) {
-                                    perturbation.addProperty(name, value.getAsDouble(),isDelta);
-                                } else if (value.getAsJsonPrimitive().isString()) {
-                                    perturbation.addProperty(name, value.getAsString(),isDelta);
+                        if (p.get("property_impacts") != null) {
+                            JsonArray properties = p.get("property_impacts").getAsJsonArray();
+                            for (JsonElement elem : properties) {
+                                JsonObject property = elem.getAsJsonObject();
+                                if (property.get("name").getAsJsonPrimitive().isString()) {
+                                    String name = property.get("name").getAsString();
+                                    boolean isDelta;
+                                    if (property.get("type") == null || property.get("type").getAsString().toLowerCase().contains("assign")) {
+                                        isDelta = false;
+                                    } else if (property.get("type").getAsString().toLowerCase().contains("delta")) {
+                                        isDelta = true;
+                                    } else {
+                                        throw new IllegalArgumentException("Invalid property type (must be an assignment or delta)");
+                                    }
+                                    JsonPrimitive value = property.get("value").getAsJsonPrimitive();
+                                    if (value.getAsJsonPrimitive().isBoolean()) {
+                                        perturbation.addProperty(name, value.getAsBoolean(), isDelta);
+                                    } else if (value.getAsJsonPrimitive().isNumber()) {
+                                        perturbation.addProperty(name, value.getAsDouble(), isDelta);
+                                    } else if (value.getAsJsonPrimitive().isString()) {
+                                        perturbation.addProperty(name, value.getAsString(), isDelta);
+                                    } else {
+                                        throw new IllegalArgumentException("Invalid property type");
+                                    }
                                 } else {
-                                    throw new IllegalArgumentException("Invalid property type");
+                                    throw new IllegalArgumentException("Invalid Perturbation Property Name type");
                                 }
-                            }
-                            else {
-                                throw new IllegalArgumentException("Invalid Perturbation Property Name type");
                             }
                         }
+                        perturbationList.add(perturbation);
+                        parsedObjects.add(perturbationList);
                     }
-                    perturbationList.add(perturbation);
+
                 }
             }
         }
-        optimizationList.sortOptimizations();
-        parsedObjects.add(taskDictionary);
-        parsedObjects.add(optimizationList);
-        parsedObjects.add(perturbationList);
         return parsedObjects;
     }
 }

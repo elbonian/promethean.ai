@@ -40,9 +40,7 @@
             "required": [
                 "initial_state",
                 "goal_state",
-                "tasks",
-                "optimizations",
-                "perturbations"
+                "tasks"
             ],
             "title": "Init"
         }

@@ -31,12 +31,12 @@ public class BooleanPropertyTest {
     void checkNotEqualsBool(){assertFalse(bp.equals(bp3));}
 
     @Test
-    void checkDelta(){assertFalse(bp.getIsDelta());}
+    void checkDelta(){assertFalse(bp.getType());}
 
     @Test
     void checkChangeDelta(){
         BooleanProperty bp5= new BooleanProperty("doorClosed", false, true);
-        assertTrue(bp5.getIsDelta());
+        assertTrue(bp5.getType());
     }
     @Test
     void checkExceptionImpacts(){
