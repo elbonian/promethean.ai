@@ -4,7 +4,9 @@
       {"name": "speed", "value": 10.0},
       {"name": "doorOpen", "value": true},
       {"name": "Fuel","value":30.0},
-      {"name": "wheelHealth", "value":20.0}
+      {"name": "wheelHealth", "value":20.0},
+      {"name": "wheelsDown", "value": false},
+      {"name": "Altitude", "value": 0.0}
     ]
   },
   "goal_state": {

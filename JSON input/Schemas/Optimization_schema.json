@@ -6,21 +6,17 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "title": {
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 },
                 "type": {
                     "type": "string"
                 },
-                "type": {
-                    "priority": "integer"
+                "priority": {
+                    "type": "integer"
                 }
             },
             "required": [
-                "title",
                 "type",
                 "priority",
                 "name"

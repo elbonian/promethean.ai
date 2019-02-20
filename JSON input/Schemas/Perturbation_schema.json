@@ -6,21 +6,18 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "title": {
-                    "type": "string"
-                },
                 "time": {
                     "type": "integer"
                 },
-                "properties": {
+                "property_impacts": {
                     "type": "array",
                     "items": {
                         "$ref": "../Property_schema.json#/Property"
                     }
                 }
             },
-               "required": [
-                "title"
+            "required": [
+                "time"
             ],
             "title": "Perturbation"
         }

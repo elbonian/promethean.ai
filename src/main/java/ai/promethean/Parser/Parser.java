@@ -215,16 +215,8 @@ public class Parser {
             if(perturbations.isJsonArray()) {
                 for (JsonElement pert : perturbations) {
                     JsonObject p = pert.getAsJsonObject();
-                    Perturbation perturbation;
-                    if (p.get("time") == null) {
-                        perturbation = new Perturbation();
-                    } else if(p.get("time").getAsJsonPrimitive().isNumber()){
-                        int time = p.get("time").getAsInt();
-                        perturbation = new Perturbation(time);
-                    }
-                    else{
-                        throw new IllegalArgumentException("JSON Object Perturbation Time invalid type");
-                    }
+                    int time = p.get("time").getAsInt();
+                    Perturbation perturbation = new Perturbation(time);
 
                     if (p.get("property_impacts") != null) {
                         JsonArray properties = p.get("property_impacts").getAsJsonArray();

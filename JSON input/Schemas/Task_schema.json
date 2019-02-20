@@ -6,9 +6,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "title": {
-                    "type": "string"
-                },
                 "duration": {
                     "type": "integer"
                 },
@@ -26,7 +23,6 @@
                 }
             },
             "required": [
-                "title",
                 "duration"
             ],
             "title": "Task"

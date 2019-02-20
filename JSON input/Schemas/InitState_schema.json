@@ -6,12 +6,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "title": {
-                    "type": "string"
-                },
-                "isGoal": {
-                    "type": "boolean"
-                },
                 "properties": {
                     "type": "array",
                     "items": {
@@ -19,10 +13,6 @@
                     }
                 }
             },
-            "required": [
-                "title",
-                "isGoal"
-            ],
             "title": "InitState"
         }
     }
