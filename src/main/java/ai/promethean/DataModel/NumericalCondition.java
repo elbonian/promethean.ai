@@ -19,20 +19,15 @@ public class NumericalCondition extends Condition {
     @Override
     public boolean evaluate(Object val1){
         if(val1 instanceof Double) {
-            if (operator.equals("==")) {
-                return val1.equals(this.value);
-            } else if (operator.equals(">")) {
-                return (Double)val1 > value;
-            } else if (operator.equals("<")) {
-                return (Double)val1 < value;
-            } else if (operator.equals("<=")) {
-                return (Double)val1 <= value;
-            } else if (operator.equals(">=")) {
-                return (Double)val1 >= value;
-            } else if (operator.equals("!=")) {
-                return !val1.equals(value);
+            switch (this.operator){
+                case("=="): return val1.equals(this.value);
+                case("!="): return !val1.equals(this.value);
+                case(">"): return (Double)val1 > value;
+                case("<"): return (Double)val1 < value;
+                case("<="): return (Double)val1 <= value;
+                case(">="): return (Double)val1 >= value;
+                default: return false;
             }
-            else return false;
         }else return false;
 
     }

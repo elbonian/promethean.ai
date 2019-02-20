@@ -25,16 +25,11 @@ public class StringCondition extends Condition {
     @Override
     public boolean evaluate(Object val1) {
         if(val1 instanceof String){
-            if (this.operator.equals("=="))
-            {
-                return val1.equals(this.value);
+            switch (this.operator){
+                case("=="): return val1.equals(this.value);
+                case("!="): return !val1.equals(this.value);
+                default: return false;
             }
-            else if (operator.equals("!="))
-            {
-                return !val1.equals(this.value);
-            }
-            else return false;
-
         }else return false;
     }
 
