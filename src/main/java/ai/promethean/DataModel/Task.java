@@ -76,7 +76,6 @@ public class Task {
     public void addProperty(String name, String value, boolean isDelta){
         property_impacts.add(new StringProperty(name, value,isDelta));
     }
-    
 
     public void addRequirement(Condition c){ requirements.add(c);}
 
