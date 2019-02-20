@@ -59,10 +59,18 @@ public class GraphManager {
     }
 
     private static SystemState createState(SystemState previousState, Task task) {
-
         ArrayList<Property> nextProperties = task.getProperty_impacts();
-        ArrayList<Property> mergedProperties = new ArrayList<>();
         PropertyMap affectedProperties = previousState.getPropertyMap();
+
+        long previousTime = previousState.getTimeStamp().getTime();
+        long nextTime = previousTime + task.getDuration();
+        double gVal = previousState.getgValue() + task.calculateTaskWeight(optimizationMap);
+        // TODO: Change UID generation
+        SystemState nextState = new SystemState(previousState.getUID() + 1, nextTime, gVal);
+        nextState.setPreviousState(previousState);
+        nextState.setPreviousTask(task);
+
+        PropertyMap nextStateMap = nextState.getPropertyMap();
 
         for (Property property: nextProperties) {
             String propertyName = property.getName();
@@ -70,25 +78,18 @@ public class GraphManager {
             if (property instanceof NumericalProperty) {
                 NumericalProperty oldProperty = (NumericalProperty) affectedProperties.getProperty(propertyName);
 
-                Double value = oldProperty.getValue() + ((NumericalProperty) property).getValue();
+                double value = oldProperty.getValue() + ((NumericalProperty) property).getValue();
                 Property updatedProperty = new NumericalProperty(propertyName, value);
-                mergedProperties.add(updatedProperty);
+                nextStateMap.addProperty(updatedProperty);
             } else {
-                mergedProperties.add(property);
+                nextStateMap.addProperty(property);
             }
         }
 
-        long previousTime = previousState.getTimeStamp().getTime();
-        long nextTime = previousTime + task.getDuration();
-        double gVal = previousState.getgValue() + task.calculateTaskWeight(optimizationMap);
-
-        // TODO: Change UID generation
-        SystemState nextState = new SystemState(previousState.getUID() + 1, nextTime, gVal);
-        nextState.setPreviousState(previousState);
-        nextState.setPreviousTask(task);
-
-        for (Property property: mergedProperties) {
-            nextState.addProperty(property);
+        for (String propertyName: affectedProperties.getKeys()) {
+            if (!nextStateMap.containsProperty(propertyName)) {
+                nextStateMap.addProperty(affectedProperties.getProperty(propertyName));
+            }
         }
 
         return nextState;
