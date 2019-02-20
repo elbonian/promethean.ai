@@ -4,7 +4,6 @@ import ai.promethean.DataModel.*;
 import ai.promethean.Planner.OptimizationWeightMap;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.PriorityQueue;
 
 public class GraphManager {
@@ -58,31 +57,25 @@ public class GraphManager {
     }
 
     private static SystemState createState(SystemState previousState, Task task) {
-        ArrayList<Property> nextProperties = task.getProperty_impacts();
+        ArrayList<Property> taskProperties = task.getProperty_impacts();
         PropertyMap affectedProperties = previousState.getPropertyMap();
 
-        long previousTime = previousState.getTimeStamp().getTime();
-        long nextTime = previousTime + task.getDuration();
+        int previousTime = previousState.getTime();
+        int nextTime = previousTime + task.getDuration();
         double gVal = previousState.getgValue() + task.calculateTaskWeight(optimizationMap);
-        // TODO: Change UID generation
-        SystemState nextState = new SystemState(previousState.getUID() + 1, nextTime, gVal);
+
+        SystemState nextState = new SystemState(nextTime);
+        nextState.setgValue(gVal);
         nextState.setPreviousState(previousState);
         nextState.setPreviousTask(task);
 
         PropertyMap nextStateMap = nextState.getPropertyMap();
 
-        for (Property property: nextProperties) {
+        for (Property property: taskProperties) {
             String propertyName = property.getName();
 
-            if (property instanceof NumericalProperty) {
-                NumericalProperty oldProperty = (NumericalProperty) affectedProperties.getProperty(propertyName);
-
-                double value = oldProperty.getValue() + ((NumericalProperty) property).getValue();
-                Property updatedProperty = new NumericalProperty(propertyName, value);
-                nextStateMap.addProperty(updatedProperty);
-            } else {
-                nextStateMap.addProperty(property);
-            }
+            Property oldProperty = affectedProperties.getProperty(propertyName);
+            nextStateMap.addProperty(oldProperty.applyPropertyImpactOnto(property));
         }
 
         for (String propertyName: affectedProperties.getKeys()) {
