@@ -41,17 +41,7 @@ public class Perturbation {
         property_impacts.add(p);
     }
 
-    public void addProperty(String name, Boolean value){
-        property_impacts.add(new BooleanProperty(name, value));
-    }
 
-    public void addProperty(String name, Double value){
-        property_impacts.add(new NumericalProperty(name, value));
-    }
-
-    public void addProperty(String name, String value){
-        property_impacts.add(new StringProperty(name, value));
-    }
     public void addProperty(String name, Boolean value, boolean isDelta){
         property_impacts.add(new BooleanProperty(name, value,isDelta));
     }
