@@ -12,6 +12,7 @@ public class PropertyMap {
      * @param   name    The name of the property being added
      * @param   value   The boolean value associated with the propertyZ
      */
+
     public void addProperty(String name, Boolean value) {
         Property new_prop = new BooleanProperty(name, value);
         if(property_map.containsKey(name)) {
@@ -23,6 +24,7 @@ public class PropertyMap {
 
     /* Add a Property with a Double value
      */
+
     public void addProperty(String name, Double value) {
         Property new_prop = new NumericalProperty(name, value);
         if(property_map.containsKey(name)) {
@@ -34,6 +36,7 @@ public class PropertyMap {
 
     /* Add a Property with a String value
      */
+
     public void addProperty(String name, String value) {
         Property new_prop = new StringProperty(name, value);
         if(property_map.containsKey(name)) {
@@ -43,11 +46,12 @@ public class PropertyMap {
         }
     }
 
-    public void addProperty(Property property) {
-        if(property_map.containsKey(property.getName())) {
-            property_map.replace(property.getName(),property);
+    public void addProperty(Property p) {
+
+        if(property_map.containsKey(p.getName())) {
+            property_map.replace(p.getName(), p);
         } else {
-            property_map.put(property.getName(),property);
+            property_map.put(p.getName(), p);
         }
     }
 
@@ -87,5 +91,15 @@ public class PropertyMap {
         return property_map.equals(p.getPropertyMap());
     }
 
-
+    @Override
+    public String toString() {
+        String printOut="";
+        for(Property p : property_map.values()){
+            printOut=printOut + "\n Name: "+ p.getName();
+            if(p.getType()) printOut=printOut+" Type: Delta";
+            else printOut=printOut+" Type: Assignment";
+            printOut=printOut+ " Value: " + p.getValue();
+        }
+        return printOut;
+    }
 }

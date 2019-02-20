@@ -8,7 +8,7 @@ import ai.promethean.DataModel.TaskDictionary;
 public class TaskTestConstants {
 
     public static Task getFullTask1() {
-        Task returnTask = new Task(1,10);
+        Task returnTask = new Task(10);
         for (Property property: PropertyTestConstants.getAllTestProperties()) {
             returnTask.addProperty(property);
         }
@@ -19,7 +19,7 @@ public class TaskTestConstants {
     }
 
     public static Task getFullTask2() {
-        Task returnTask = new Task(1,5);
+        Task returnTask = new Task(5);
         for (Property property: PropertyTestConstants.getAllNumericProperties()) {
             returnTask.addProperty(property);
         }
@@ -30,7 +30,7 @@ public class TaskTestConstants {
     }
 
     public static Task getFullTask3() {
-        Task returnTask = new Task(1,8);
+        Task returnTask = new Task(8);
         for (Property property: PropertyTestConstants.getAllBooleanProperties()) {
             returnTask.addProperty(property);
         }
@@ -41,7 +41,7 @@ public class TaskTestConstants {
     }
 
     public static Task getFullTask4() {
-        Task returnTask = new Task(1,8);
+        Task returnTask = new Task(8);
         for (Property property: PropertyTestConstants.getAllStringProperties()) {
             returnTask.addProperty(property);
         }
@@ -61,7 +61,7 @@ public class TaskTestConstants {
     }
 
     public static Task getImpactsOnlyTask1() {
-        Task returnTask = new Task(1,1);
+        Task returnTask = new Task(1);
         for (Property property: PropertyTestConstants.getAllTestProperties()) {
             returnTask.addProperty(property);
         }
@@ -70,7 +70,7 @@ public class TaskTestConstants {
 
 
     public static Task getConditionsOnlyTask() {
-        Task returnTask = new Task(1,10);
+        Task returnTask = new Task(10);
         for (Condition condition: ConditionTestConstants.getAllTestConditions()) {
             returnTask.addRequirement(condition);
         }

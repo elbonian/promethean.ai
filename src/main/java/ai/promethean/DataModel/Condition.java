@@ -1,76 +1,39 @@
 package ai.promethean.DataModel;
 
-import java.lang.*;
+public abstract class Condition {
+    protected String name;
+    protected String operator;
 
-public class Condition {
-    private String name;
-    private double value;
-    //this needs some work - is there any way to pass in operators directly?
-    private String operator;
-
-
-    public Condition(String _name, double _value, String _operator){
-        if (_operator == "==" || _operator == ">" || _operator == ">=" || _operator == "<" || _operator == "<=" || _operator == "!="){
+    public Condition(String _name){
+        setName(_name);
+    }
+    public Condition(String _name,  String _operator){
+        if (_operator.equals("==") || _operator.equals(">") || _operator.equals(">=") || _operator.equals("<") || _operator.equals("<=") || _operator.equals("!=")){
             setName(_name);
-            setValue(_value);
             setOperator(_operator);
         }
         else{
             //if not valid operator throw exception
-            throw new IllegalArgumentException("Illegal operator argument");
+            throw new IllegalArgumentException("Illegal operator argument"+_operator);
         }
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String _name){
+        this.name=_name;
     }
 
-    public void setValue(double value) {
-        this.value = value;
+    public String getName() {
+        return name;
     }
 
     public void setOperator(String operator) {
         this.operator = operator;
     }
 
-    public String getName() {return name; }
-
-    public double getValue() {
-        return value;
-    }
-
     public String getOperator() {
         return operator;
     }
 
-    public boolean evaluate(Double val1){
-        if (this.operator.equals("=="))
-        {
-            return val1 == this.value;
-        }
-        else if (operator.equals(">"))
-        {
-            return val1 > value;
-        }
-        else if (operator.equals("<"))
-        {
-            return val1 < value;
-        }
-        else if (operator.equals("<="))
-        {
-            return val1 <= value;
-        }
-        else if (operator.equals(">="))
-        {
-            return val1 >= value;
-        }
-        else if (operator.equals("!="))
-        {
-            return val1 != value;
-        }
-        else{
-            //if not valid operator throw exception
-            throw new IllegalArgumentException();
-        }
-    }
+    public abstract boolean evaluate(Object val1);
+    public abstract Object getValue();
 }
