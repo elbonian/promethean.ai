@@ -136,7 +136,12 @@ public class Parser {
                     JsonObject t = taski.getAsJsonObject();
                     if (t.get("duration").getAsJsonPrimitive().isNumber()) {
                         int duration = t.get("duration").getAsInt();
-                        Task task = new Task(duration);
+                        Task task= new Task(duration);
+                        if(t.get("name")!=null)
+                        {
+                           String name= t.get("name").getAsString();
+                           task.setName(name);
+                        }
                         if (t.get("requirements") != null) {
                             JsonArray requirements = t.get("requirements").getAsJsonArray();
                             for (JsonElement elem : requirements) {
@@ -204,6 +209,11 @@ public class Parser {
                         JsonObject p = pert.getAsJsonObject();
                         int time = p.get("time").getAsInt();
                         Perturbation perturbation = new Perturbation(time);
+                        if(p.get("name")!=null)
+                        {
+                            String name= p.get("name").getAsString();
+                            perturbation.setName(name);
+                        }
 
                         if (p.get("property_impacts") != null) {
                             JsonArray properties = p.get("property_impacts").getAsJsonArray();
@@ -235,8 +245,8 @@ public class Parser {
                             }
                         }
                         perturbationList.add(perturbation);
-                        parsedObjects.add(perturbationList);
                     }
+                    parsedObjects.add(perturbationList);
 
                 }
             }

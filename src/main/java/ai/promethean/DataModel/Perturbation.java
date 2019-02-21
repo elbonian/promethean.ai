@@ -5,10 +5,16 @@ import java.util.*;
 
 public class Perturbation {
     private int time;
+    private String name;
     private ArrayList<Property> property_impacts= new ArrayList<Property>();
 
     public Perturbation(){
         setTime(0);
+    }
+    public Perturbation(String _name){
+        setTime(0);
+        setName(_name);
+
     }
     public Perturbation(int time){
         setTime(time);
@@ -20,6 +26,14 @@ public class Perturbation {
 
     public int getTime() {
         return time;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public ArrayList<Property> getProperties() {
@@ -60,7 +74,7 @@ public class Perturbation {
 
     @Override
     public String toString() {
-        return "Pertubation Time: " + this.time
+        return "Perturbation Name: "+this.name+ ", Time: " + this.time
                 + "\n Property Changes: " + property_impacts + "\n";
     }
 }

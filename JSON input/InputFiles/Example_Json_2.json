@@ -22,6 +22,7 @@
   },
   "tasks": [
     {
+      "name" : "Move Wheels Down",
       "duration": 5,
       "requirements":[
         {"name": "Fuel","value":5.0, "operator": ">"},
@@ -33,6 +34,7 @@
       ]
     },
     {
+      "name" : "Increase Speed",
       "duration": 10,
       "requirements":[
         {"name": "Fuel","value":10.0, "operator": ">="}
@@ -42,7 +44,8 @@
         {"name": "Fuel", "type": "delta", "value":-10.0}
       ]
     },
-        {
+      {
+      "name" : "Decrease Speed",
       "duration": 10,
       "requirements":[
         {"name": "Fuel","value":10.0, "operator": ">="}
@@ -53,6 +56,7 @@
       ]
     },
     {
+      "name" : "Change Position",
       "duration": 30,
       "requirements":[
         {"name": "Fuel","value":10.0, "operator": ">="},
@@ -64,6 +68,7 @@
       ]
     },
     {
+      "name" : "Charge",
       "duration": 10,
       "requirements":[
         {"name": "Fuel","value":90.0, "operator": "<"},
