@@ -5,6 +5,7 @@ public class StringProperty extends Property {
 
     public StringProperty(String _name, String _value, String _type){
         super(_name,_type);
+
         setValue(_value);
     }
     public StringProperty(String _name, String _value){
@@ -35,6 +36,7 @@ public class StringProperty extends Property {
     @Override
     public String toString(){
         return "Property Name: "+ super.name+", Type: "+ super.type+ ", Value: " + this.value;
+
     }
 
     @Override

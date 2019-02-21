@@ -48,6 +48,7 @@ public class BooleanPropertyTest {
     @Test
     void checkApplyImpacts(){
         BooleanProperty bp6= new BooleanProperty("test", false,"delta");
+
         assertTrue(bp.applyPropertyImpactOnto(bp6).getValue());
     }
 }

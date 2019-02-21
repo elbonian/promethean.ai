@@ -4,8 +4,10 @@ package ai.promethean.DataModel;
 public class BooleanProperty extends Property {
     protected Boolean value;
 
+
     public BooleanProperty(String _name, Boolean _value, String _type){
         super(_name, _type);
+
         setValue(_value);
     }
     public BooleanProperty(String _name, Boolean _value){
@@ -35,6 +37,7 @@ public class BooleanProperty extends Property {
     @Override
     public String toString(){
         return "Property Name: "+ super.name+", Type: "+ super.type+ ", Value: " + this.value;
+
     }
 
     @Override

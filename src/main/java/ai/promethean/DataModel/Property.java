@@ -3,10 +3,12 @@ package ai.promethean.DataModel;
 
 public abstract class Property {
     protected String name;
+
     protected String type;
     public Property(){
         setName("");
         setType("assignment");
+
     }
 
     public Property(String _name){
@@ -16,6 +18,7 @@ public abstract class Property {
     public Property(String _name, String _type){
         setName(_name);
         setType(_type);
+
     }
     public void setName(String _name){
         this.name=_name;
@@ -39,7 +42,9 @@ public abstract class Property {
 
     public abstract Object getValue();
 
-    public abstract Object applyPropertyImpactOnto(Property p);
+
+    public abstract Property applyPropertyImpactOnto(Property p);
+
 
 
 }
