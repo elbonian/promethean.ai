@@ -5,10 +5,16 @@ import java.util.*;
 
 public class Perturbation {
     private int time;
+    private String name;
     private ArrayList<Property> property_impacts= new ArrayList<Property>();
 
     public Perturbation(){
         setTime(0);
+    }
+    public Perturbation(String _name){
+        setTime(0);
+        setName(_name);
+
     }
     public Perturbation(int time){
         setTime(time);
@@ -20,6 +26,14 @@ public class Perturbation {
 
     public int getTime() {
         return time;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public ArrayList<Property> getProperties() {
@@ -42,16 +56,16 @@ public class Perturbation {
     }
 
 
-    public void addProperty(String name, Boolean value, boolean isDelta){
-        property_impacts.add(new BooleanProperty(name, value,isDelta));
+    public void addProperty(String name, Boolean value, String type){
+        property_impacts.add(new BooleanProperty(name, value,type));
     }
 
-    public void addProperty(String name, Double value, boolean isDelta){
-        property_impacts.add(new NumericalProperty(name, value,isDelta));
+    public void addProperty(String name, Double value, String type){
+        property_impacts.add(new NumericalProperty(name, value,type));
     }
 
-    public void addProperty(String name, String value, boolean isDelta){
-        property_impacts.add(new StringProperty(name, value,isDelta));
+    public void addProperty(String name, String value, String type){
+        property_impacts.add(new StringProperty(name, value,type));
     }
 
     public void sortProperties(){
@@ -60,7 +74,7 @@ public class Perturbation {
 
     @Override
     public String toString() {
-        return "Pertubation Time: " + this.time
+        return "Perturbation Name: "+this.name+ ", Time: " + this.time
                 + "\n Property Changes: " + property_impacts + "\n";
     }
 }

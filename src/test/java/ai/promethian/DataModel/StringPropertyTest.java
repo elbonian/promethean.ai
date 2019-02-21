@@ -38,7 +38,7 @@ public class StringPropertyTest {
 
    @Test
   void checkApplyImpacts(){
-      StringProperty sp6= new StringProperty("test", "Medium",true);
+      StringProperty sp6= new StringProperty("test", "Medium","delta");
       assertTrue(sp.applyPropertyImpactOnto(sp6).getValue().equals("High"));
  }
 }

@@ -136,7 +136,12 @@ public class Parser {
                     JsonObject t = taski.getAsJsonObject();
                     if (t.get("duration").getAsJsonPrimitive().isNumber()) {
                         int duration = t.get("duration").getAsInt();
-                        Task task = new Task(duration);
+                        Task task= new Task(duration);
+                        if(t.get("name")!=null)
+                        {
+                           String name= t.get("name").getAsString();
+                           task.setName(name);
+                        }
                         if (t.get("requirements") != null) {
                             JsonArray requirements = t.get("requirements").getAsJsonArray();
                             for (JsonElement elem : requirements) {
@@ -167,21 +172,21 @@ public class Parser {
                                 JsonObject property = elem.getAsJsonObject();
                                 if (property.get("name").getAsJsonPrimitive().isString()) {
                                     String name = property.get("name").getAsString();
-                                    boolean isDelta;
+                                    String type;
                                     if (property.get("type") == null || property.get("type").getAsString().toLowerCase().contains("assign")) {
-                                        isDelta = false;
+                                        type = "assignment";
                                     } else if (property.get("type").getAsString().toLowerCase().contains("delta")) {
-                                        isDelta = true;
+                                        type = "delta";
                                     } else {
                                         throw new IllegalArgumentException("Invalid property type (must be an assignment or delta)");
                                     }
                                     JsonPrimitive value = property.get("value").getAsJsonPrimitive();
                                     if (value.getAsJsonPrimitive().isBoolean()) {
-                                        task.addProperty(name, value.getAsBoolean(), isDelta);
+                                        task.addProperty(name, value.getAsBoolean(), type);
                                     } else if (value.getAsJsonPrimitive().isNumber()) {
-                                        task.addProperty(name, value.getAsDouble(), isDelta);
+                                        task.addProperty(name, value.getAsDouble(), type);
                                     } else if (value.getAsJsonPrimitive().isString()) {
-                                        task.addProperty(name, value.getAsString(), isDelta);
+                                        task.addProperty(name, value.getAsString(), type);
                                     } else {
                                         throw new IllegalArgumentException("Invalid property type");
                                     }
@@ -204,6 +209,11 @@ public class Parser {
                         JsonObject p = pert.getAsJsonObject();
                         int time = p.get("time").getAsInt();
                         Perturbation perturbation = new Perturbation(time);
+                        if(p.get("name")!=null)
+                        {
+                            String name= p.get("name").getAsString();
+                            perturbation.setName(name);
+                        }
 
                         if (p.get("property_impacts") != null) {
                             JsonArray properties = p.get("property_impacts").getAsJsonArray();
@@ -211,21 +221,21 @@ public class Parser {
                                 JsonObject property = elem.getAsJsonObject();
                                 if (property.get("name").getAsJsonPrimitive().isString()) {
                                     String name = property.get("name").getAsString();
-                                    boolean isDelta;
+                                    String type;
                                     if (property.get("type") == null || property.get("type").getAsString().toLowerCase().contains("assign")) {
-                                        isDelta = false;
+                                        type = "assignment";
                                     } else if (property.get("type").getAsString().toLowerCase().contains("delta")) {
-                                        isDelta = true;
+                                        type = "delta";
                                     } else {
                                         throw new IllegalArgumentException("Invalid property type (must be an assignment or delta)");
                                     }
                                     JsonPrimitive value = property.get("value").getAsJsonPrimitive();
                                     if (value.getAsJsonPrimitive().isBoolean()) {
-                                        perturbation.addProperty(name, value.getAsBoolean(), isDelta);
+                                        perturbation.addProperty(name, value.getAsBoolean(), type);
                                     } else if (value.getAsJsonPrimitive().isNumber()) {
-                                        perturbation.addProperty(name, value.getAsDouble(), isDelta);
+                                        perturbation.addProperty(name, value.getAsDouble(), type);
                                     } else if (value.getAsJsonPrimitive().isString()) {
-                                        perturbation.addProperty(name, value.getAsString(), isDelta);
+                                        perturbation.addProperty(name, value.getAsString(), type);
                                     } else {
                                         throw new IllegalArgumentException("Invalid property type");
                                     }
@@ -235,8 +245,8 @@ public class Parser {
                             }
                         }
                         perturbationList.add(perturbation);
-                        parsedObjects.add(perturbationList);
                     }
+                    parsedObjects.add(perturbationList);
 
                 }
             }

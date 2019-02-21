@@ -10,6 +10,7 @@ public class Task {
     private int UID;
     private static AtomicInteger ID_GENERATOR = new AtomicInteger(1);
     private int duration;
+    private String name;
 
     private ArrayList<Property> property_impacts=new ArrayList<Property>();
     private ArrayList<Condition> requirements=new ArrayList<Condition>();
@@ -17,6 +18,12 @@ public class Task {
     public Task( int _duration){
         setUID();
         setDuration(_duration);
+    }
+
+    public Task(int _duration, String _name){
+        setUID();
+        setDuration(_duration);
+        setName(_name);
     }
 
     private void  setUID(){
@@ -33,6 +40,14 @@ public class Task {
 
     public int getDuration(){
         return this.duration;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public ArrayList<Property> getProperty_impacts() {
@@ -65,16 +80,16 @@ public class Task {
         property_impacts.add(p);
     }
 
-    public void addProperty(String name, Boolean value, boolean isDelta){
-        property_impacts.add(new BooleanProperty(name, value,isDelta));
+    public void addProperty(String name, Boolean value, String type){
+        property_impacts.add(new BooleanProperty(name, value,type));
     }
 
-    public void addProperty(String name, Double value, boolean isDelta){
-        property_impacts.add(new NumericalProperty(name, value,isDelta));
+    public void addProperty(String name, Double value, String type){
+        property_impacts.add(new NumericalProperty(name, value,type));
     }
 
-    public void addProperty(String name, String value, boolean isDelta){
-        property_impacts.add(new StringProperty(name, value,isDelta));
+    public void addProperty(String name, String value, String type){
+        property_impacts.add(new StringProperty(name, value,type));
     }
 
     public void addRequirement(Condition c){ requirements.add(c);}
@@ -94,7 +109,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task UID: " + this.UID + "\n Duration: " + this.duration
+        return "Task UID: " + this.UID + ", Name: "+ this.name+ "\n Duration: " + this.duration
                 + "\n Requirements: " + requirements
                 + "\n Properties: " + property_impacts;
     }

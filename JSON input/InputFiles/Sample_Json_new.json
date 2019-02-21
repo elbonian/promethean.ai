@@ -19,6 +19,7 @@
   },
   "tasks": [
     {
+      "name" : "Decrease Altitude",
       "duration": 20,
       "requirements":[
         {"name": "Fuel","value":60.0, "operator": ">"},
@@ -30,6 +31,7 @@
       ]
     },
     {
+      "name" : "Open Door",
       "duration": 10,
       "requirements":[
         {"name": "Fuel","value":30.0, "operator": ">="},
@@ -41,6 +43,7 @@
       ]
     },
     {
+      "name" : "Increase Speed",
       "duration": 100,
       "requirements":[
         {"name": "wheelHealth","value":30.0, "operator": ">="},
@@ -71,6 +74,7 @@
   ],
   "perturbations": [
     {
+      "name" : "Decrease Altitude",
       "time": 320,
       "property_impacts": [
         {"name": "Altitude", "type": "delta", "value":-10.0},
@@ -78,6 +82,7 @@
       ]
     },
     {
+      "name" : "Increase Spped",
       "time": 1300,
       "property_impacts": [
         {"name": "speed", "type": "assignment", "value":5.0},
@@ -85,6 +90,7 @@
       ]
     },
     {
+      "name" : "Close Door",
       "time": 180,
       "property_impacts": [
         {"name": "doorOpen", "type": "assignment", "value":false},
@@ -92,6 +98,7 @@
       ]
     },
     {
+      "name" : "Speed Up and Charge",
       "time": 320,
       "property_impacts": [
         {"name": "speed", "type": "delta","value":6.0},
