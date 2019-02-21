@@ -4,15 +4,15 @@ import ai.promethean.DataModel.Optimization;
 import java.util.*;
 
 public class OptimizationWeightMap {
-    private Map<String, Double> optimizationWeightMap = new HashMap<>();
+    private Map<String, Integer> optimizationWeightMap = new HashMap<>();
 
     public OptimizationWeightMap(ArrayList<Optimization> optimizations) {
         for (int i =0 ; i<optimizations.size(); i++) {
-            optimizationWeightMap.put(optimizations.get(i).getName(),1.0 + (optimizations.size()-i)/optimizations.size());
+            optimizationWeightMap.put(optimizations.get(i).getName(),(optimizations.size()-i)*2);
         }
     }
 
-    public Map<String, Double> getOptimizationWeightMap () {
+    public Map<String, Integer> getOptimizationWeightMap () {
         return this.optimizationWeightMap;
     }
 }

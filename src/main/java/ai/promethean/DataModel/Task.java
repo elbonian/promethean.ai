@@ -100,14 +100,18 @@ public class Task {
     }
 
     public Double calculateTaskWeight(OptimizationWeightMap map) {
-        Double squaredSum = this.duration * map.getOptimizationWeightMap().get("Duration");
-        // Translate the
+        Double squaredSum = 0.0;
+        if(map.getOptimizationWeightMap().get("Duration") != null) {
+            squaredSum += Math.pow(this.duration, map.getOptimizationWeightMap().get("Duration"));
+        } else {
+            squaredSum += this.duration;
+        }
         for (Property property : this.property_impacts) {
             if (property instanceof NumericalProperty) {
                 if (map.getOptimizationWeightMap().get(property.getName()) != null) {
-                    squaredSum += (Math.pow(((NumericalProperty) property).getValue(),2)) * map.getOptimizationWeightMap().get(property.getName());
+                    squaredSum += (Math.pow(((NumericalProperty) property).getValue(),map.getOptimizationWeightMap().get(property.getName())));
                 } else {
-                    squaredSum += (Math.pow(((NumericalProperty) property).getValue(), 2));
+                    squaredSum += ((NumericalProperty) property).getValue();
                 }
             } else {
                 squaredSum += 1.0;
