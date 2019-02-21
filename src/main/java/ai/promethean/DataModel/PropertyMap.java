@@ -95,10 +95,7 @@ public class PropertyMap {
     public String toString() {
         String printOut="";
         for(Property p : property_map.values()){
-            printOut=printOut + "\n Name: "+ p.getName();
-            if(p.getType()) printOut=printOut+" Type: Delta";
-            else printOut=printOut+" Type: Assignment";
-            printOut=printOut+ " Value: " + p.getValue();
+            printOut=printOut + "\n Name: "+ p.getName()+ "Type: " +p.getType()+ " Value: " + p.getValue();
         }
         return printOut;
     }

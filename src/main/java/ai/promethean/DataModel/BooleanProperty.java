@@ -4,8 +4,8 @@ package ai.promethean.DataModel;
 public class BooleanProperty extends Property {
     protected Boolean value;
 
-    public BooleanProperty(String _name, Boolean _value, boolean _isDelta){
-        super(_name, _isDelta);
+    public BooleanProperty(String _name, Boolean _value, String _type){
+        super(_name, _type);
         setValue(_value);
     }
     public BooleanProperty(String _name, Boolean _value){
@@ -34,12 +34,7 @@ public class BooleanProperty extends Property {
 
     @Override
     public String toString(){
-        String printOut= "Property Name: "+ super.name;
-        if(super.isDelta)
-            printOut= printOut + ", Type: Delta";
-        else
-            printOut= printOut + ", Type: Assignment";
-        return printOut + ", Property Value: " + this.value;
+        return "Property Name: "+ super.name+", Type: "+ super.type+ ", Value: " + this.value;
     }
 
     @Override

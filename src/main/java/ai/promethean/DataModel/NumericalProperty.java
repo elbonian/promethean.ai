@@ -3,8 +3,8 @@ package ai.promethean.DataModel;
 public class NumericalProperty extends Property {
     protected Double value;
 
-    public NumericalProperty(String _name, Double _value, boolean _isDelta){
-        super(_name,_isDelta);
+    public NumericalProperty(String _name, Double _value, String _type){
+        super(_name,_type);
         setValue(_value);
     }
     public NumericalProperty(String _name, Double _value){
@@ -28,23 +28,20 @@ public class NumericalProperty extends Property {
         if(!p.name.equals(this.name)){
             throw new IllegalArgumentException("Property names do not match");
         }
-        else if(this.isDelta){
-            Double newVal= (Double)p.getValue()+this.value;
-            return new NumericalProperty(this.name, newVal);
-        }
-        else {
-            return new NumericalProperty(this.name, this.value);
+        else{
+            switch (this.type){
+                case("assignment"): return new NumericalProperty(this.name, this.value);
+                case("delta"):
+                    Double newVal= (Double)p.getValue()+this.value;
+                    return new NumericalProperty(this.name, newVal);
+                default: throw new IllegalArgumentException("Property type is not valid");
+            }
         }
     }
 
     @Override
     public String toString(){
-        String printOut= "Property Name: "+ super.name;
-        if(super.isDelta)
-            printOut= printOut + ", Type: Delta";
-        else
-            printOut= printOut + ", Type: Assignment";
-        return printOut + ", Property Value: " + this.value;
+        return "Property Name: "+ super.name+", Type: "+ super.type+ ", Value: " + this.value;
     }
 
     @Override

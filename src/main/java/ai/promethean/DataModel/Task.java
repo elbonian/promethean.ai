@@ -65,16 +65,16 @@ public class Task {
         property_impacts.add(p);
     }
 
-    public void addProperty(String name, Boolean value, boolean isDelta){
-        property_impacts.add(new BooleanProperty(name, value,isDelta));
+    public void addProperty(String name, Boolean value, String type){
+        property_impacts.add(new BooleanProperty(name, value,type));
     }
 
-    public void addProperty(String name, Double value, boolean isDelta){
-        property_impacts.add(new NumericalProperty(name, value,isDelta));
+    public void addProperty(String name, Double value, String type){
+        property_impacts.add(new NumericalProperty(name, value,type));
     }
 
-    public void addProperty(String name, String value, boolean isDelta){
-        property_impacts.add(new StringProperty(name, value,isDelta));
+    public void addProperty(String name, String value, String type){
+        property_impacts.add(new StringProperty(name, value,type));
     }
 
     public void addRequirement(Condition c){ requirements.add(c);}
