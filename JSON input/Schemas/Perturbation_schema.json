@@ -6,6 +6,9 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
+                "name": {
+                    "type": "string"
+                },
                 "time": {
                     "type": "integer"
                 },

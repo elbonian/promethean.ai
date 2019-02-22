@@ -31,12 +31,12 @@ public class BooleanPropertyTest {
     void checkNotEqualsBool(){assertFalse(bp.equals(bp3));}
 
     @Test
-    void checkDelta(){assertFalse(bp.getType());}
+    void checkDelta(){assertTrue(bp.getType().equals("assignment"));}
 
     @Test
     void checkChangeDelta(){
-        BooleanProperty bp5= new BooleanProperty("doorClosed", false, true);
-        assertTrue(bp5.getType());
+        BooleanProperty bp5= new BooleanProperty("doorClosed", false, "delta");
+        assertTrue(bp5.getType().equals("delta"));
     }
     @Test
     void checkExceptionImpacts(){
@@ -47,7 +47,8 @@ public class BooleanPropertyTest {
 
     @Test
     void checkApplyImpacts(){
-        BooleanProperty bp6= new BooleanProperty("test", false,true);
+        BooleanProperty bp6= new BooleanProperty("test", false,"delta");
+
         assertTrue(bp.applyPropertyImpactOnto(bp6).getValue());
     }
 }

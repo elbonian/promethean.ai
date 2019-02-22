@@ -3,19 +3,22 @@ package ai.promethean.DataModel;
 
 public abstract class Property {
     protected String name;
-    protected boolean isDelta;
+
+    protected String type;
     public Property(){
         setName("");
-        setType(false);
+        setType("assignment");
+
     }
 
     public Property(String _name){
         setName(_name);
-        setType(false);
+        setType("assignment");
     }
-    public Property(String _name, boolean _delta){
+    public Property(String _name, String _type){
         setName(_name);
-        setType(_delta);
+        setType(_type);
+
     }
     public void setName(String _name){
         this.name=_name;
@@ -25,12 +28,12 @@ public abstract class Property {
         return this.name;
     }
 
-    public boolean getType() {
-        return isDelta;
+    public String getType() {
+        return type;
     }
 
-    public void setType(boolean delta) {
-        isDelta = delta;
+    public void setType(String _type) {
+        type=_type;
     }
 
     public abstract String toString();
@@ -39,7 +42,9 @@ public abstract class Property {
 
     public abstract Object getValue();
 
-    public abstract Object applyPropertyImpactOnto(Property p);
+
+    public abstract Property applyPropertyImpactOnto(Property p);
+
 
 
 }

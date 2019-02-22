@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class NumericalPropertyTest {
-    private NumericalProperty np = new NumericalProperty("test", 100.0, true);
+    private NumericalProperty np = new NumericalProperty("test", 100.0, "delta");
     private NumericalProperty np1 = new NumericalProperty("test", 100.0);
     private NumericalProperty np2 = new NumericalProperty("test1", 100.0);
     private NumericalProperty np3 = new NumericalProperty("test", -50.0);
