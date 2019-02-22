@@ -3,8 +3,7 @@ package ai.promethean.DataModel;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ai.promethean.DataModel.Condition;
-import ai.promethean.Planner.OptimizationWeightMap;
+import ai.promethean.Planner.OptimizationWeight;
 
 public class Task {
     private int UID;
@@ -99,17 +98,24 @@ public class Task {
                 + "\n Properties: " + property_impacts;
     }
 
-    public Double calculateTaskWeight(OptimizationWeightMap map) {
+    public Double calculateTaskWeight(StaticOptimizations optimizations) {
         Double squaredSum = 0.0;
-        if(map.getOptimizationWeightMap().get("Duration") != null) {
-            squaredSum += Math.pow(this.duration, map.getOptimizationWeightMap().get("Duration"));
+        int optimizationsLength = optimizations.size();
+        if(optimizations.getOptimization("Duration") != null) {
+            squaredSum += OptimizationWeight.weightedPropertyValue(
+                    optimizations.getOptimization("Duration"),
+                    duration+0.0,
+                    optimizationsLength);
         } else {
             squaredSum += this.duration;
         }
         for (Property property : this.property_impacts) {
             if (property instanceof NumericalProperty) {
-                if (map.getOptimizationWeightMap().get(property.getName()) != null) {
-                    squaredSum += (Math.pow(((NumericalProperty) property).getValue(),map.getOptimizationWeightMap().get(property.getName())));
+                if (optimizations.getOptimization(property.getName()) != null) {
+                    squaredSum += OptimizationWeight.weightedPropertyValue(
+                            optimizations.getOptimization(property.getName()),
+                            ((NumericalProperty)property).getValue(),
+                            optimizationsLength);
                 } else {
                     squaredSum += ((NumericalProperty) property).getValue();
                 }

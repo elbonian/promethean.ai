@@ -1,7 +1,6 @@
 package ai.promethean.GraphManagement;
 
 import ai.promethean.DataModel.*;
-import ai.promethean.Planner.OptimizationWeightMap;
 
 public class Heuristic {
 
@@ -9,8 +8,8 @@ public class Heuristic {
         return g_value + h_value(goalState, currentState);
     }
 
-    public static Double g_value(SystemState currentState, Task currentTask, OptimizationWeightMap map) {
-        return currentTask.calculateTaskWeight(map) + currentState.getgValue();
+    public static Double g_value(SystemState currentState, Task currentTask, StaticOptimizations optimizations) {
+        return currentTask.calculateTaskWeight(optimizations) + currentState.getgValue();
     }
 
     private static Double h_value(GoalState goalState, SystemState currentState) {
