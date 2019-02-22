@@ -1,7 +1,7 @@
 package ai.promethean.GraphManagement;
 
 import ai.promethean.DataModel.*;
-import ai.promethean.Planner.OptimizationWeightMap;
+import ai.promethean.Planner.TaskWeight;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
@@ -12,7 +12,7 @@ public class GraphManager {
     private static SystemState initState;
     private static SystemState goalState;
     private static TaskDictionary taskDict;
-    private static OptimizationWeightMap optimizationMap;
+    private static StaticOptimizations optimizations;
 
     public GraphManager() {
 
@@ -62,7 +62,7 @@ public class GraphManager {
 
         int previousTime = previousState.getTime();
         int nextTime = previousTime + task.getDuration();
-        double gVal = previousState.getgValue() + task.calculateTaskWeight(optimizationMap);
+        double gVal = previousState.getgValue() + TaskWeight.calculateTaskWeight(task, optimizations);
 
         SystemState nextState = new SystemState(nextTime);
         nextState.setgValue(gVal);
