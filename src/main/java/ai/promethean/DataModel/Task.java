@@ -113,32 +113,4 @@ public class Task {
                 + "\n Properties: " + property_impacts;
     }
 
-    public Double calculateTaskWeight(StaticOptimizations optimizations) {
-        Double squaredSum = 0.0;
-        int optimizationsLength = optimizations.size();
-        if(optimizations.getOptimization("Duration") != null) {
-            squaredSum += OptimizationWeight.weightedPropertyValue(
-                    optimizations.getOptimization("Duration"),
-                    duration+0.0,
-                    optimizationsLength);
-        } else {
-            squaredSum += this.duration;
-        }
-        for (Property property : this.property_impacts) {
-            if (property instanceof NumericalProperty) {
-                if (optimizations.getOptimization(property.getName()) != null) {
-                    squaredSum += OptimizationWeight.weightedPropertyValue(
-                            optimizations.getOptimization(property.getName()),
-                            ((NumericalProperty)property).getValue(),
-                            optimizationsLength);
-                } else {
-                    squaredSum += ((NumericalProperty) property).getValue();
-                }
-            } else {
-                squaredSum += 1.0;
-            }
-        }
-        return Math.sqrt(squaredSum);
-    }
-
 }

@@ -1,6 +1,7 @@
 package ai.promethean.GraphManagement;
 
 import ai.promethean.DataModel.*;
+import ai.promethean.Planner.TaskWeight;
 
 public class Heuristic {
 
@@ -9,7 +10,7 @@ public class Heuristic {
     }
 
     public static Double g_value(SystemState currentState, Task currentTask, StaticOptimizations optimizations) {
-        return currentTask.calculateTaskWeight(optimizations) + currentState.getgValue();
+        return TaskWeight.calculateTaskWeight(currentTask, optimizations) + currentState.getgValue();
     }
 
     private static Double h_value(GoalState goalState, SystemState currentState) {
