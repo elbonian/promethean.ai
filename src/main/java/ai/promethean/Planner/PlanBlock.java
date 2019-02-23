@@ -8,13 +8,11 @@ public class PlanBlock {
     private SystemState state;
 
     public PlanBlock(Task task, SystemState state) {
-        this.setTask(task);
-        this.setState(state);
+        this.task = task;
+        this.state = state;
     }
 
-    public void setTask(Task task) { this.task = task; }
     public Task getTask() { return task; }
-    public void setState(SystemState state) { this.state = state; }
     public SystemState getState() { return state; }
 
 }

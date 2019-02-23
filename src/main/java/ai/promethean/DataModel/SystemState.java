@@ -57,6 +57,7 @@ public class SystemState {
         return property_list;
     }
 
+    public void setPropertyMap(PropertyMap propertyMap) { this.properties = propertyMap; }
     public PropertyMap getPropertyMap() { return properties; }
 
     public void setPreviousState(SystemState previousState) {

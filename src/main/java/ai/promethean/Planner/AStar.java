@@ -1,35 +1,34 @@
 package ai.promethean.Planner;
 
-import ai.promethean.DataModel.Optimization;
-import ai.promethean.DataModel.SystemState;
-import ai.promethean.DataModel.TaskDictionary;
+import ai.promethean.DataModel.*;
 
 import java.util.ArrayList;
 
 public class AStar implements Algorithm {
     private GraphManager graph;
     private Double ceiling;
+    private SystemState initState;
+    private GoalState goalState;
 
-    public AStar(SystemState goalState) {
-        this.graph = new GraphManager(goalState);
+    public AStar(SystemState initState, GoalState goalState, TaskDictionary taskDict, StaticOptimizations optimizations) {
+        this.graph = new GraphManager(initState, goalState, taskDict, optimizations);
+        this.initState = initState;
+        this.goalState = goalState;
     }
 
-    public SystemState run(SystemState initialState,
-                           SystemState goalState,
-                           TaskDictionary tasks,
-                           ArrayList<Optimization> optimizations) {
-
-       boolean found = false;
-       if (initialState.equals(goalState)) { found = true; }
-
-       graph.addNeighbors(initialState);
-
-       while(!found /*|| ceiling check*/) {
-           SystemState currentState = graph.poll();
-           if (currentState.equals(goalState)) { found = true; }
-           graph.addNeighbors(currentState);
+    public SystemState run() {
+       if (goalState.meetsGoal(initState)) {
+           return initState;
        }
-       // TODO: Return runtimeGoalState
+
+       graph.addNeighborsToFrontier(initState);
+
+       while(!graph.frontierIsEmpty()/*|| ceiling check*/) {
+           SystemState currentState = graph.poll();
+           if (goalState.meetsGoal(currentState)) { return currentState; }
+           graph.addNeighborsToFrontier(currentState);
+       }
+
        return null;
     }
 

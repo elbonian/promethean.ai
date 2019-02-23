@@ -1,4 +1,5 @@
 package ai.promethean.DataModel;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -7,6 +8,11 @@ public class PropertyMap {
     private Map<String, Property> property_map = new HashMap<>();
 
     public PropertyMap() {}
+    public PropertyMap(PropertyMap propertyMap) {
+        for (Property p: propertyMap.getProperties() ) {
+            this.addProperty(p);
+        }
+    }
 
     /* Used to add a new property to the PropertyMap. If a property already has the name specified, the value will be updated
      * @param   name    The name of the property being added
@@ -83,6 +89,20 @@ public class PropertyMap {
         return property_map.keySet();
     }
 
+    public ArrayList<Property> getProperties() {
+        ArrayList<Property> properties =  new ArrayList<>();
+        for (String key : this.getKeys()) {
+            properties.add(getProperty(key));
+        }
+        return properties;
+    }
+
+    public void applyImpacts(ArrayList<Property> property_impacts) {
+        for (Property p: property_impacts) {
+            this.addProperty(p.applyPropertyImpactOnto(this.getProperty(p.getName())));
+        }
+    }
+
     /* Used to compare two PropertyMaps. Returns true if they are the same map, false otherwise. This includes the Property mapped to the name
      * @param   p   The PropertyMap to compare to this one
      * @return Boolean whether input PropertyMap is identical to this one
@@ -91,11 +111,12 @@ public class PropertyMap {
         return property_map.equals(p.getPropertyMap());
     }
 
+
     @Override
     public String toString() {
         String printOut="";
         for(Property p : property_map.values()){
-            printOut=printOut + "\n Name: "+ p.getName()+ "Type: " +p.getType()+ " Value: " + p.getValue();
+            printOut=printOut + "\n Name: "+ p.getName()+ " Type: " +p.getType()+ " Value: " + p.getValue();
         }
         return printOut;
     }

@@ -1,56 +1,98 @@
 package ai.promethean.Planner;
 
-import ai.promethean.DataModel.SystemState;
-import ai.promethean.DataModel.Task;
+import ai.promethean.DataModel.*;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class GraphManager {
 
-    // Ordered based on f value
     private PriorityQueue<StateTemplate> frontier = new PriorityQueue<StateTemplate>(1, new FrontierComparator());
-    private SystemState goalState;
+    private static SystemState initState;
+    private static GoalState goalState;
+    private static TaskDictionary taskDict;
+    private static StaticOptimizations optimizations;
 
-    public GraphManager(SystemState goalState) {
+    public GraphManager(SystemState initState, GoalState goalState, TaskDictionary taskDict, StaticOptimizations optimizations) {
+        this.initState = initState;
         this.goalState = goalState;
+        this.taskDict = taskDict;
+        this.optimizations = optimizations;
     }
 
-    // Return all tasks that can be executed from a given SystemState
-    private ArrayList<Task> validTasks(SystemState state){
-        // TODO: Find all tasks that can be executed from state (is TaskDictionary global?)
-        return null;
+    public boolean frontierIsEmpty(){
+        if (frontier.peek() == null) {
+            return true;
+        }
+        return false;
     }
 
-    // Create stateTemplate given previous state and valid task list
+    private static ArrayList<Task> validTasks(SystemState state){
+        // For keeping track of valid tasks
+        ArrayList<Task> validTasks = new ArrayList<>();
+        for (String name: taskDict.getKeys()) {
+            boolean possible_task = true;
+            Task current_task = taskDict.getTask(name);
+            ArrayList<Condition> requirements = current_task.getRequirements();
+            // I love IntelliJ
+            for (Condition condition : requirements) {
+                if (!condition.evaluate(state.getProperty(condition.getName()).getValue())) {
+                    possible_task = false;
+                    break;
+                }
+            }
+            // If no conditions are unsatisfied, then add this task to the valid_tasks array
+            if (possible_task) {
+                validTasks.add(current_task);
+            }
+        }
+        return validTasks;
+    }
+
     private ArrayList<StateTemplate> templateGeneration(SystemState state, ArrayList<Task> tasks){
         Double g_value;
         Double f_value;
-        ArrayList<StateTemplate> templates = null;
+        ArrayList<StateTemplate> templates = new ArrayList<>();
 
         for (Task task : tasks) {
-            // g_value = Heuristic.g_value(state, task);
-            // f_value = Heuristic.f_value(state, this.goalState, g_value);
-            g_value = 0.0;
-            f_value = 0.0;
+            g_value = Heuristic.g_value(state, task, optimizations);
+            f_value = Heuristic.f_value(state, this.goalState, g_value);
 
-            StateTemplate template = new StateTemplate(state, task, f_value, g_value);
-            templates.add(template);
+            templates.add(new StateTemplate(state, task, f_value, g_value));
         }
         return templates;
     }
 
     // Add stateTemplates of all potential neighbors to the frontier
-    public void addNeighbors(SystemState state) {
-        ArrayList<Task> tasks = validTasks(state);
-        ArrayList<StateTemplate> templates = templateGeneration(state, tasks);
-        templates.forEach((template) -> frontier.add(template));
+    public void addNeighborsToFrontier(SystemState state) {
+        ArrayList<StateTemplate> templates = templateGeneration(state, validTasks(state));
+        frontier.addAll(templates);
     }
 
-    // Given a previousState, task, return next SystemState
-    private SystemState createState(SystemState previousState, Task task) {
-        // TODO: Build and return a new SystemState object
-        return null;
+    private static SystemState createState(SystemState previousState, Task task) {
+        ArrayList<Property> impacts = task.getProperty_impacts();
+        PropertyMap affectedProperties = previousState.getPropertyMap();
+
+        SystemState nextState = new SystemState(previousState.getTime() + task.getDuration());
+        nextState.setgValue(previousState.getgValue() + TaskWeight.calculateTaskWeight(task, optimizations));
+        nextState.setPreviousState(previousState);
+        nextState.setPreviousTask(task);
+
+
+        for (Property property: impacts) {
+            String propertyName = property.getName();
+
+            Property oldProperty = affectedProperties.getProperty(propertyName);
+            nextState.getPropertyMap().addProperty(property.applyPropertyImpactOnto(oldProperty));
+        }
+
+        for (String propertyName: affectedProperties.getKeys()) {
+            if (! nextState.getPropertyMap().containsProperty(propertyName)) {
+                nextState.getPropertyMap().addProperty(affectedProperties.getProperty(propertyName));
+            }
+        }
+
+        return nextState;
     }
 
     // Get best neighbor from frontier and convert to SystemState
@@ -58,5 +100,4 @@ public class GraphManager {
         StateTemplate template = frontier.poll();
         return createState(template.getPreviousState(), template.getTask());
     }
-
 }
