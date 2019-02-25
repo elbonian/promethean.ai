@@ -77,12 +77,12 @@ public class Parser {
 
                                 //Captures any type containing min (Case Indifferent)
                                 if (optimization.get("type").getAsString().toLowerCase().contains("min")) {
-                                    Optimization o = new Optimization(name, true, priority);
+                                    Optimization o = new Optimization(name, "min", priority);
                                     optimizationList.addOptimization(o);
 
                                     //Captures any type containing max (Case insensitive)
                                 } else if (optimization.get("type").getAsString().toLowerCase().contains("max")) {
-                                    Optimization o = new Optimization(name, false, priority);
+                                    Optimization o = new Optimization(name, "max", priority);
                                     optimizationList.addOptimization(o);
                                 } else {
                                     throw new IllegalArgumentException("JSON Object Optimization type is invalid (must be a minimum or maximum)");

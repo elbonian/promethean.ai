@@ -5,8 +5,8 @@ import ai.promethean.DataModel.Task;
 
 // Holds minimum information required to store SystemState information in frontier
 public class StateTemplate {
-    private SystemState previousState; // reference
-    private Task task; // reference
+    private SystemState previousState;
+    private Task task;
     private Double g;
     private Double f;
 

@@ -8,11 +8,11 @@ import java.util.ArrayList;
 public class OptimizationTestConstants {
 
     public static Optimization getTestOptimization1() {
-        return new Optimization("NumProperty1", true, 1);
+        return new Optimization("NumProperty1", "min", 1);
     }
 
     public static Optimization getTestOptimization2() {
-        return new Optimization("NumProperty2", false, 1);
+        return new Optimization("NumProperty2", "max", 1);
     }
 
     public static StaticOptimizations getAllTestOptimizations() {

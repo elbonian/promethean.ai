@@ -13,10 +13,12 @@ public class Plan {
     public Plan(SystemState runtimeGoalState) {
         this.goalState = runtimeGoalState;
         SystemState state = runtimeGoalState;
+
         while (state.getPreviousTask() != null) {
             planBlockList.add(new PlanBlock(state.getPreviousTask(), state));
             state = state.getPreviousState();
         }
+
         Collections.reverse(planBlockList);
         this.initialState = state;
     }

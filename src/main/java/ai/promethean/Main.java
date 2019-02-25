@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Parser p = new Parser("/Users/nix/workspace/git/promethean.ai/JSON_input/InputFiles/test.json", true);
         ArrayList<Object> objects = p.parse();
         Algorithm algo = new AStar((SystemState) objects.get(1),
