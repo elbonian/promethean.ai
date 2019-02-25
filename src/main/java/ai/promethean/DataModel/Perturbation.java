@@ -1,45 +1,80 @@
 package ai.promethean.DataModel;
 
-import java.sql.Time;
 import java.util.*;
 
 
 public class Perturbation {
-    private Time timeStamp;
-    private ArrayList<Property> property_impacts = new ArrayList<>();
+    private int time;
+    private String name;
+    private ArrayList<Property> property_impacts= new ArrayList<Property>();
 
     public Perturbation(){
-        timeStamp= new Time(System.currentTimeMillis());
+        setTime(0);
     }
-    public Perturbation(long time){
-        timeStamp= new Time(time);
+    public Perturbation(String _name){
+        setTime(0);
+        setName(_name);
+
+    }
+    public Perturbation(int time){
+        setTime(time);
     }
 
-    public Time getTimeStamp() {
-        return timeStamp;
+    public void setTime(int time) {
+        this.time = time;
     }
 
-    public ArrayList<Property> getPropertyImpacts() {
+    public int getTime() {
+        return time;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<Property> getProperties() {
         return property_impacts;
     }
 
-    public void addProperty(String name, Boolean value){
-        property_impacts.add(new BooleanProperty(name, value));
+
+    public Property getProperty(String name){
+        for(Property p: property_impacts){
+            if(p.getName().equals(name)){
+                return p;
+            }
+        }
+        return null;
     }
 
-    public void addProperty(String name, Double value){
-        property_impacts.add(new NumericalProperty(name, value));
+
+    public void addProperty(Property p){
+        property_impacts.add(p);
     }
 
-    public void addProperty(String name, String value){
-        property_impacts.add(new StringProperty(name, value));
+
+    public void addProperty(String name, Boolean value, String type){
+        property_impacts.add(new BooleanProperty(name, value,type));
     }
 
-    public void addProperty(Property property) { property_impacts.add(property); }
+    public void addProperty(String name, Double value, String type){
+        property_impacts.add(new NumericalProperty(name, value,type));
+    }
+
+    public void addProperty(String name, String value, String type){
+        property_impacts.add(new StringProperty(name, value,type));
+    }
+
+    public void sortProperties(){
+        Collections.sort(property_impacts, new SortbyProperty());
+    }
 
     @Override
     public String toString() {
-        return "Pertubation Timestamp: " + this.timeStamp
-                + "\n Property Changes: " + property_impacts;
+        return "Perturbation Name: "+this.name+ ", Time: " + this.time
+                + "\n Property Changes: " + property_impacts + "\n";
     }
 }

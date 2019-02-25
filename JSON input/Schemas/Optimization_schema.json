@@ -9,12 +9,16 @@
                 "name": {
                     "type": "string"
                 },
-                "isMinimum": {
-                    "type": "boolean"
+                "type": {
+                    "type": "string"
+                },
+                "priority": {
+                    "type": "integer"
                 }
             },
             "required": [
-                "isMinimum",
+                "type",
+                "priority",
                 "name"
             ],
             "title": "Optimization"

@@ -6,10 +6,10 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "UID": {
-                    "type": "integer"
+                "name": {
+                    "type": "string"
                 },
-                "Duration": {
+                "duration": {
                     "type": "integer"
                 },
                 "requirements": {
@@ -18,13 +18,7 @@
                         "$ref": "../Condition_schema.json#/Condition"
                     }
                 },
-                "resources": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "../Resource_schema.json#/Resource"
-                    }
-                },
-                "properties": {
+                "property_impacts": {
                     "type": "array",
                     "items": {
                         "$ref": "../Property_schema.json#/Property"
@@ -32,8 +26,7 @@
                 }
             },
             "required": [
-                "Duration",
-                "UID"
+                "duration"
             ],
             "title": "Task"
         }

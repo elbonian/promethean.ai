@@ -1,0 +1,48 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/Init",
+    "definitions": {
+        "Init": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "initial_state": {
+                    "type": "object",
+                    "items": {
+                        "$ref": "../InitState_schema.json#/InitState"
+                    }
+                },
+                "goal_state": {
+                    "type": "object",
+                    "items": {
+                        "$ref": "../GoalState_schema.json#/GoalState"
+                    }
+                },
+                "tasks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../Task_schema.json#/Task"
+                    }
+                },
+                 "optimizations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../Optimization_schema.json#/Optimization"
+                    }
+                },
+                "perturbations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../Perturbation_schema.json#/Perturbation"
+                    }
+                }
+            },
+            "required": [
+                "initial_state",
+                "goal_state",
+                "tasks"
+            ],
+            "title": "Init"
+        }
+    }
+}

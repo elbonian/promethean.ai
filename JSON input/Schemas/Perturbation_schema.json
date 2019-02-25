@@ -1,24 +1,18 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$ref": "#/definitions/State",
+    "$ref": "#/definitions/Perturbation",
     "definitions": {
         "State": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "UID": {
+                "name": {
+                    "type": "string"
+                },
+                "time": {
                     "type": "integer"
                 },
-                "Time": {
-                    "type": "integer"
-                },
-                "resources": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "../Resource_schema.json#/Resource"
-                    }
-                },
-                "properties": {
+                "property_impacts": {
                     "type": "array",
                     "items": {
                         "$ref": "../Property_schema.json#/Property"
@@ -26,9 +20,9 @@
                 }
             },
             "required": [
-                "UID",
+                "time"
             ],
-            "title": "State"
+            "title": "Perturbation"
         }
     }
 }

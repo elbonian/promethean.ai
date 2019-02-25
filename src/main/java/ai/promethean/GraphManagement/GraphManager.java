@@ -1,6 +1,7 @@
 package ai.promethean.GraphManagement;
 
 import ai.promethean.DataModel.*;
+import ai.promethean.Planner.TaskWeight;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
@@ -11,6 +12,7 @@ public class GraphManager {
     private static SystemState initState;
     private static SystemState goalState;
     private static TaskDictionary taskDict;
+    private static StaticOptimizations optimizations;
 
     public GraphManager() {
 
@@ -25,7 +27,6 @@ public class GraphManager {
             // I love IntelliJ
             for (Condition condition : requirements) {
                 String name = condition.getName();
-                double value = condition.getValue();
                 Object state_value = state.getProperty(name);
                 // ISSUE: condition.evaluate only does Doubles, extending props will break this
                 // Extend after merging other changes to handle different inputs
@@ -56,8 +57,34 @@ public class GraphManager {
     }
 
     private static SystemState createState(SystemState previousState, Task task) {
-        // TODO: Build and return a new SystemState object
-        return null;
+        ArrayList<Property> taskProperties = task.getProperty_impacts();
+        PropertyMap affectedProperties = previousState.getPropertyMap();
+
+        int previousTime = previousState.getTime();
+        int nextTime = previousTime + task.getDuration();
+        double gVal = previousState.getgValue() + TaskWeight.calculateTaskWeight(task, optimizations);
+
+        SystemState nextState = new SystemState(nextTime);
+        nextState.setgValue(gVal);
+        nextState.setPreviousState(previousState);
+        nextState.setPreviousTask(task);
+
+        PropertyMap nextStateMap = nextState.getPropertyMap();
+
+        for (Property property: taskProperties) {
+            String propertyName = property.getName();
+
+            Property oldProperty = affectedProperties.getProperty(propertyName);
+            nextStateMap.addProperty(oldProperty.applyPropertyImpactOnto(property));
+        }
+
+        for (String propertyName: affectedProperties.getKeys()) {
+            if (!nextStateMap.containsProperty(propertyName)) {
+                nextStateMap.addProperty(affectedProperties.getProperty(propertyName));
+            }
+        }
+
+        return nextState;
     }
 
     public static SystemState poll() {
