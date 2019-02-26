@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        Parser p = new Parser("/Users/nix/promethean.ai/JSON_input/InputFiles/test.json", true);
+        Parser p = new Parser("JSON_input/InputFiles/test.json", true);
         ArrayList<Object> objects = p.parse();
         Algorithm algo = new AStar((SystemState) objects.get(1),
                                     (GoalState) objects.get(2),
