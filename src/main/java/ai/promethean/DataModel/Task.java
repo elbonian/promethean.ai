@@ -11,7 +11,7 @@ public class Task {
     private int duration;
     private String name;
 
-    private ArrayList<Property> property_impacts=new ArrayList<Property>();
+    private PropertyMap property_impacts=new PropertyMap();
     private ArrayList<Condition> requirements=new ArrayList<Condition>();
 
     public Task( int _duration){
@@ -49,8 +49,16 @@ public class Task {
         this.name = name;
     }
 
-    public ArrayList<Property> getProperty_impacts() {
+    public PropertyMap getProperty_impacts() {
         return property_impacts;
+    }
+
+    public ArrayList<Property> getProperties() {
+        ArrayList<Property> property_list = new ArrayList<>();
+        for (String key : property_impacts.getKeys()) {
+            property_list.add(property_impacts.getProperty(key));
+        }
+        return property_list;
     }
 
     public ArrayList<Condition> getRequirements(){
@@ -58,12 +66,7 @@ public class Task {
     }
 
     public Property getProperty(String name){
-        for(Property p: property_impacts){
-            if(p.getName().equals(name)){
-                return p;
-            }
-        }
-        return null;
+        return this.property_impacts.getProperty(name);
     }
 
     public Condition getRequirement(String name){
@@ -76,19 +79,19 @@ public class Task {
     }
 
     public void addProperty(Property p){
-        property_impacts.add(p);
+        property_impacts.addProperty(p);
     }
 
     public void addProperty(String name, Boolean value, String type){
-        property_impacts.add(new BooleanProperty(name, value,type));
+        property_impacts.addProperty(name, value, type);
     }
 
     public void addProperty(String name, Double value, String type){
-        property_impacts.add(new NumericalProperty(name, value,type));
+        property_impacts.addProperty(name, value, type);
     }
 
     public void addProperty(String name, String value, String type){
-        property_impacts.add(new StringProperty(name, value,type));
+        property_impacts.addProperty(name, value, type);
     }
 
     public void addRequirement(Condition c){ requirements.add(c);}

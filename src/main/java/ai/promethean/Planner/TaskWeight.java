@@ -22,7 +22,7 @@ public class TaskWeight {
             squaredSum += task.getDuration();
         }
 
-        for (Property property : task.getProperty_impacts()) {
+        for (Property property : task.getProperties()) {
             if (property instanceof NumericalProperty) {
                 if (optimizations.getOptimization(property.getName()) != null) {
                     squaredSum += OptimizationWeight.weightedPropertyValue(

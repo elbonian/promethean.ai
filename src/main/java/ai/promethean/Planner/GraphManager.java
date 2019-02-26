@@ -27,7 +27,7 @@ public class GraphManager {
     /*
      * returns list of tasks that can be executed at a given SystemState
      */
-    private ArrayList<Task> validTasks(SystemState state) {
+    public ArrayList<Task> validTasks(SystemState state) {
         ArrayList<Task> validTasks = new ArrayList<>();
 
         for (String name : taskDict.getKeys()) {
@@ -52,8 +52,7 @@ public class GraphManager {
     /*
      * returns a SystemState created by applying task's property impacts to previous state
      */
-    private SystemState createState(SystemState previousState, Task task, Double g_value) {
-        ArrayList<Property> impacts = task.getProperty_impacts();
+    public SystemState createState(SystemState previousState, Task task, Double g_value) {
         PropertyMap prev_properties = previousState.getPropertyMap();
 
         SystemState nextState = new SystemState(previousState.getTime() + task.getDuration());
@@ -61,15 +60,14 @@ public class GraphManager {
         nextState.setPreviousState(previousState);
         nextState.setPreviousTask(task);
 
-        for (Property property : impacts) {
-            String propertyName = property.getName();
-            Property oldProperty = prev_properties.getProperty(propertyName);
-            nextState.getPropertyMap().addProperty(property.applyPropertyImpactOnto(oldProperty));
-        }
-
         for (String propertyName : prev_properties.getKeys()) {
-            if (!nextState.getPropertyMap().containsProperty(propertyName)) {
-                nextState.getPropertyMap().addProperty(prev_properties.getProperty(propertyName));
+            Property previousProperty = previousState.getProperty(propertyName);
+            Property impact = task.getProperty(propertyName);
+            if (impact != null) {
+                Property newProperty = previousProperty.applyImpact(impact);
+                nextState.addProperty(newProperty);
+            } else {
+                nextState.addProperty(previousProperty);
             }
         }
 

@@ -19,43 +19,39 @@ public class PropertyMap {
      * @param   value   The boolean value associated with the propertyZ
      */
 
-    public void addProperty(String name, Boolean value) {
-        Property new_prop = new BooleanProperty(name, value);
+    public void addProperty(String name, Boolean value, String type) {
         if(property_map.containsKey(name)) {
-            property_map.replace(name, new_prop);
+            throw new IllegalArgumentException("Properties should never be mutated.");
         } else {
-            property_map.put(name, new_prop);
+            property_map.put(name, new BooleanProperty(name, value, type));
         }
     }
 
     /* Add a Property with a Double value
      */
 
-    public void addProperty(String name, Double value) {
-        Property new_prop = new NumericalProperty(name, value);
+    public void addProperty(String name, Double value, String type) {
         if(property_map.containsKey(name)) {
-            property_map.replace(name, new_prop);
+            throw new IllegalArgumentException("Properties should never be mutated.");
         } else {
-            property_map.put(name, new_prop);
+            property_map.put(name, new NumericalProperty(name, value, type));
         }
     }
 
     /* Add a Property with a String value
      */
 
-    public void addProperty(String name, String value) {
-        Property new_prop = new StringProperty(name, value);
+    public void addProperty(String name, String value, String type) {
         if(property_map.containsKey(name)) {
-            property_map.replace(name, new_prop);
+            throw new IllegalArgumentException("Properties should never be mutated.");
         } else {
-            property_map.put(name, new_prop);
+            property_map.put(name, new StringProperty(name, value, type));
         }
     }
 
     public void addProperty(Property p) {
-
         if(property_map.containsKey(p.getName())) {
-            property_map.replace(p.getName(), p);
+            throw new IllegalArgumentException("Properties should never be mutated.");
         } else {
             property_map.put(p.getName(), p);
         }
@@ -95,12 +91,6 @@ public class PropertyMap {
             properties.add(getProperty(key));
         }
         return properties;
-    }
-
-    public void applyImpacts(ArrayList<Property> property_impacts) {
-        for (Property p: property_impacts) {
-            this.addProperty(p.applyPropertyImpactOnto(this.getProperty(p.getName())));
-        }
     }
 
     /* Used to compare two PropertyMaps. Returns true if they are the same map, false otherwise. This includes the Property mapped to the name

@@ -32,13 +32,13 @@ public class StringPropertyTest {
     @Test
     void checkExceptionImpacts(){
         assertThrows(IllegalArgumentException.class, () -> {
-            sp.applyPropertyImpactOnto(sp2);
+            sp2.applyImpact(sp);
         });
     }
 
    @Test
   void checkApplyImpacts(){
       StringProperty sp6= new StringProperty("test", "Medium","delta");
-      assertTrue(sp.applyPropertyImpactOnto(sp6).getValue().equals("High"));
+      assertTrue(sp6.applyImpact(sp).getValue().equals("High"));
  }
 }

@@ -41,7 +41,7 @@ public class BooleanPropertyTest {
     @Test
     void checkExceptionImpacts(){
         assertThrows(IllegalArgumentException.class, () -> {
-            bp.applyPropertyImpactOnto(bp2);
+            bp2.applyImpact(bp);
         });
     }
 
@@ -49,6 +49,6 @@ public class BooleanPropertyTest {
     void checkApplyImpacts(){
         BooleanProperty bp6= new BooleanProperty("test", false,"delta");
 
-        assertTrue(bp.applyPropertyImpactOnto(bp6).getValue());
+        assertTrue(bp6.applyImpact(bp).getValue());
     }
 }

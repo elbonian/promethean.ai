@@ -25,17 +25,17 @@ public class NumericalProperty extends Property {
     /* Applies the impacts of this property object onto a given property p
     * Returns: New property with the assignment/delta applied
      */
-    public NumericalProperty applyPropertyImpactOnto(Property p){
+    public NumericalProperty applyImpact(Property impact){
 
-        if(!p.name.equals(this.name)){
+        if(!impact.name.equals(this.name)){
             throw new IllegalArgumentException("Property names do not match");
         }
 
         else{
-            switch (this.type){
-                case("assignment"): return new NumericalProperty(this.name, this.value);
+            switch (impact.getType()){
+                case("assignment"): return new NumericalProperty(this.name, (Double) impact.getValue());
                 case("delta"):
-                    Double newVal= (Double)p.getValue()+this.value;
+                    Double newVal= (Double)impact.getValue()+this.value;
                     return new NumericalProperty(this.name, newVal);
                 default: throw new IllegalArgumentException("Property type is not valid");
             }

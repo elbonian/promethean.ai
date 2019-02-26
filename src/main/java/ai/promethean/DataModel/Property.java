@@ -43,7 +43,7 @@ public abstract class Property {
     public abstract Object getValue();
 
 
-    public abstract Property applyPropertyImpactOnto(Property p);
+    public abstract Property applyImpact(Property p);
 
 
 
