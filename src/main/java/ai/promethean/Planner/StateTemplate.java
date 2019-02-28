@@ -1,15 +1,16 @@
-package ai.promethean.GraphManagement;
+package ai.promethean.Planner;
 
 import ai.promethean.DataModel.SystemState;
 import ai.promethean.DataModel.Task;
 
+// Holds minimum information required to store SystemState information in frontier
 public class StateTemplate {
     private SystemState previousState;
     private Task task;
-    private Integer f;
-    private Integer g;
+    private Double g;
+    private Double f;
 
-    public StateTemplate(SystemState prev, Task t, Integer g_value, Integer f_value) {
+    public StateTemplate(SystemState prev, Task t, Double g_value, Double f_value) {
         this.previousState = prev;
         this.task = t;
         this.g = g_value;
@@ -18,7 +19,7 @@ public class StateTemplate {
 
     public SystemState getPreviousState() {return this.previousState;}
     public Task getTask() {return this.task;}
-    public Integer getF() {return this.f;}
-    public Integer getG() {return this.g;}
+    public Double getG() {return this.g;}
+    public Double getF() {return this.f;}
 
 }

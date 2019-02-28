@@ -4,8 +4,10 @@ package ai.promethean.DataModel;
 public class BooleanProperty extends Property {
     protected Boolean value;
 
-    public BooleanProperty(String _name, Boolean _value, boolean _isDelta){
-        super(_name, _isDelta);
+
+    public BooleanProperty(String _name, Boolean _value, String _type){
+        super(_name, _type);
+
         setValue(_value);
     }
     public BooleanProperty(String _name, Boolean _value){
@@ -25,21 +27,17 @@ public class BooleanProperty extends Property {
     /* Applies the impacts of this property object onto a given property p
    *  Returns: New property with the assignment applied
    */
-    public BooleanProperty applyPropertyImpactOnto(Property p){
-        if(!p.name.equals(this.name)){
+    public BooleanProperty applyImpact(Property impact){
+        if(!impact.name.equals(this.name)){
             throw new IllegalArgumentException("Property names do not match");
         }
-        return new BooleanProperty(this.name, this.value);
+        return new BooleanProperty(this.name, (boolean) impact.getValue());
     }
 
     @Override
     public String toString(){
-        String printOut= "Property Name: "+ super.name;
-        if(super.isDelta)
-            printOut= printOut + ", Type: Delta";
-        else
-            printOut= printOut + ", Type: Assignment";
-        return printOut + ", Property Value: " + this.value;
+        return "Property Name: "+ super.name+", Type: "+ super.type+ ", Value: " + this.value;
+
     }
 
     @Override

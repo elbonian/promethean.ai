@@ -1,10 +1,9 @@
 package ai.promethean.API;
 import ai.promethean.Parser.*;
-import ai.promethean.API.*;
 import java.util.ArrayList;
 import ai.promethean.DataModel.*;
 import ai.promethean.Planner.*;
-import ai.promethean.GraphManagement.*;
+
 
 /*
     This API is meant to be as simple as possible and expandable as possible.
@@ -29,8 +28,8 @@ public class API {
         throw new ParserError(err_msg);
     }
 
-    public void generatePlan(String inputFile){
-        Parser p = new Parser("JSON_input/InputFiles/test.json", true);
+    public void generatePlan(String inputFile, Boolean isFile){
+        Parser p = new Parser("JSON_input/InputFiles/test.json", isFile);
         ArrayList<Object> objects = p.parse();
         Algorithm algo = new AStar((SystemState) objects.get(1),
                 (GoalState) objects.get(2),

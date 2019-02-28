@@ -3,8 +3,9 @@ package ai.promethean.DataModel;
 public class StringProperty extends Property {
     protected String value;
 
-    public StringProperty(String _name, String _value, boolean _isDelta){
-        super(_name,_isDelta);
+    public StringProperty(String _name, String _value, String _type){
+        super(_name,_type);
+
         setValue(_value);
     }
     public StringProperty(String _name, String _value){
@@ -25,21 +26,17 @@ public class StringProperty extends Property {
     /* Applies the impacts of this property object onto a given property p
     *  Returns: New property with the assignment applied
     */
-    public StringProperty applyPropertyImpactOnto(Property p){
-        if(!p.name.equals(this.name)){
+    public StringProperty applyImpact(Property impact){
+        if(!impact.name.equals(this.name)){
             throw new IllegalArgumentException("Property names do not match");
         }
-        return new StringProperty(this.name, this.value);
+        return new StringProperty(this.name, (String) impact.getValue());
     }
 
     @Override
     public String toString(){
-        String printOut= "Property Name: "+ super.name;
-        if(super.isDelta)
-            printOut= printOut + ", Type: Delta";
-        else
-            printOut= printOut + ", Type: Assignment";
-        return printOut + ", Property Value: " + this.value;
+        return "Property Name: "+ super.name+", Type: "+ super.type+ ", Value: " + this.value;
+
     }
 
     @Override
