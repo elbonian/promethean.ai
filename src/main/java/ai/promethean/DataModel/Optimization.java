@@ -2,12 +2,12 @@ package ai.promethean.DataModel;
 
 public class Optimization {
     private String name;
-    private Boolean isMin;
+    private String type;
     private int priority;
 
-    public Optimization(String _name, Boolean _isMin, int _priority){
+    public Optimization(String _name, String type, int _priority){
         setName(_name);
-        setIsMin(_isMin);
+        setType(type);
         setPriority(_priority);
     }
 
@@ -19,12 +19,12 @@ public class Optimization {
         return priority;
     }
 
-    public void setIsMin(Boolean min) {
-        isMin = min;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public Boolean getIsMin() {
-        return isMin;
+    public String getType() {
+        return this.type;
     }
 
     public void setName(String name) {
@@ -36,12 +36,12 @@ public class Optimization {
     }
 
     public Boolean equals(Optimization optimization){
-        return optimization.getName().equals(this.name) && optimization.getIsMin().equals(this.isMin);
+        return optimization.getName().equals(this.name) && optimization.getType().equals(this.type);
     }
 
     @Override
     public String toString() {
-        if(isMin)
+        if(type == "min")
             return "Optimization Name: " +name + " Type: Minimize Priority: " + priority;
         else
             return "Optimization Name: " +name + " Type: Maximize Priority: " + priority;

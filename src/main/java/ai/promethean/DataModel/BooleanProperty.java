@@ -27,11 +27,11 @@ public class BooleanProperty extends Property {
     /* Applies the impacts of this property object onto a given property p
    *  Returns: New property with the assignment applied
    */
-    public BooleanProperty applyPropertyImpactOnto(Property p){
-        if(!p.name.equals(this.name)){
+    public BooleanProperty applyImpact(Property impact){
+        if(!impact.name.equals(this.name)){
             throw new IllegalArgumentException("Property names do not match");
         }
-        return new BooleanProperty(this.name, this.value);
+        return new BooleanProperty(this.name, (boolean) impact.getValue());
     }
 
     @Override

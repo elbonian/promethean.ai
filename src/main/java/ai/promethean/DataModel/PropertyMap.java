@@ -1,4 +1,5 @@
 package ai.promethean.DataModel;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -7,49 +8,50 @@ public class PropertyMap {
     private Map<String, Property> property_map = new HashMap<>();
 
     public PropertyMap() {}
+    public PropertyMap(PropertyMap propertyMap) {
+        for (Property p: propertyMap.getProperties() ) {
+            this.addProperty(p);
+        }
+    }
 
     /* Used to add a new property to the PropertyMap. If a property already has the name specified, the value will be updated
      * @param   name    The name of the property being added
      * @param   value   The boolean value associated with the propertyZ
      */
 
-    public void addProperty(String name, Boolean value) {
-        Property new_prop = new BooleanProperty(name, value);
+    public void addProperty(String name, Boolean value, String type) {
         if(property_map.containsKey(name)) {
-            property_map.replace(name, new_prop);
+            throw new IllegalArgumentException("Properties should never be mutated.");
         } else {
-            property_map.put(name, new_prop);
+            property_map.put(name, new BooleanProperty(name, value, type));
         }
     }
 
     /* Add a Property with a Double value
      */
 
-    public void addProperty(String name, Double value) {
-        Property new_prop = new NumericalProperty(name, value);
+    public void addProperty(String name, Double value, String type) {
         if(property_map.containsKey(name)) {
-            property_map.replace(name, new_prop);
+            throw new IllegalArgumentException("Properties should never be mutated.");
         } else {
-            property_map.put(name, new_prop);
+            property_map.put(name, new NumericalProperty(name, value, type));
         }
     }
 
     /* Add a Property with a String value
      */
 
-    public void addProperty(String name, String value) {
-        Property new_prop = new StringProperty(name, value);
+    public void addProperty(String name, String value, String type) {
         if(property_map.containsKey(name)) {
-            property_map.replace(name, new_prop);
+            throw new IllegalArgumentException("Properties should never be mutated.");
         } else {
-            property_map.put(name, new_prop);
+            property_map.put(name, new StringProperty(name, value, type));
         }
     }
 
     public void addProperty(Property p) {
-
         if(property_map.containsKey(p.getName())) {
-            property_map.replace(p.getName(), p);
+            throw new IllegalArgumentException("Properties should never be mutated.");
         } else {
             property_map.put(p.getName(), p);
         }
@@ -83,6 +85,14 @@ public class PropertyMap {
         return property_map.keySet();
     }
 
+    public ArrayList<Property> getProperties() {
+        ArrayList<Property> properties =  new ArrayList<>();
+        for (String key : this.getKeys()) {
+            properties.add(getProperty(key));
+        }
+        return properties;
+    }
+
     /* Used to compare two PropertyMaps. Returns true if they are the same map, false otherwise. This includes the Property mapped to the name
      * @param   p   The PropertyMap to compare to this one
      * @return Boolean whether input PropertyMap is identical to this one
@@ -91,11 +101,12 @@ public class PropertyMap {
         return property_map.equals(p.getPropertyMap());
     }
 
+
     @Override
     public String toString() {
         String printOut="";
         for(Property p : property_map.values()){
-            printOut=printOut + "\n Name: "+ p.getName()+ "Type: " +p.getType()+ " Value: " + p.getValue();
+            printOut=printOut + "\n Name: "+ p.getName()+ " Type: " +p.getType()+ " Value: " + p.getValue();
         }
         return printOut;
     }

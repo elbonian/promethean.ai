@@ -26,11 +26,11 @@ public class StringProperty extends Property {
     /* Applies the impacts of this property object onto a given property p
     *  Returns: New property with the assignment applied
     */
-    public StringProperty applyPropertyImpactOnto(Property p){
-        if(!p.name.equals(this.name)){
+    public StringProperty applyImpact(Property impact){
+        if(!impact.name.equals(this.name)){
             throw new IllegalArgumentException("Property names do not match");
         }
-        return new StringProperty(this.name, this.value);
+        return new StringProperty(this.name, (String) impact.getValue());
     }
 
     @Override

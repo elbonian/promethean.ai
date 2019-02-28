@@ -6,7 +6,7 @@ import java.util.*;
 public class Perturbation {
     private int time;
     private String name;
-    private ArrayList<Property> property_impacts= new ArrayList<Property>();
+    private PropertyMap property_impacts = new PropertyMap();
 
     public Perturbation(){
         setTime(0);
@@ -36,40 +36,31 @@ public class Perturbation {
         this.name = name;
     }
 
-    public ArrayList<Property> getProperties() {
+    public PropertyMap getProperties() {
         return property_impacts;
     }
 
 
     public Property getProperty(String name){
-        for(Property p: property_impacts){
-            if(p.getName().equals(name)){
-                return p;
-            }
-        }
-        return null;
+        return this.property_impacts.getProperty(name);
     }
 
 
     public void addProperty(Property p){
-        property_impacts.add(p);
+        property_impacts.addProperty(p);
     }
 
 
     public void addProperty(String name, Boolean value, String type){
-        property_impacts.add(new BooleanProperty(name, value,type));
+        property_impacts.addProperty(name, value,type);
     }
 
     public void addProperty(String name, Double value, String type){
-        property_impacts.add(new NumericalProperty(name, value,type));
+        property_impacts.addProperty(name, value,type);
     }
 
     public void addProperty(String name, String value, String type){
-        property_impacts.add(new StringProperty(name, value,type));
-    }
-
-    public void sortProperties(){
-        Collections.sort(property_impacts, new SortbyProperty());
+        property_impacts.addProperty(name, value,type);
     }
 
     @Override

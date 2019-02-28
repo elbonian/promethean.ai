@@ -29,21 +29,21 @@ public class NumericalPropertyTest {
     @Test
     void checkExceptionImpacts(){
         assertThrows(IllegalArgumentException.class, () -> {
-            np.applyPropertyImpactOnto(np2);
+            np2.applyImpact(np);
         });
     }
 
     @Test
     void checkApplyImpacts(){
         NumericalProperty np6= new NumericalProperty("test", -20.0);
-        assertTrue(np1.applyPropertyImpactOnto(np6).getValue().equals(100.0));
+        assertTrue(np6.applyImpact(np).getValue().equals(80.0));
     }
 
 
     @Test
     void checkApplyImpactsDelta(){
         NumericalProperty np6= new NumericalProperty("test", -20.0);
-        NumericalProperty np7= np.applyPropertyImpactOnto(np6);
+        NumericalProperty np7= np6.applyImpact(np);
         assertTrue(np7.getValue().equals(80.0));
 
     }

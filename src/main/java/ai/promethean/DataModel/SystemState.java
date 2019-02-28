@@ -57,6 +57,7 @@ public class SystemState {
         return property_list;
     }
 
+    public void setPropertyMap(PropertyMap propertyMap) { this.properties = propertyMap; }
     public PropertyMap getPropertyMap() { return properties; }
 
     public void setPreviousState(SystemState previousState) {
@@ -79,16 +80,16 @@ public class SystemState {
 
 
     public void addProperty(String name, Boolean value) {
-        properties.addProperty(name, value);
+        properties.addProperty(name, value, null);
     }
 
 
     public void addProperty(String name, Double value) {
-        properties.addProperty(name, value);
+        properties.addProperty(name, value, null);
     }
 
     public void addProperty(String name, String value) {
-        properties.addProperty(name, value);
+        properties.addProperty(name, value, null);
     }
 
     public void addProperty(Property p) {
