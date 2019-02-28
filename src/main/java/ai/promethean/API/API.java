@@ -21,16 +21,16 @@ public class API {
 
     }
 
-    public void throwError(String err_msg){
+    public void throwPlannerError(String err_msg){
         throw new PlannerError(err_msg);
     }
 
-    public void runSimulation(String inputFile){
-        /*
-        Example execution of graph from Hayden's Graph-Planner Branch. This is just an example of what it
-        might look like to call runSimulation, we will be continually updating this
-         */
-        /*Parser p = new Parser(inputFile, true);
+    public void throwParserError(String err_msg){
+        throw new ParserError(err_msg);
+    }
+
+    public void generatePlan(String inputFile){
+        Parser p = new Parser("JSON_input/InputFiles/test.json", true);
         ArrayList<Object> objects = p.parse();
         Algorithm algo = new AStar((SystemState) objects.get(1),
                 (GoalState) objects.get(2),
@@ -50,16 +50,8 @@ public class API {
             System.out.println(block.getTask());
             System.out.println("\n");
             System.out.println(block.getState());
-            System.out.println("\n");*/
+            System.out.println("\n");
+        }
     }
-
-    public void generatePlan(String inputFile){
-        //TODO
-        //These currently serve as examples and only call the parser, need to link up with entire system
-        Parser p = new Parser(inputFile, true);
-        ArrayList<Object> parsedObjects = p.parse();
-        System.out.println(parsedObjects);
-    }
-
 }
 
