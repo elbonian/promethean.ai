@@ -1,2 +1,9 @@
 language: java
 
+addons:
+  sonarcloud:
+    organization: "promethean-jpl"
+
+script:
+  - sonar-scanner
+
