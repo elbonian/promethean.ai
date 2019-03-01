@@ -262,7 +262,7 @@ public class Parser {
                                 if (property.get("name").getAsJsonPrimitive().isString()) {
                                     String name = property.get("name").getAsString();
                                     String type;
-                                    
+
                                     //Captures any property type containing characters "assign" or "delta" (Case insensitive)
                                     if (property.get("type") == null || property.get("type").getAsString().toLowerCase().contains("assign")) {
                                         type = "assignment";
