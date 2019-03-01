@@ -1,8 +1,18 @@
 package ai.promethean.DataModel;
 
+/**
+ * String extension of the Condition class
+ */
 public class StringCondition extends Condition {
     protected String value;
 
+    /**
+     * Instantiates a new String condition.
+     *
+     * @param _name     The name
+     * @param _operator The operator used to compare the value
+     * @param _value    The value
+     */
     public StringCondition(String _name, String _operator, String _value){
         super(_name);
         if(_operator.equals("==")|| _operator.equals("!=")) {
@@ -14,6 +24,11 @@ public class StringCondition extends Condition {
         }
     }
 
+    /**
+     * Sets the value of the Condition
+     *
+     * @param value The value
+     */
     public void setValue(String value) {
         this.value = value;
     }

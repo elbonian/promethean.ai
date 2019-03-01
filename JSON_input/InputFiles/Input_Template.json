@@ -1,0 +1,58 @@
+{
+  "initial_state": {
+    "properties": [
+      {},
+      {},
+      {}
+    ]
+  },
+  "goal_state": {
+    "requirements": [
+      {},
+      {},
+      {}
+    ]
+  },
+  "tasks": [
+    {
+      "name": "",
+      "duration": 0,
+      "requirements": [
+        {},
+        {},
+      ],
+      "property_impacts": [
+        {},
+        {},
+      ]
+    },
+    {
+      "name": "",
+      "duration": 0,
+      "requirements": [
+        {},
+        {},
+      ],
+      "property_impacts": [
+        {},
+        {},
+      ]
+    }
+  ],
+  "optimizations": [
+    {
+      "name": "",
+      "priority": 0,
+      "type": ""
+    }
+  ],
+  "perturbations": [
+    {
+      "name": "",
+      "time": 0,
+      "property_impacts": [
+        {"name": "", "type": "", "value": 0}
+      ]
+    }
+  ]
+}

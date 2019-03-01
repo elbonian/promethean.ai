@@ -1,8 +1,19 @@
 package ai.promethean.DataModel;
 
+/**
+ * Boolean extension of the Condition class
+ */
 public class BooleanCondition extends Condition {
+
     protected Boolean value;
 
+    /**
+     * Instantiates a new Boolean condition.
+     *
+     * @param _name     The name of the condition
+     * @param _operator The operator used to compare the value
+     * @param _value    The value of the condition
+     */
     public BooleanCondition(String _name, String _operator, Boolean _value){
         super(_name);
         if(_operator.equals("==")|| _operator.equals("!=")) {
@@ -14,6 +25,11 @@ public class BooleanCondition extends Condition {
         }
     }
 
+    /**
+     * Sets value of the Condition
+     *
+     * @param value The value to be set
+     */
     public void setValue(Boolean value) {
         this.value = value;
     }
@@ -26,9 +42,12 @@ public class BooleanCondition extends Condition {
     public boolean evaluate(Object val1) {
         if(val1 instanceof Boolean){
             switch (this.operator){
-                case("=="): return val1.equals(this.value);
-                case("!="): return !val1.equals(this.value);
-                default: return false;
+                case("=="):
+                    return val1.equals(this.value);
+                case("!="):
+                    return !val1.equals(this.value);
+                default:
+                    return false;
             }
         }else return false;
     }
