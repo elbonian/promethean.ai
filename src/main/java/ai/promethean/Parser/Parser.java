@@ -17,24 +17,20 @@ public class Parser {
     private StaticOptimizations optimizationList =  new StaticOptimizations();
     private ArrayList<Object> perturbationList =  new ArrayList<Object>();
 
-    public Parser(){
-        setJson("");
-    }
-
-
-    /* Parser constructor with input
+    /* Parser set JSON with input
      * @param   _json    Either the json string or the file path for a json file
      * @param   isFile   Denotes whether _json is a json string or file path
      */
-    public Parser(String _json, Boolean isFile){
+
+    public void setJson(String _json, Boolean isFile){
         if(!isFile) {
-            setJson(_json);
+            json=_json;
         }
         else{
             try
             {
                 String content = new String(Files.readAllBytes(Paths.get(_json)), StandardCharsets.ISO_8859_1);
-                setJson(content);
+                json= content;
             }
             catch (IOException e)
             {
@@ -42,10 +38,7 @@ public class Parser {
             }
 
         }
-    }
 
-    public void setJson(String _json){
-        this.json=_json;
     }
 
     /* Parse function parses the class's json string into data model classes
@@ -56,7 +49,8 @@ public class Parser {
     * OptimizationList Object (Optional)
     * List of Perturbation Objects (Optional)
     */
-    public ArrayList<Object> parse() {
+    public ArrayList<Object> parse(String _json, Boolean isFile) {
+        setJson(_json,isFile);
         JsonElement jsonTree = parser.parse(json);
         if (jsonTree.isJsonObject()) {
             JsonObject jsonObject = jsonTree.getAsJsonObject();
