@@ -12,17 +12,17 @@ import java.util.*;
 
 public class Parser {
     //Constants specific to the JSON language
-    private static final String optimizationField= "optimizations";
-    private static final String initStateField= "initial_state";
-    private static final String goalStateField= "goal_state";
-    private static final String taskField= "tasks";
-    private static final String perturbationField= "perturbations";
+    private static final String OPTIMIZATION_FIELD= "optimizations";
+    private static final String INITSTATE_FIELD= "initial_state";
+    private static final String GOALSTATE_FIELD= "goal_state";
+    private static final String TASK_FIELD= "tasks";
+    private static final String PERTURBATION_FIELD= "perturbations";
 
-    private static final String fieldName = "name";
-    private static final String fieldOperator = "operator";
-    private static final String fieldPriority = "priority";
-    private static final String fieldValue = "value";
-    private static final String fieldDuration = "duration";
+    private static final String FIELD_NAME = "name";
+    private static final String FIELD_OPERATOR = "operator";
+    private static final String FIELD_PRIORITY= "priority";
+    private static final String FIELD_VALUE = "value";
+    private static final String FIELD_DURATION = "duration";
 
     private JsonParser parser = new JsonParser();
     private String json;
@@ -71,18 +71,18 @@ public class Parser {
 
             //Section that parses json into optimization objects
             //Check null because optimizations is an optional field
-            if (jsonObject.get(optimizationField) != null) {
-                JsonElement optimizationArray = jsonObject.get(optimizationField);
+            if (jsonObject.get(OPTIMIZATION_FIELD) != null) {
+                JsonElement optimizationArray = jsonObject.get(OPTIMIZATION_FIELD);
 
                 //Iterate through every optimization json object and create objects
                 if (optimizationArray.isJsonArray()) {
                     JsonArray optimizations= optimizationArray.getAsJsonArray();
                     for (JsonElement op : optimizations) {
                         JsonObject optimization = op.getAsJsonObject();
-                        if (!(optimization.get(fieldName)==null || !optimization.get(fieldName).getAsJsonPrimitive().isString())) {
-                            String name = optimization.get(fieldName).getAsString();
-                            if (!(optimization.get(fieldPriority)==null ||!optimization.get(fieldPriority).getAsJsonPrimitive().isNumber())) {
-                                int priority = optimization.get(fieldPriority).getAsInt();
+                        if (!(optimization.get(FIELD_NAME)==null || !optimization.get(FIELD_NAME).getAsJsonPrimitive().isString())) {
+                            String name = optimization.get(FIELD_NAME).getAsString();
+                            if (!(optimization.get(FIELD_PRIORITY)==null ||!optimization.get(FIELD_PRIORITY).getAsJsonPrimitive().isNumber())) {
+                                int priority = optimization.get(FIELD_PRIORITY).getAsInt();
 
                                 //Captures any type containing min (Case Indifferent)
                                 if(optimization.get("type")==null){
@@ -116,21 +116,21 @@ public class Parser {
             }
 
             //Section that parses json into an initial SystemState object (Required field)
-            if(jsonObject.get(initStateField)==null){
+            if(jsonObject.get(INITSTATE_FIELD)==null){
                 throw new ParserError("Missing initial_state JSON object");
             }
-            JsonObject initialState = jsonObject.get(initStateField).getAsJsonObject();
+            JsonObject initialState = jsonObject.get(INITSTATE_FIELD).getAsJsonObject();
             SystemState systemState = new SystemState();
             if (initialState.get("properties") != null) {
                 JsonArray properties = initialState.get("properties").getAsJsonArray();
                 for (JsonElement elem : properties) {
                     JsonObject property = elem.getAsJsonObject();
-                    if (!(property.get(fieldName)==null || !property.get(fieldName).getAsJsonPrimitive().isString()) ){
-                        String name = property.get(fieldName).getAsString();
-                        if(property.get(fieldValue)==null){
+                    if (!(property.get(FIELD_NAME)==null || !property.get(FIELD_NAME).getAsJsonPrimitive().isString()) ){
+                        String name = property.get(FIELD_NAME).getAsString();
+                        if(property.get(FIELD_VALUE)==null){
                             throw new ParserError("Initial State Property value must be non-null");
                         }
-                        JsonPrimitive value = property.get(fieldValue).getAsJsonPrimitive();
+                        JsonPrimitive value = property.get(FIELD_VALUE).getAsJsonPrimitive();
                         if (value.getAsJsonPrimitive().isBoolean()) {
                             systemState.addProperty(name, value.getAsBoolean());
                         } else if (value.getAsJsonPrimitive().isNumber()) {
@@ -149,22 +149,22 @@ public class Parser {
             parsedObjects.add(systemState);
 
             //Section parses json into GoalState object (required field)
-            if(jsonObject.get(goalStateField)==null){
+            if(jsonObject.get(GOALSTATE_FIELD)==null){
                 throw new ParserError("Missing goal_state JSON object");
             }
-            JsonObject gs = jsonObject.get(goalStateField).getAsJsonObject();
+            JsonObject gs = jsonObject.get(GOALSTATE_FIELD).getAsJsonObject();
             GoalState goalState = new GoalState();
             if (gs.get("requirements") != null) {
                 JsonArray requirements = gs.get("requirements").getAsJsonArray();
                 for (JsonElement elem : requirements) {
                     JsonObject requirement = elem.getAsJsonObject();
-                    if (!(requirement.get(fieldName)==null || requirement.get(fieldOperator)==null|| !requirement.get(fieldName).getAsJsonPrimitive().isString() || !requirement.get(fieldOperator).getAsJsonPrimitive().isString())) {
-                        String name = requirement.get(fieldName).getAsString();
-                        String operator = requirement.get(fieldOperator).getAsString();
-                        if(requirement.get(fieldValue)==null){
+                    if (!(requirement.get(FIELD_NAME)==null || requirement.get(FIELD_OPERATOR)==null|| !requirement.get(FIELD_NAME).getAsJsonPrimitive().isString() || !requirement.get(FIELD_OPERATOR).getAsJsonPrimitive().isString())) {
+                        String name = requirement.get(FIELD_NAME).getAsString();
+                        String operator = requirement.get(FIELD_OPERATOR).getAsString();
+                        if(requirement.get(FIELD_VALUE)==null){
                             throw new ParserError("Goal State requirement value must be non-null");
                         }
-                        JsonPrimitive value = requirement.get(fieldValue).getAsJsonPrimitive();
+                        JsonPrimitive value = requirement.get(FIELD_VALUE).getAsJsonPrimitive();
                         if (value.getAsJsonPrimitive().isBoolean()) {
                             goalState.addRequirement(name, value.getAsBoolean(), operator);
                         } else if (value.getAsJsonPrimitive().isNumber()) {
@@ -183,38 +183,38 @@ public class Parser {
             parsedObjects.add(goalState);
 
             //Section parses json objects into Task java objects (required field)
-            if(jsonObject.get(taskField)==null){
+            if(jsonObject.get(TASK_FIELD)==null){
                 throw new ParserError("Missing tasks JSON object");
             }
-            JsonElement taskList = jsonObject.get(taskField);
+            JsonElement taskList = jsonObject.get(TASK_FIELD);
 
             //Iterate through every task json object and create java objects
             if (taskList.isJsonArray()) {
                 JsonArray tasks= taskList.getAsJsonArray();
                 for (JsonElement taski : tasks) {
                     JsonObject t = taski.getAsJsonObject();
-                    if(t.get(fieldDuration)==null){
+                    if(t.get(FIELD_DURATION)==null){
                         throw new ParserError("Task duration must be non-null");
                     }
-                    if (t.get(fieldDuration).getAsJsonPrimitive().isNumber()) {
-                        int duration = t.get(fieldDuration).getAsInt();
+                    if (t.get(FIELD_DURATION).getAsJsonPrimitive().isNumber()) {
+                        int duration = t.get(FIELD_DURATION).getAsInt();
                         Task task= new Task(duration);
-                        if(t.get(fieldName)!=null)
+                        if(t.get(FIELD_NAME)!=null)
                         {
-                           String name= t.get(fieldName).getAsString();
+                           String name= t.get(FIELD_NAME).getAsString();
                            task.setName(name);
                         }
                         if (t.get("requirements") != null) {
                             JsonArray requirements = t.get("requirements").getAsJsonArray();
                             for (JsonElement elem : requirements) {
                                 JsonObject requirement = elem.getAsJsonObject();
-                                if (!(requirement.get(fieldName)==null || requirement.get(fieldOperator)==null|| !requirement.get(fieldName).getAsJsonPrimitive().isString() || !requirement.get(fieldOperator).getAsJsonPrimitive().isString())) {
-                                    String name = requirement.get(fieldName).getAsString();
-                                    String operator = requirement.get(fieldOperator).getAsString();
-                                    if(requirement.get(fieldValue)==null){
+                                if (!(requirement.get(FIELD_NAME)==null || requirement.get(FIELD_OPERATOR)==null|| !requirement.get(FIELD_NAME).getAsJsonPrimitive().isString() || !requirement.get(FIELD_OPERATOR).getAsJsonPrimitive().isString())) {
+                                    String name = requirement.get(FIELD_NAME).getAsString();
+                                    String operator = requirement.get(FIELD_OPERATOR).getAsString();
+                                    if(requirement.get(FIELD_VALUE)==null){
                                         throw new ParserError("Task requirement value must be non-null");
                                     }
-                                    JsonPrimitive value = requirement.get(fieldValue).getAsJsonPrimitive();
+                                    JsonPrimitive value = requirement.get(FIELD_VALUE).getAsJsonPrimitive();
                                     if (value.getAsJsonPrimitive().isBoolean()) {
                                         task.addRequirement(name, value.getAsBoolean(), operator);
                                     } else if (value.getAsJsonPrimitive().isNumber()) {
@@ -235,8 +235,8 @@ public class Parser {
                             JsonArray properties = t.get("property_impacts").getAsJsonArray();
                             for (JsonElement elem : properties) {
                                 JsonObject property = elem.getAsJsonObject();
-                                if (!(property.get(fieldName)==null || !property.get(fieldName).getAsJsonPrimitive().isString()) ){
-                                    String name = property.get(fieldName).getAsString();
+                                if (!(property.get(FIELD_NAME)==null || !property.get(FIELD_NAME).getAsJsonPrimitive().isString()) ){
+                                    String name = property.get(FIELD_NAME).getAsString();
                                     String type;
 
                                     //Captures any property type containing characters "assign" or "delta" (Case insensitive)
@@ -247,10 +247,10 @@ public class Parser {
                                     } else {
                                         throw new ParserError("Invalid property type (must be an assignment or delta)");
                                     }
-                                    if(property.get(fieldValue)==null){
+                                    if(property.get(FIELD_VALUE)==null){
                                         throw new ParserError("Task property impact value must be non-null");
                                     }
-                                    JsonPrimitive value = property.get(fieldValue).getAsJsonPrimitive();
+                                    JsonPrimitive value = property.get(FIELD_VALUE).getAsJsonPrimitive();
                                     if (value.getAsJsonPrimitive().isBoolean()) {
                                         task.addProperty(name, value.getAsBoolean(), type);
                                     } else if (value.getAsJsonPrimitive().isNumber()) {
@@ -280,8 +280,8 @@ public class Parser {
 
             //Section parses json objects into Perturbation java objects
             //Check for null because perturbations is an optional value
-            if(jsonObject.get(perturbationField)!=null){
-                JsonElement perturbationArray = jsonObject.get(perturbationField);
+            if(jsonObject.get(PERTURBATION_FIELD)!=null){
+                JsonElement perturbationArray = jsonObject.get(PERTURBATION_FIELD);
 
                 //Iterate through every json perturbation and create java objects
                 if (perturbationArray.isJsonArray()) {
@@ -293,9 +293,9 @@ public class Parser {
                         }
                         int time = p.get("time").getAsInt();
                         Perturbation perturbation = new Perturbation(time);
-                        if(p.get(fieldName)!=null)
+                        if(p.get(FIELD_NAME)!=null)
                         {
-                            String name= p.get(fieldName).getAsString();
+                            String name= p.get(FIELD_NAME).getAsString();
                             perturbation.setName(name);
                         }
 
@@ -303,8 +303,8 @@ public class Parser {
                             JsonArray properties = p.get("property_impacts").getAsJsonArray();
                             for (JsonElement elem : properties) {
                                 JsonObject property = elem.getAsJsonObject();
-                                if (!(property.get(fieldName)==null || !property.get(fieldName).getAsJsonPrimitive().isString()) ){
-                                    String name = property.get(fieldName).getAsString();
+                                if (!(property.get(FIELD_NAME)==null || !property.get(FIELD_NAME).getAsJsonPrimitive().isString()) ){
+                                    String name = property.get(FIELD_NAME).getAsString();
                                     String type;
                                     
                                     //Captures any property type containing characters "assign" or "delta" (Case insensitive)
@@ -315,10 +315,10 @@ public class Parser {
                                     } else {
                                         throw new ParserError("Invalid property type (must be an assignment or delta)");
                                     }
-                                    if(property.get(fieldValue)==null){
+                                    if(property.get(FIELD_VALUE)==null){
                                         throw new ParserError("Perturbation property impact value must be non-null");
                                     }
-                                    JsonPrimitive value = property.get(fieldValue).getAsJsonPrimitive();
+                                    JsonPrimitive value = property.get(FIELD_VALUE).getAsJsonPrimitive();
                                     if (value.getAsJsonPrimitive().isBoolean()) {
                                         perturbation.addProperty(name, value.getAsBoolean(), type);
                                     } else if (value.getAsJsonPrimitive().isNumber()) {
