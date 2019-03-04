@@ -19,19 +19,19 @@ public class Parser {
     private ArrayList<Object> perturbationList =  new ArrayList<Object>();
 
     /* Parser set JSON with input
-     * @param   _json    Either the json string or the file path for a json file
+     * @param   json    Either the json string or the file path for a json file
      * @param   isFile   Denotes whether _json is a json string or file path
      */
 
-    public void setJson(String _json, Boolean isFile){
+    public void setJson(String json, Boolean isFile){
         if(!isFile) {
-            json=_json;
+            this.json=json;
         }
         else{
             try
             {
-                String content = new String(Files.readAllBytes(Paths.get(_json)), StandardCharsets.ISO_8859_1);
-                json= content;
+                String content = new String(Files.readAllBytes(Paths.get(json)), StandardCharsets.ISO_8859_1);
+                this.json= content;
             }
             catch (IOException e)
             {
@@ -50,9 +50,9 @@ public class Parser {
     * OptimizationList Object (Optional)
     * List of Perturbation Objects (Optional)
     */
-    public ArrayList<Object> parse(String _json, Boolean isFile) {
-        setJson(_json,isFile);
-        JsonElement jsonTree = parser.parse(json);
+    public ArrayList<Object> parse(String json, Boolean isFile) {
+        setJson(json,isFile);
+        JsonElement jsonTree = parser.parse(this.json);
         if (jsonTree.isJsonObject()) {
             JsonObject jsonObject = jsonTree.getAsJsonObject();
 
