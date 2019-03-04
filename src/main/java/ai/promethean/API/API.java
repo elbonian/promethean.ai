@@ -1,5 +1,5 @@
 package ai.promethean.API;
-import ai.promethean.parser.*;
+import ai.promethean.Parser.*;
 import java.util.*;
 import ai.promethean.DataModel.*;
 import ai.promethean.Planner.*;

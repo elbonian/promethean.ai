@@ -1,4 +1,4 @@
-package ai.promethean.parser;
+package ai.promethean.Parser;
 
 import ai.promethean.API.API;
 import ai.promethean.DataModel.*;
