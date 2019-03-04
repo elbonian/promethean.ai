@@ -1,7 +1,6 @@
 package ai.promethean.Parser;
 
 import ai.promethean.API.API;
-import ai.promethean.API.ParserError;
 import ai.promethean.DataModel.*;
 import com.google.gson.*;
 
@@ -11,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class Parser implements ParserInterface{
+public class JSONParser implements ParserInterface{
     //Constants specific to the JSON language
     private static final String OPTIMIZATION_FIELD= "optimizations";
     private static final String INITSTATE_FIELD= "initial_state";

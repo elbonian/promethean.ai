@@ -29,7 +29,7 @@ public class API {
     }
 
     public void generatePlan(String inputFile, Boolean isFile){
-        Parser p = new Parser();
+        JSONParser p = new JSONParser();
         List<Object> objects = p.parse(inputFile,isFile);
         Algorithm algo = new AStar((SystemState) objects.get(1),
                 (GoalState) objects.get(2),
