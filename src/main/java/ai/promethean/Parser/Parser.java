@@ -1,5 +1,6 @@
 package ai.promethean.Parser;
 
+import ai.promethean.API.API;
 import ai.promethean.API.ParserError;
 import ai.promethean.DataModel.*;
 import com.google.gson.*;
@@ -64,6 +65,7 @@ public class Parser implements ParserInterface{
     * List of Perturbation Objects (Optional)
     */
     public List<Object> parse(String json, Boolean isFile) {
+        API api= new API();
         setJson(json,isFile);
         JsonElement jsonTree = parser.parse(this.json);
         if (jsonTree.isJsonObject()) {
@@ -86,7 +88,7 @@ public class Parser implements ParserInterface{
 
                                 //Captures any type containing min (Case Indifferent)
                                 if(optimization.get("type")==null){
-                                    throw new ParserError("JSON Optimization type must be non-null");
+                                    api.throwParserError("JSON Optimization type must be non-null");
                                 }
                                 if (optimization.get("type").getAsString().toLowerCase().contains("min")) {
                                     Optimization o = new Optimization(name, "min", priority);
@@ -97,17 +99,17 @@ public class Parser implements ParserInterface{
                                     Optimization o = new Optimization(name, "max", priority);
                                     optimizationList.addOptimization(o);
                                 } else {
-                                    throw new ParserError("JSON Object Optimization type is invalid (must be a minimum or maximum)");
+                                    api.throwParserError("JSON Object Optimization type is invalid (must be a minimum or maximum)");
                                 }
                             } else {
-                                throw new ParserError("JSON Object Optimization Priority must be a number and non-null");
+                                api.throwParserError("JSON Object Optimization Priority must be a number and non-null");
                             }
                         } else {
-                            throw new ParserError("JSON Optimization name must be a string and non-null");
+                            api.throwParserError("JSON Optimization name must be a string and non-null");
                         }
                     }
                 } else {
-                    throw new ParserError("JSON optimizations must be an array");
+                    api.throwParserError("JSON optimizations must be an array");
                 }
                 //Sort optimizations by priority
                 //Add parsed optimization Java objects to return list
@@ -117,7 +119,7 @@ public class Parser implements ParserInterface{
 
             //Section that parses json into an initial SystemState object (Required field)
             if(jsonObject.get(INITSTATE_FIELD)==null){
-                throw new ParserError("Missing initial_state JSON object");
+                api.throwParserError("Missing initial_state JSON object");
             }
             JsonObject initialState = jsonObject.get(INITSTATE_FIELD).getAsJsonObject();
             SystemState systemState = new SystemState();
@@ -128,7 +130,7 @@ public class Parser implements ParserInterface{
                     if (!(property.get(FIELD_NAME)==null || !property.get(FIELD_NAME).getAsJsonPrimitive().isString()) ){
                         String name = property.get(FIELD_NAME).getAsString();
                         if(property.get(FIELD_VALUE)==null){
-                            throw new ParserError("Initial State Property value must be non-null");
+                            api.throwParserError("Initial State Property value must be non-null");
                         }
                         JsonPrimitive value = property.get(FIELD_VALUE).getAsJsonPrimitive();
                         if (value.getAsJsonPrimitive().isBoolean()) {
@@ -138,10 +140,10 @@ public class Parser implements ParserInterface{
                         } else if (value.getAsJsonPrimitive().isString()) {
                             systemState.addProperty(name, value.getAsString());
                         } else {
-                            throw new ParserError("Invalid property type; must be a number, string, or bool");
+                            api.throwParserError("Invalid property type; must be a number, string, or bool");
                         }
                     } else {
-                        throw new ParserError("Invalid State Property name type; must be a string and non-null");
+                        api.throwParserError("Invalid State Property name type; must be a string and non-null");
                     }
                 }
             }
@@ -150,7 +152,7 @@ public class Parser implements ParserInterface{
 
             //Section parses json into GoalState object (required field)
             if(jsonObject.get(GOALSTATE_FIELD)==null){
-                throw new ParserError("Missing goal_state JSON object");
+                api.throwParserError("Missing goal_state JSON object");
             }
             JsonObject gs = jsonObject.get(GOALSTATE_FIELD).getAsJsonObject();
             GoalState goalState = new GoalState();
@@ -162,7 +164,7 @@ public class Parser implements ParserInterface{
                         String name = requirement.get(FIELD_NAME).getAsString();
                         String operator = requirement.get(FIELD_OPERATOR).getAsString();
                         if(requirement.get(FIELD_VALUE)==null){
-                            throw new ParserError("Goal State requirement value must be non-null");
+                            api.throwParserError("Goal State requirement value must be non-null");
                         }
                         JsonPrimitive value = requirement.get(FIELD_VALUE).getAsJsonPrimitive();
                         if (value.getAsJsonPrimitive().isBoolean()) {
@@ -172,10 +174,10 @@ public class Parser implements ParserInterface{
                         } else if (value.getAsJsonPrimitive().isString()) {
                             goalState.addRequirement(name, value.getAsString(), operator);
                         } else {
-                            throw new ParserError("Invalid Goal State requirement value type; must be a number, string or boolean");
+                            api.throwParserError("Invalid Goal State requirement value type; must be a number, string or boolean");
                         }
                     } else {
-                        throw new ParserError("Invalid Goal State requirement name/operator type; must be strings and non-null");
+                        api.throwParserError("Invalid Goal State requirement name/operator type; must be strings and non-null");
                     }
                 }
             }
@@ -184,7 +186,7 @@ public class Parser implements ParserInterface{
 
             //Section parses json objects into Task java objects (required field)
             if(jsonObject.get(TASK_FIELD)==null){
-                throw new ParserError("Missing tasks JSON object");
+                api.throwParserError("Missing tasks JSON object");
             }
             JsonElement taskList = jsonObject.get(TASK_FIELD);
 
@@ -194,7 +196,7 @@ public class Parser implements ParserInterface{
                 for (JsonElement taski : tasks) {
                     JsonObject t = taski.getAsJsonObject();
                     if(t.get(FIELD_DURATION)==null){
-                        throw new ParserError("Task duration must be non-null");
+                        api.throwParserError("Task duration must be non-null");
                     }
                     if (t.get(FIELD_DURATION).getAsJsonPrimitive().isNumber()) {
                         int duration = t.get(FIELD_DURATION).getAsInt();
@@ -212,7 +214,7 @@ public class Parser implements ParserInterface{
                                     String name = requirement.get(FIELD_NAME).getAsString();
                                     String operator = requirement.get(FIELD_OPERATOR).getAsString();
                                     if(requirement.get(FIELD_VALUE)==null){
-                                        throw new ParserError("Task requirement value must be non-null");
+                                        api.throwParserError("Task requirement value must be non-null");
                                     }
                                     JsonPrimitive value = requirement.get(FIELD_VALUE).getAsJsonPrimitive();
                                     if (value.getAsJsonPrimitive().isBoolean()) {
@@ -222,10 +224,10 @@ public class Parser implements ParserInterface{
                                     } else if (value.getAsJsonPrimitive().isString()) {
                                         task.addRequirement(name, value.getAsString(), operator);
                                     } else {
-                                        throw new ParserError("Invalid Task requirement value type; must be a string, number, or boolean");
+                                        api.throwParserError("Invalid Task requirement value type; must be a string, number, or boolean");
                                     }
                                 } else {
-                                    throw new ParserError("Invalid Task requirement name/operator type; must be a string and non-null");
+                                    api.throwParserError("Invalid Task requirement name/operator type; must be a string and non-null");
                                 }
 
                             }
@@ -237,7 +239,7 @@ public class Parser implements ParserInterface{
                                 JsonObject property = elem.getAsJsonObject();
                                 if (!(property.get(FIELD_NAME)==null || !property.get(FIELD_NAME).getAsJsonPrimitive().isString()) ){
                                     String name = property.get(FIELD_NAME).getAsString();
-                                    String type;
+                                    String type="";
 
                                     //Captures any property type containing characters "assign" or "delta" (Case insensitive)
                                     if (property.get("type") == null || property.get("type").getAsString().toLowerCase().contains("assign")) {
@@ -245,10 +247,10 @@ public class Parser implements ParserInterface{
                                     } else if (property.get("type").getAsString().toLowerCase().contains("delta")) {
                                         type = "delta";
                                     } else {
-                                        throw new ParserError("Invalid property type (must be an assignment or delta)");
+                                        api.throwParserError("Invalid property type (must be an assignment or delta)");
                                     }
                                     if(property.get(FIELD_VALUE)==null){
-                                        throw new ParserError("Task property impact value must be non-null");
+                                        api.throwParserError("Task property impact value must be non-null");
                                     }
                                     JsonPrimitive value = property.get(FIELD_VALUE).getAsJsonPrimitive();
                                     if (value.getAsJsonPrimitive().isBoolean()) {
@@ -258,24 +260,24 @@ public class Parser implements ParserInterface{
                                     } else if (value.getAsJsonPrimitive().isString()) {
                                         task.addProperty(name, value.getAsString(), type);
                                     } else {
-                                        throw new ParserError("Invalid property type; must be a string, number, or boolean");
+                                        api.throwParserError("Invalid property type; must be a string, number, or boolean");
                                     }
                                 } else {
-                                    throw new ParserError("Invalid Task Property name type; must be a string and non-null");
+                                    api.throwParserError("Invalid Task Property name type; must be a string and non-null");
                                 }
                             }
                         }
                         //Add each task object to TaskDictionary object
                         taskDictionary.addTask(task);
                     } else {
-                        throw new ParserError("JSON Object Task Duration invalid type; must be an integer");
+                        api.throwParserError("JSON Object Task Duration invalid type; must be an integer");
                     }
                 }
                 //Add final TaskDictionary to return list
                 parsedObjects.add(taskDictionary);
             }
             else{
-                throw new ParserError("JSON tasks must be a JSON array");
+                api.throwParserError("JSON tasks must be a JSON array");
             }
 
             //Section parses json objects into Perturbation java objects
@@ -289,7 +291,7 @@ public class Parser implements ParserInterface{
                     for (JsonElement pert : perturbations) {
                         JsonObject p = pert.getAsJsonObject();
                         if(p.get("time")==null){
-                            throw new ParserError("Perturbation time must be non-null");
+                            api.throwParserError("Perturbation time must be non-null");
                         }
                         int time = p.get("time").getAsInt();
                         Perturbation perturbation = new Perturbation(time);
@@ -305,7 +307,7 @@ public class Parser implements ParserInterface{
                                 JsonObject property = elem.getAsJsonObject();
                                 if (!(property.get(FIELD_NAME)==null || !property.get(FIELD_NAME).getAsJsonPrimitive().isString()) ){
                                     String name = property.get(FIELD_NAME).getAsString();
-                                    String type;
+                                    String type="";
                                     
                                     //Captures any property type containing characters "assign" or "delta" (Case insensitive)
                                     if (property.get("type") == null || property.get("type").getAsString().toLowerCase().contains("assign")) {
@@ -313,10 +315,10 @@ public class Parser implements ParserInterface{
                                     } else if (property.get("type").getAsString().toLowerCase().contains("delta")) {
                                         type = "delta";
                                     } else {
-                                        throw new ParserError("Invalid property type (must be an assignment or delta)");
+                                        api.throwParserError("Invalid property type (must be an assignment or delta)");
                                     }
                                     if(property.get(FIELD_VALUE)==null){
-                                        throw new ParserError("Perturbation property impact value must be non-null");
+                                        api.throwParserError("Perturbation property impact value must be non-null");
                                     }
                                     JsonPrimitive value = property.get(FIELD_VALUE).getAsJsonPrimitive();
                                     if (value.getAsJsonPrimitive().isBoolean()) {
@@ -326,10 +328,10 @@ public class Parser implements ParserInterface{
                                     } else if (value.getAsJsonPrimitive().isString()) {
                                         perturbation.addProperty(name, value.getAsString(), type);
                                     } else {
-                                        throw new ParserError("Invalid property type; must be a string, number, or boolean");
+                                        api.throwParserError("Invalid property type; must be a string, number, or boolean");
                                     }
                                 } else {
-                                    throw new ParserError("Invalid Perturbation Property Name type; must be a string and non-null");
+                                    api.throwParserError("Invalid Perturbation Property Name type; must be a string and non-null");
                                 }
                             }
                         }
@@ -339,7 +341,7 @@ public class Parser implements ParserInterface{
                     parsedObjects.add(perturbationList);
                 }
                 else{
-                    throw new ParserError("JSON perturbation must be a JSON array");
+                    api.throwParserError("JSON perturbation must be a JSON array");
                 }
             }
         }
