@@ -17,12 +17,15 @@ public class JSONParser implements ParserInterface{
     private static final String GOALSTATE_FIELD= "goal_state";
     private static final String TASK_FIELD= "tasks";
     private static final String PERTURBATION_FIELD= "perturbations";
+    private static final String PROPERTY_IMPACTS_FIELD= "property_impacts";
 
     private static final String FIELD_NAME = "name";
     private static final String FIELD_OPERATOR = "operator";
     private static final String FIELD_PRIORITY= "priority";
     private static final String FIELD_VALUE = "value";
     private static final String FIELD_DURATION = "duration";
+    private static final String FIELD_REQUIREMENTS = "requirements";
+    private static final String DELTA = "delta";
 
     private JsonParser parser = new JsonParser();
     private String json;
@@ -156,8 +159,8 @@ public class JSONParser implements ParserInterface{
             }
             JsonObject gs = jsonObject.get(GOALSTATE_FIELD).getAsJsonObject();
             GoalState goalState = new GoalState();
-            if (gs.get("requirements") != null) {
-                JsonArray requirements = gs.get("requirements").getAsJsonArray();
+            if (gs.get(FIELD_REQUIREMENTS) != null) {
+                JsonArray requirements = gs.get(FIELD_REQUIREMENTS).getAsJsonArray();
                 for (JsonElement elem : requirements) {
                     JsonObject requirement = elem.getAsJsonObject();
                     if (!(requirement.get(FIELD_NAME)==null || requirement.get(FIELD_OPERATOR)==null|| !requirement.get(FIELD_NAME).getAsJsonPrimitive().isString() || !requirement.get(FIELD_OPERATOR).getAsJsonPrimitive().isString())) {
@@ -206,8 +209,8 @@ public class JSONParser implements ParserInterface{
                            String name= t.get(FIELD_NAME).getAsString();
                            task.setName(name);
                         }
-                        if (t.get("requirements") != null) {
-                            JsonArray requirements = t.get("requirements").getAsJsonArray();
+                        if (t.get(FIELD_REQUIREMENTS) != null) {
+                            JsonArray requirements = t.get(FIELD_REQUIREMENTS).getAsJsonArray();
                             for (JsonElement elem : requirements) {
                                 JsonObject requirement = elem.getAsJsonObject();
                                 if (!(requirement.get(FIELD_NAME)==null || requirement.get(FIELD_OPERATOR)==null|| !requirement.get(FIELD_NAME).getAsJsonPrimitive().isString() || !requirement.get(FIELD_OPERATOR).getAsJsonPrimitive().isString())) {
@@ -233,19 +236,19 @@ public class JSONParser implements ParserInterface{
                             }
                         }
 
-                        if (t.get("property_impacts") != null) {
-                            JsonArray properties = t.get("property_impacts").getAsJsonArray();
+                        if (t.get(PROPERTY_IMPACTS_FIELD) != null) {
+                            JsonArray properties = t.get(PROPERTY_IMPACTS_FIELD).getAsJsonArray();
                             for (JsonElement elem : properties) {
                                 JsonObject property = elem.getAsJsonObject();
                                 if (!(property.get(FIELD_NAME)==null || !property.get(FIELD_NAME).getAsJsonPrimitive().isString()) ){
                                     String name = property.get(FIELD_NAME).getAsString();
                                     String type="";
 
-                                    //Captures any property type containing characters "assign" or "delta" (Case insensitive)
+                                    //Captures any property type containing characters "assign" or DELTA (Case insensitive)
                                     if (property.get("type") == null || property.get("type").getAsString().toLowerCase().contains("assign")) {
                                         type = "assignment";
-                                    } else if (property.get("type").getAsString().toLowerCase().contains("delta")) {
-                                        type = "delta";
+                                    } else if (property.get("type").getAsString().toLowerCase().contains(DELTA)) {
+                                        type = DELTA;
                                     } else {
                                         api.throwParserError("Invalid property type (must be an assignment or delta)");
                                     }
@@ -301,19 +304,19 @@ public class JSONParser implements ParserInterface{
                             perturbation.setName(name);
                         }
 
-                        if (p.get("property_impacts") != null) {
-                            JsonArray properties = p.get("property_impacts").getAsJsonArray();
+                        if (p.get(PROPERTY_IMPACTS_FIELD) != null) {
+                            JsonArray properties = p.get(PROPERTY_IMPACTS_FIELD).getAsJsonArray();
                             for (JsonElement elem : properties) {
                                 JsonObject property = elem.getAsJsonObject();
                                 if (!(property.get(FIELD_NAME)==null || !property.get(FIELD_NAME).getAsJsonPrimitive().isString()) ){
                                     String name = property.get(FIELD_NAME).getAsString();
                                     String type="";
                                     
-                                    //Captures any property type containing characters "assign" or "delta" (Case insensitive)
+                                    //Captures any property type containing characters "assign" or DELTA (Case insensitive)
                                     if (property.get("type") == null || property.get("type").getAsString().toLowerCase().contains("assign")) {
                                         type = "assignment";
-                                    } else if (property.get("type").getAsString().toLowerCase().contains("delta")) {
-                                        type = "delta";
+                                    } else if (property.get("type").getAsString().toLowerCase().contains(DELTA)) {
+                                        type = DELTA;
                                     } else {
                                         api.throwParserError("Invalid property type (must be an assignment or delta)");
                                     }
