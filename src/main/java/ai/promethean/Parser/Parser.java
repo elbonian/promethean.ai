@@ -59,11 +59,11 @@ public class Parser {
             //Section that parses json into optimization objects
             //Check null because optimizations is an optional field
             if (jsonObject.get("optimizations") != null) {
-                JsonElement optimization_list = jsonObject.get("optimizations");
+                JsonElement optimizationArray = jsonObject.get("optimizations");
 
                 //Iterate through every optimization json object and create objects
-                if (optimization_list.isJsonArray()) {
-                    JsonArray optimizations= optimization_list.getAsJsonArray();
+                if (optimizationArray.isJsonArray()) {
+                    JsonArray optimizations= optimizationArray.getAsJsonArray();
                     for (JsonElement op : optimizations) {
                         JsonObject optimization = op.getAsJsonObject();
                         if (!(optimization.get("name")==null || !optimization.get("name").getAsJsonPrimitive().isString())) {
@@ -173,11 +173,11 @@ public class Parser {
             if(jsonObject.get("tasks")==null){
                 throw new ParserError("Missing tasks JSON object");
             }
-            JsonElement task_list = jsonObject.get("tasks");
+            JsonElement taskList = jsonObject.get("tasks");
 
             //Iterate through every task json object and create java objects
-            if (task_list.isJsonArray()) {
-                JsonArray tasks= task_list.getAsJsonArray();
+            if (taskList.isJsonArray()) {
+                JsonArray tasks= taskList.getAsJsonArray();
                 for (JsonElement taski : tasks) {
                     JsonObject t = taski.getAsJsonObject();
                     if(t.get("duration")==null){
@@ -268,11 +268,11 @@ public class Parser {
             //Section parses json objects into Perturbation java objects
             //Check for null because perturbations is an optional value
             if(jsonObject.get("perturbations")!=null){
-                JsonElement perturbation_list = jsonObject.get("perturbations");
+                JsonElement perturbationArray = jsonObject.get("perturbations");
 
                 //Iterate through every json perturbation and create java objects
-                if (perturbation_list.isJsonArray()) {
-                    JsonArray perturbations= perturbation_list.getAsJsonArray();
+                if (perturbationArray.isJsonArray()) {
+                    JsonArray perturbations= perturbationArray.getAsJsonArray();
                     for (JsonElement pert : perturbations) {
                         JsonObject p = pert.getAsJsonObject();
                         if(p.get("time")==null){
