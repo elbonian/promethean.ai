@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Parser {
     private JsonParser parser = new JsonParser();
@@ -50,7 +50,7 @@ public class Parser {
     * OptimizationList Object (Optional)
     * List of Perturbation Objects (Optional)
     */
-    public ArrayList<Object> parse(String json, Boolean isFile) {
+    public List<Object> parse(String json, Boolean isFile) {
         setJson(json,isFile);
         JsonElement jsonTree = parser.parse(this.json);
         if (jsonTree.isJsonObject()) {
