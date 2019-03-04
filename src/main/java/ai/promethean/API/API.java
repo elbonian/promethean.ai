@@ -5,14 +5,12 @@ import ai.promethean.DataModel.*;
 import ai.promethean.Planner.*;
 
 
-/*
-    This API is meant to be as simple as possible and expandable as possible.
-    If you want to add a new functionality simply add a function to the the API class.
-    PlannerError is a custom error throwing class. When throwing a PlannerError make sure to include
-    a detailed error message.
-    Example, if we want to add a function to create resource objects, simply create that function and then
-    call it with the resource object that keeps track of the examples
-
+/**
+ * This API is meant to be as simple as possible and expandable as possible.
+ * To add new functionality define your own function and the arguments it takes.
+ * ParserError and PlannerError classes serve to throw descriptive errors from specific components of the system.
+ * Example, if we want to add a function to create resource objects, simply create that function and then
+ * call it with the resource object that keeps track of the examples
  */
 
 public class API {
