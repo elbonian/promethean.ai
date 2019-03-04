@@ -1,19 +1,41 @@
 package ai.promethean.DataModel;
 
+/**
+ * String extension of the Property class
+ */
 public class StringProperty extends Property {
     protected String value;
 
+    /**
+     * Instantiates a new String property.
+     *
+     * @param _name  The name
+     * @param _value The value
+     * @param _type  The property type, used in property_impacts. Either "assignment" or "delta"
+     */
     public StringProperty(String _name, String _value, String _type){
         super(_name,_type);
 
         setValue(_value);
     }
+
+    /**
+     * Instantiates a new String property without a _type argument. Used for SystemState properties
+     *
+     * @param _name  the name
+     * @param _value the value
+     */
     public StringProperty(String _name, String _value){
         super(_name);
         setValue(_value);
     }
 
 
+    /**
+     * Set the value of the Property
+     *
+     * @param _value The value
+     */
     public void setValue(String _value){
         this.value=_value;
     }
