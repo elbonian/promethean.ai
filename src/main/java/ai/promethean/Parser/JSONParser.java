@@ -1,4 +1,4 @@
-package ai.promethean.Parser;
+package ai.promethean.parser;
 
 import ai.promethean.API.API;
 import ai.promethean.DataModel.*;
@@ -26,10 +26,11 @@ public class JSONParser implements ParserInterface{
 
     private JsonParser parser = new JsonParser();
     private String json;
-    private ArrayList<Object> parsedObjects = new ArrayList<Object>();
+    private ArrayList<Object> parsedObjects = new ArrayList<>();
     private TaskDictionary taskDictionary = new TaskDictionary();
     private StaticOptimizations optimizationList =  new StaticOptimizations();
-    private ArrayList<Object> perturbationList =  new ArrayList<Object>();
+    private ArrayList<Object> perturbationList =  new ArrayList<>();
+    private API api= new API();
 
     /* Parser set JSON with input
      * @param   json    Either the json string or the file path for a json file
@@ -48,7 +49,8 @@ public class JSONParser implements ParserInterface{
             }
             catch (IOException e)
             {
-                e.printStackTrace();
+
+               api.throwParserError("Invalid File Path");
             }
 
         }
@@ -64,7 +66,6 @@ public class JSONParser implements ParserInterface{
     * List of Perturbation Objects (Optional)
     */
     public List<Object> parse(String json, Boolean isFile) {
-        API api= new API();
         setJson(json,isFile);
         JsonElement jsonTree = parser.parse(this.json);
         if (jsonTree.isJsonObject()) {

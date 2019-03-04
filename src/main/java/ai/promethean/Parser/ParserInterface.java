@@ -1,4 +1,4 @@
-package ai.promethean.Parser;
+package ai.promethean.parser;
 
 import java.util.List;
 
