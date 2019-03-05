@@ -1,6 +1,6 @@
 package ai.promethean.API;
 import ai.promethean.Parser.*;
-import java.util.ArrayList;
+import java.util.*;
 import ai.promethean.DataModel.*;
 import ai.promethean.Planner.*;
 
@@ -29,8 +29,8 @@ public class API {
     }
 
     public void generatePlan(String inputFile, Boolean isFile){
-        Parser p = new Parser("JSON_input/InputFiles/test.json", isFile);
-        ArrayList<Object> objects = p.parse();
+        JSONParser p = new JSONParser();
+        List<Object> objects = p.parse(inputFile,isFile);
         Algorithm algo = new AStar((SystemState) objects.get(1),
                 (GoalState) objects.get(2),
                 (TaskDictionary) objects.get(3),
