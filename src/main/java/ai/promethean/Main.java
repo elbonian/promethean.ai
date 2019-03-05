@@ -15,7 +15,8 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        Clock clock = new Clock(30, 3);
-        clock.runClock();
+        API api = new API();
+
+        api.executePlan("JSON_input/InputFiles/test.json", true);
     }
 }

@@ -1,6 +1,9 @@
 package ai.promethean.API;
+import ai.promethean.ExecutingAgent.*;
 import ai.promethean.Parser.*;
 import java.util.ArrayList;
+import java.util.List;
+
 import ai.promethean.DataModel.*;
 import ai.promethean.Planner.*;
 
@@ -49,6 +52,35 @@ public class API {
             System.out.println(block.getState());
             System.out.println("\n");
         }
+    }
+
+    public void executePlan(String inputFile, Boolean isFile){
+        Parser p = new Parser(inputFile, isFile);
+        ArrayList<Object> objects = p.parse();
+        Algorithm algo = new AStar((SystemState) objects.get(1),
+                (GoalState) objects.get(2),
+                (TaskDictionary) objects.get(3),
+                (StaticOptimizations) objects.get(0));
+
+        Planner planner = new Planner(algo);
+        Plan plan = planner.plan();
+
+        System.out.println("\nInitial State:\n======================");
+        System.out.println(plan.getInitialState());
+        System.out.println("\nRuntime Goal State:\n======================");
+        System.out.println(plan.getGoalState());
+        System.out.println("\nPlan:\n======================");
+        ArrayList<PlanBlock> list = plan.getPlanBlockList();
+
+        List<SystemState> actualStates = new ArrayList<>();
+        actualStates.add(plan.getInitialState());
+        ClockObserver.setStateList(actualStates);
+
+        Clock clock = new Clock(1);
+        ClockObserver co = new TaskExecutor(plan);
+        clock.addObserver(co);
+
+        clock.runClock();
     }
 }
 

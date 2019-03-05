@@ -2,7 +2,11 @@ package ai.promethean.ExecutingAgent;
 
 import ai.promethean.DataModel.SystemState;
 
-abstract class ClockObserver {
+import java.util.List;
+
+public abstract class ClockObserver {
+
+    protected static List<SystemState> stateList;
 
     /**
      * Called by Clock to update the listener's time
@@ -10,6 +14,21 @@ abstract class ClockObserver {
      *
      * @param _time The current time
      */
-    public abstract Boolean update(int _time);
+    public abstract boolean update(int _time);
 
+    /**
+     * Set the list of SystemStates that observers will add to
+     * @param states List of SystemStates
+     */
+    public static void setStateList(List<SystemState> states) {
+        stateList = states;
+    }
+
+    /**
+     * Add a SystemState to the static list of SystemStates
+     * @param state
+     */
+    public static void addState(SystemState state) {
+        stateList.add(state);
+    }
 }
