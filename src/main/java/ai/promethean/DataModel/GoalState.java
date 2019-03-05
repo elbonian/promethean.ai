@@ -18,7 +18,7 @@ public class GoalState {
     }
 
     /**
-     * Retrieve a requirement given the na,e
+     * Retrieve a requirement given the name
      *
      * @param name The name of the Condition to find
      * @return A Condition object with the given name, or Null if a Condition with that name is not found
