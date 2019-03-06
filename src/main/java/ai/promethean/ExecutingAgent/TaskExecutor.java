@@ -18,6 +18,12 @@ public class TaskExecutor extends ClockObserver {
         initTime = 0;
     }
 
+    /**
+     * Notify TaskExecutor of the current time
+     * This will apply a task and add a new state to shared state list if the task has finished
+     * @param _time The current time
+     * @return returns true if the TaskExecutor is out of tasks or a generated state is invalid
+     */
     @Override
     public boolean update(int _time) {
         List<PlanBlock> planBlocks = plan.getPlanBlockList();
@@ -41,6 +47,13 @@ public class TaskExecutor extends ClockObserver {
         return false;
     }
 
+    /**
+     * Generate a new state from the current PlanBlock
+     * Also compare the new state to the state that the plan predicted
+     * @param block PlanBlock whose task should be applied to the current state
+     * @param time Current time
+     * @return true if the generated state matches the block's state or false otherwise
+     */
     private boolean applyBlock(PlanBlock block, int time) {
         System.out.println(block.getTask().toString());
         System.out.println(block.getState().toString());
