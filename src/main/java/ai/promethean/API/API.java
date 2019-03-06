@@ -57,6 +57,7 @@ public class API {
     public void executePlan(String inputFile, Boolean isFile){
         Parser p = new Parser(inputFile, isFile);
         ArrayList<Object> objects = p.parse();
+
         Algorithm algo = new AStar((SystemState) objects.get(1),
                 (GoalState) objects.get(2),
                 (TaskDictionary) objects.get(3),
@@ -77,8 +78,14 @@ public class API {
         ClockObserver.setStateList(actualStates);
 
         Clock clock = new Clock(1);
-        ClockObserver co = new TaskExecutor(plan);
-        clock.addObserver(co);
+
+        ClockObserver tasks = new TaskExecutor(plan);
+        clock.addObserver(tasks);
+
+        if (objects.size() >= 4) {
+            ClockObserver perturbations = new PerturbationInjector((List<Perturbation>)objects.get(4));
+            clock.addObserver(perturbations);
+        }
 
         clock.runClock();
 
