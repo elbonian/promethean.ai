@@ -81,6 +81,7 @@ public class API {
         clock.addObserver(co);
 
         clock.runClock();
+
     }
 }
 
