@@ -42,12 +42,25 @@ public class TestCaseGenerator {
     /**
      * Compute the difference in properties between the input and goal states and create a list of those deltas
      */
-    private void computePropertyDeltas() {
+    private ArrayList<PropertyDelta> computePropertyDeltas() {
+        ArrayList<PropertyDelta> deltas = new ArrayList<>();
         for(Condition goalReq: goalReqs) {
-            if(stateProps.containsProperty(goalReq.getName())) {
-                // Compute the difference in values between init and goal state
-                // Somehow add the (name, difference) tuple to some list or something
+            String req_name = goalReq.getName();
+            if(stateProps.containsProperty(req_name)) {
+                Property init_prop = stateProps.getProperty(req_name);
+                // Storing this here to figure out the proper way to subtract the init and goal state values
+                String req_op = goalReq.getOperator();
+                Object req_val = goalReq.getValue();
+                if(req_val instanceof Integer) {
+                    // I don't think this is a nice way to do this, with the type casting from Object
+                    Integer delta = (Integer)init_prop.getValue() - (Integer)req_val;
+                    deltas.add(new NumericalDelta(req_name, delta));
+                }
+                else if(req_val instanceof Boolean) {
+                    deltas.add(new BooleanDelta(req_name, (Boolean)req_val));
+                }
             }
         }
+        return deltas;
     }
 }
