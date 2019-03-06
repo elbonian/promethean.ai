@@ -47,13 +47,12 @@ public class Clock {
         }
     }
     public boolean notifyObservers(){
-        for (ClockObserver o:observers){
-            boolean result = o.update(this.currentTime);
-            if (!result){
-                return false;
-            }
+        boolean result = true;
+
+        for (ClockObserver o: observers) {
+            result = o.update(this.currentTime) && result;
         }
-        return true;
+        return result;
     }
 
 }

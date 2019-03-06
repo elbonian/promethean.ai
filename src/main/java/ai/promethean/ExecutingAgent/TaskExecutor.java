@@ -55,9 +55,6 @@ public class TaskExecutor extends ClockObserver {
      * @return true if the generated state matches the block's state or false otherwise
      */
     private boolean applyBlock(PlanBlock block, int time) {
-        System.out.println(block.getTask().toString());
-        System.out.println(block.getState().toString());
-        System.out.println(time);
         // Generate a new SystemState based on the last element of the list of SystemStates
         // Add that new State to the end of the state list
         // Check that the new state equals the plan's predicted state
@@ -79,6 +76,10 @@ public class TaskExecutor extends ClockObserver {
         }
 
         ClockObserver.addState(currentState);
+
+        System.out.println(block.getTask());
+        System.out.println(currentState);
+        System.out.println(time);
 
         System.out.println(currentState.equals(block.getState()));
         return currentState.equals(block.getState());

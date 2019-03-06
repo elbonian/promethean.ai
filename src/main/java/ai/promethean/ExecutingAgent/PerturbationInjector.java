@@ -43,6 +43,7 @@ public class PerturbationInjector extends ClockObserver {
             }
         }
 
+        System.out.println(perturbation);
         ClockObserver.addState(currentState);
 
     }
