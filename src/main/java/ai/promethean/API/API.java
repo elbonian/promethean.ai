@@ -82,7 +82,7 @@ public class API {
         ClockObserver tasks = new TaskExecutor(plan);
         clock.addObserver(tasks);
 
-        if (objects.size() >= 4) {
+        if (objects.size() >= 5) {
             ClockObserver perturbations = new PerturbationInjector((List<Perturbation>)objects.get(4));
             clock.addObserver(perturbations);
         }
