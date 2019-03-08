@@ -13,4 +13,10 @@ public abstract class PropertyDelta {
         this.property_name = _name;
     }
 
+    public String getName() {
+        return this.property_name;
+    }
+
+    public abstract Object getValue();
+
 }
