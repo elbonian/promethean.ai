@@ -57,7 +57,7 @@
     },
     {
       "name": "Acceleration",
-      "time": 30,
+      "time": 10,
       "property_impacts": [{"name": "speed","type": "delta","value": 1}]
     }
   ]

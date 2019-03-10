@@ -63,22 +63,10 @@ public class TaskExecutor extends ClockObserver {
         // Add that new State to the end of the state list
         // Check that the new state equals the plan's predicted state
         SystemState previousState = stateList.get(stateList.size() - 1);
-        PropertyMap prev_properties = previousState.getPropertyMap();
-
-        SystemState currentState = new SystemState(time);
         Task task = block.getTask();
 
-        for (String propertyName : prev_properties.getKeys()) {
-            Property previousProperty = previousState.getProperty(propertyName);
-            Property impact = task.getProperty(propertyName);
-            if (impact != null) {
-                Property newProperty = previousProperty.applyImpact(impact);
-                currentState.addProperty(newProperty);
-            } else {
-                currentState.addProperty(previousProperty);
-            }
-        }
-
+        SystemState currentState= task.applyTask(previousState);
+        currentState.setTime(time);
         ClockObserver.addState(currentState);
 
         System.out.println(block.getTask());

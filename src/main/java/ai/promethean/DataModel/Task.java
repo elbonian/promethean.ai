@@ -232,6 +232,28 @@ public class Task {
         requirements.add(c);
     }
 
+    /**
+     * Applies the task's property impacts onto a state and returns the resulting new state
+     * @param previousState The original system state
+     * @return a new System state with the task property impacts applied to the original state
+     */
+    public SystemState applyTask(SystemState previousState){
+        SystemState newState= new SystemState();
+        PropertyMap prevProperties = previousState.getPropertyMap();
+        for(String propertyName: prevProperties.getKeys()){
+            Property previousProperty = previousState.getProperty(propertyName);
+            Property impact = this.getProperty(propertyName);
+            if(impact!=null){
+                Property newProperty = previousProperty.applyImpact(impact);
+                newState.addProperty(newProperty);
+            }
+            else{
+                newState.addProperty(previousProperty);
+            }
+        }
+        return newState;
+    }
+
     @Override
     public String toString() {
         return "Task UID: " + this.UID + ", Name: "+ this.name+ "\n Duration: " + this.duration

@@ -28,20 +28,8 @@ public class PerturbationInjector extends ClockObserver {
 
     private void updateState(Perturbation perturbation, int time) {
         SystemState previousState = stateList.get(stateList.size() - 1);
-        PropertyMap prev_properties = previousState.getPropertyMap();
-
-        SystemState currentState = new SystemState(time);
-
-        for (String propertyName : prev_properties.getKeys()) {
-            Property previousProperty = previousState.getProperty(propertyName);
-            Property impact = perturbation.getProperty(propertyName);
-            if (impact != null) {
-                Property newProperty = previousProperty.applyImpact(impact);
-                currentState.addProperty(newProperty);
-            } else {
-                currentState.addProperty(previousProperty);
-            }
-        }
+        SystemState currentState= perturbation.applyPerturbation(previousState);
+        currentState.setTime(time);
 
         System.out.println(perturbation);
         ClockObserver.addState(currentState);
