@@ -21,18 +21,25 @@ public class PerturbationInjector extends ClockObserver {
         // While loop in case there are multiple perturbations at the same time
         while (perturbations.get(0).getTime() == _time) {
             Perturbation perturbation = perturbations.remove(0);
-            updateState(perturbation, _time);
+            if (perturbation.getProperties().containsProperty("time")) {
+                Property timeProperty = perturbation.getProperty("time");
+                int newTime = _time + ((NumericalProperty) timeProperty).getValue().intValue();
+
+                updateState(perturbation, newTime);
+                Clock.setTime(newTime);
+            } else {
+                updateState(perturbation, _time);
+            }
         }
         return true;
     }
 
     private void updateState(Perturbation perturbation, int time) {
-        SystemState previousState = stateList.get(stateList.size() - 1);
-        SystemState currentState= perturbation.applyPerturbation(previousState);
+        SystemState previousState = ClockObserver.peekLastState();
+        SystemState currentState = perturbation.applyPerturbation(previousState);
         currentState.setTime(time);
 
         System.out.println(perturbation);
         ClockObserver.addState(currentState);
-
     }
 }

@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Clock {
     private int stepSize;
-    private int currentTime;
+    private static int currentTime;
     private boolean stopFlag;
     private List<ClockObserver> observers= new ArrayList<ClockObserver>();
 
@@ -42,7 +42,7 @@ public class Clock {
 
     public void runClock(){
         while (!stopFlag){
-            this.currentTime += this.stepSize;
+            Clock.incrementTime(stepSize);
             stopFlag = notifyObservers();
         }
     }
@@ -50,9 +50,22 @@ public class Clock {
         boolean result = true;
 
         for (ClockObserver o: observers) {
-            result = o.update(this.currentTime) && result;
+            int time = Clock.getTime();
+            result = o.update(time) && result;
         }
         return result;
+    }
+
+    public static void incrementTime(int stepSize) {
+        currentTime += stepSize;
+    }
+
+    public static int getTime() {
+        return currentTime;
+    }
+
+    public static void setTime(int time) {
+        currentTime = time;
     }
 
 }

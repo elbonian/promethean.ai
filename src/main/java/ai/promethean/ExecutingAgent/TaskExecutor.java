@@ -1,7 +1,5 @@
 package ai.promethean.ExecutingAgent;
 
-import ai.promethean.DataModel.Property;
-import ai.promethean.DataModel.PropertyMap;
 import ai.promethean.DataModel.SystemState;
 import ai.promethean.DataModel.Task;
 import ai.promethean.Planner.Plan;
@@ -38,6 +36,7 @@ public class TaskExecutor extends ClockObserver {
         if(_time > initTime+taskDuration){
             return true;
         }
+
         if (_time == initTime + taskDuration) {
             PlanBlock currentBlock = planBlocks.remove(0);
 
@@ -62,7 +61,7 @@ public class TaskExecutor extends ClockObserver {
         // Generate a new SystemState based on the last element of the list of SystemStates
         // Add that new State to the end of the state list
         // Check that the new state equals the plan's predicted state
-        SystemState previousState = stateList.get(stateList.size() - 1);
+        SystemState previousState = ClockObserver.peekLastState();
         Task task = block.getTask();
 
         SystemState currentState= task.applyTask(previousState);

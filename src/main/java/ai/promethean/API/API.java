@@ -73,9 +73,7 @@ public class API {
         System.out.println("\nPlan:\n======================");
         ArrayList<PlanBlock> list = plan.getPlanBlockList();
 
-        List<SystemState> actualStates = new ArrayList<>();
-        actualStates.add(plan.getInitialState());
-        ClockObserver.setStateList(actualStates);
+        ClockObserver.addState(plan.getInitialState());
 
         Clock clock = new Clock(1);
 
