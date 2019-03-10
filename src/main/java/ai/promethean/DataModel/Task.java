@@ -3,7 +3,6 @@ package ai.promethean.DataModel;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ai.promethean.Planner.OptimizationWeight;
 
 /**
  * Defined a Task which can be executed from a SystemState to transition to a different state
