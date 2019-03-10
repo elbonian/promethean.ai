@@ -208,7 +208,7 @@ public class SystemState {
     @Override
     public boolean equals(Object systemState){
         if(systemState instanceof SystemState) {
-            return properties.equals(((SystemState)systemState).getPropertyMap());
+            return properties.equals(((SystemState)systemState).getPropertyMap()) && this.time==((SystemState) systemState).getTime();
         }
         return false;
 

@@ -34,6 +34,10 @@ public class TaskExecutor extends ClockObserver {
         int taskDuration = planBlocks.get(0).getTask().getDuration();
 //        int initTime = planBlocks.get(0).getTask().getTime();
 
+        //TODO: will refactor later but this is a check for a time perturbation
+        if(_time > initTime+taskDuration){
+            return true;
+        }
         if (_time == initTime + taskDuration) {
             PlanBlock currentBlock = planBlocks.remove(0);
 
