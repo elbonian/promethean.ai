@@ -19,11 +19,19 @@ public class PerturbationInjector extends ClockObserver {
     @Override
     public boolean update(int _time) {
         // While loop in case there are multiple perturbations at the same time
-        while (perturbations.get(0).getTime() == _time) {
+        while (!perturbations.isEmpty() && perturbations.get(0).getTime() <= _time) {
             Perturbation perturbation = perturbations.remove(0);
-            if (perturbation.getProperties().containsProperty("time")) {
-                Property timeProperty = perturbation.getProperty("time");
-                int newTime = _time + ((NumericalProperty) timeProperty).getValue().intValue();
+            if (perturbation.getProperties().containsProperty("time")
+                    && perturbation.getProperty("time") instanceof NumericalProperty) {
+                NumericalProperty timeProperty = (NumericalProperty) perturbation.getProperty("time");
+
+                int newTime;
+
+                if (timeProperty.getType().equals("assign")) {
+                    newTime = timeProperty.getValue().intValue();
+                } else {
+                    newTime = _time + timeProperty.getValue().intValue();
+                }
 
                 updateState(perturbation, newTime);
                 Clock.setTime(newTime);
@@ -42,4 +50,5 @@ public class PerturbationInjector extends ClockObserver {
         System.out.println(perturbation);
         ClockObserver.addState(currentState);
     }
+
 }
