@@ -3,7 +3,8 @@ import java.util.*;
 
 public class Clock {
     private int stepSize;
-    private static int currentTime;
+    private int currentTime;
+    private static int lag = 0;
     private boolean stopFlag;
     private List<ClockObserver> observers= new ArrayList<ClockObserver>();
 
@@ -42,30 +43,41 @@ public class Clock {
 
     public void runClock(){
         while (!stopFlag){
-            Clock.incrementTime(stepSize);
+            currentTime += stepSize;
             stopFlag = notifyObservers();
         }
     }
+
     public boolean notifyObservers(){
         boolean result = true;
 
         for (ClockObserver o: observers) {
-            int time = Clock.getTime();
+            int time = currentTime;
             result = o.update(time) && result;
         }
         return result;
     }
 
-    public static void incrementTime(int stepSize) {
-        currentTime += stepSize;
+    /**
+     * Reset task lag to 0
+     */
+    public static void resetLag() {
+        lag = 0;
     }
 
-    public static int getTime() {
-        return currentTime;
+    /**
+     * Add task lag to the clock
+     * @param _lag int number of clock ticks of lag
+     */
+    public static void addLag(int _lag) {
+        lag += _lag;
     }
 
-    public static void setTime(int time) {
-        currentTime = time;
+    /**
+     * Get the current amount of task lag added to the clock
+     * @return int total number of clock ticks of lag
+     */
+    public static int getLag() {
+        return lag;
     }
-
 }

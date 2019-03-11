@@ -16,6 +16,12 @@ public class PerturbationInjector extends ClockObserver {
         perturbations.sort(Comparator.comparing(Perturbation::getTime));
     }
 
+    /**
+     * Check if any perturbations need to be applied at the current time
+     * If so, update the state stack
+     * @param _time The current time
+     * @return
+     */
     @Override
     public boolean update(int _time) {
         // While loop in case there are multiple perturbations at the same time
@@ -25,23 +31,19 @@ public class PerturbationInjector extends ClockObserver {
                     && perturbation.getProperty("time") instanceof NumericalProperty) {
                 NumericalProperty timeProperty = (NumericalProperty) perturbation.getProperty("time");
 
-                int newTime;
-
-                if (timeProperty.getType().equals("assign")) {
-                    newTime = timeProperty.getValue().intValue();
-                } else {
-                    newTime = _time + timeProperty.getValue().intValue();
-                }
-
-                updateState(perturbation, newTime);
-                Clock.setTime(newTime);
-            } else {
-                updateState(perturbation, _time);
+                int lag = timeProperty.getValue().intValue();
+                Clock.addLag(lag);
             }
+            updateState(perturbation, _time);
         }
         return true;
     }
 
+    /**
+     * Update the latest state with a perturbation
+     * @param perturbation
+     * @param time
+     */
     private void updateState(Perturbation perturbation, int time) {
         SystemState previousState = ClockObserver.peekLastState();
         SystemState currentState = perturbation.applyPerturbation(previousState);

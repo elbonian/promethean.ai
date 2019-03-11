@@ -35,8 +35,9 @@ public class TaskExecutor extends ClockObserver {
 //        if(_time > initTime+taskDuration){
 //            return true;
 //        }
-        if (_time >= initTime + taskDuration) {
+        if (_time == initTime + taskDuration + Clock.getLag()) {
             PlanBlock currentBlock = planBlocks.remove(0);
+            Clock.resetLag();
 
             boolean appliedBlock = applyBlock(currentBlock, _time);
             if (appliedBlock) {
