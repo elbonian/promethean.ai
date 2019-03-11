@@ -5,23 +5,23 @@ public class Clock {
     private int stepSize;
     private int currentTime;
     private static int lag = 0;
-    private boolean stopFlag;
+    private boolean clockRunning;
     private List<ClockObserver> observers= new ArrayList<ClockObserver>();
 
     public Clock(){
         setStepSize(1);
         setCurrentTime(0);
-        setStopFlag(false);
+        setClockRunning(true);
     }
 
     public Clock(int _stepSize){
         setStepSize(_stepSize);
         setCurrentTime(0);
-        setStopFlag(false);
+        setClockRunning(true);
     }
 
-    public void setStopFlag(boolean stopFlag) {
-        this.stopFlag = stopFlag;
+    public void setClockRunning(boolean clockRunning) {
+        this.clockRunning = clockRunning;
     }
     public void setStepSize(int stepSize) {
         this.stepSize = stepSize;
@@ -39,12 +39,12 @@ public class Clock {
     public int getCurrentTime() {
         return currentTime;
     }
-    public boolean getStopFlag() {return stopFlag; }
+    public boolean getClockRunning() {return clockRunning; }
 
     public void runClock(){
-        while (!stopFlag){
+        while (clockRunning){
             currentTime += stepSize;
-            stopFlag = notifyObservers();
+            clockRunning = notifyObservers();
         }
     }
 

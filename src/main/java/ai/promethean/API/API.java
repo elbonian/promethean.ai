@@ -86,6 +86,15 @@ public class API {
         }
 
         clock.runClock();
+        System.out.println(((TaskExecutor)tasks).isPlanCompleted());
+//
+//        if(((TaskExecutor)tasks).isPlanCompleted()){
+//            //Goal Handler
+//        }
+//        else{
+//            //Perturbation Handler
+//        }
+
 
     }
 }

@@ -10,10 +10,16 @@ import java.util.List;
 public class TaskExecutor extends ClockObserver {
     private Plan plan;
     private int initTime;
+    private boolean planCompleted;
 
     public TaskExecutor(Plan _plan) {
         plan = _plan;
         initTime = 0;
+        planCompleted=false;
+    }
+
+    public boolean isPlanCompleted() {
+        return planCompleted;
     }
 
     /**
@@ -26,15 +32,13 @@ public class TaskExecutor extends ClockObserver {
     public boolean update(int _time) {
         List<PlanBlock> planBlocks = plan.getPlanBlockList();
         if (planBlocks.isEmpty()) {
-            return true;
+            planCompleted=true;
+            return false;
         }
 
         int taskDuration = planBlocks.get(0).getTask().getDuration();
 
-//        //TODO: will refactor later but this is a check for a time perturbation
-//        if(_time > initTime+taskDuration){
-//            return true;
-//        }
+
         if (_time == initTime + taskDuration + Clock.getLag()) {
             PlanBlock currentBlock = planBlocks.remove(0);
             Clock.resetLag();
@@ -43,10 +47,10 @@ public class TaskExecutor extends ClockObserver {
             if (appliedBlock) {
                 initTime = _time;
             }
-            return !appliedBlock;
+            return appliedBlock;
         }
 
-        return false;
+        return true;
     }
 
     /**
