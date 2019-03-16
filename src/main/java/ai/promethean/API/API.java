@@ -60,6 +60,8 @@ public class API {
      * Initialize the clock and handle perturbation or goal state responses
      */
     public void executePlan(String inputFile, Boolean isFile){
+        boolean planCompleted = false;
+
         ArrayList<Object> objects = parseInput(inputFile, isFile);
         Plan plan = generatePlanFromParsedObjects(objects);
 
@@ -74,36 +76,37 @@ public class API {
         System.out.println(plan.getGoalState());
         System.out.println("\nPlan:\n======================");
 
-        ClockObserver.addState(plan.getInitialState());
-        Clock clock = new Clock(1);
-        ClockObserver tasks = new TaskExecutor(plan);
-        clock.addObserver(tasks);
-        if (objects.size() >= 5) {
-            ClockObserver perturbations = new PerturbationInjector((List<Perturbation>)objects.get(4));
-            clock.addObserver(perturbations);
-        }
-        clock.runClock();
-
-        if(((TaskExecutor)tasks).isPlanCompleted()){
-            //TODO: Make this call the goal state handler
-            System.out.println("Plan completed");
-        }
-        // a perturbation has occurred and needs to be handled.
-         else{
-             //get the current state of the craft for replanning
-            System.out.println("===================== Replanning =====================");
-            SystemState currentState = ClockObserver.peekLastState();
-            Plan newPlan = generatePlanFromSystemState(currentState, goalState, taskDict, optimizations);
-            ArrayList<PlanBlock> list = newPlan.getPlanBlockList();
-            for (PlanBlock block: list) {
-                System.out.println(block.getTask());
-                System.out.println("\n");
-                System.out.println(block.getState());
-                System.out.println("\n");
+        while (!planCompleted){
+            ClockObserver.addState(plan.getInitialState());
+            Clock clock = new Clock(1);
+            ClockObserver tasks = new TaskExecutor(plan);
+            clock.addObserver(tasks);
+            if (objects.size() >= 5) {
+                ClockObserver perturbations = new PerturbationInjector((List<Perturbation>)objects.get(4));
+                clock.addObserver(perturbations);
             }
-
+            clock.runClock();
+            planCompleted = ((TaskExecutor)tasks).isPlanCompleted();
+            System.out.println(planCompleted);
+            if(planCompleted){
+                //TODO: Make this call the goal state handler
+                System.out.println("Plan completed");
+            }
+            // a perturbation has occurred and needs to be handled.
+            else{
+                //get the current state of the craft for replanning
+                System.out.println("===================== Replanning =====================");
+                SystemState currentState = ClockObserver.peekLastState();
+                plan = generatePlanFromSystemState(currentState, goalState, taskDict, optimizations);
+                ArrayList<PlanBlock> list = plan.getPlanBlockList();
+             /*   for (PlanBlock block: list) {
+                    System.out.println(block.getTask());
+                    System.out.println("\n");
+                    System.out.println(block.getState());
+                    System.out.println("\n");
+                }*/
+            }
         }
-
     }
 }
 
