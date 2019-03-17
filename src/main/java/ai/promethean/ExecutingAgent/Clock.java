@@ -14,10 +14,17 @@ public class Clock {
         setClockRunning(true);
     }
 
-    public Clock(int _stepSize){
-        setStepSize(_stepSize);
-        setCurrentTime(0);
+    public Clock(int startTime){
+        setCurrentTime(startTime);
+        setStepSize(1);
         setClockRunning(true);
+    }
+
+    public Clock(int startTime, int _stepSize){
+        setStepSize(1);
+        setStepSize(_stepSize);
+        setClockRunning(true);
+        setCurrentTime(startTime);
     }
 
     public void setClockRunning(boolean clockRunning) {

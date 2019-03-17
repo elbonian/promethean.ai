@@ -75,12 +75,12 @@ public class API {
         System.out.println("\nRuntime Goal State:\n======================");
         System.out.println(plan.getGoalState());
         System.out.println("\nPlan:\n======================");
-
         while (!planCompleted){
             ClockObserver.addState(plan.getInitialState());
-            Clock clock = new Clock(1);
+            Clock clock = new Clock(plan.getInitialState().getTime());
             ClockObserver tasks = new TaskExecutor(plan);
             clock.addObserver(tasks);
+            //TODO: Should refactor parser objects to look up dictionary instead of checking size
             if (objects.size() >= 5) {
                 ClockObserver perturbations = new PerturbationInjector((List<Perturbation>)objects.get(4));
                 clock.addObserver(perturbations);

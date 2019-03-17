@@ -14,7 +14,7 @@ public class TaskExecutor extends ClockObserver {
 
     public TaskExecutor(Plan _plan) {
         plan = _plan;
-        initTime = 0;
+        initTime = _plan.getInitialState().getTime();
         planCompleted=false;
     }
 
@@ -32,7 +32,7 @@ public class TaskExecutor extends ClockObserver {
     public boolean update(int _time) {
         List<PlanBlock> planBlocks = plan.getPlanBlockList();
         if (planBlocks.isEmpty()) {
-            planCompleted=true;
+           this. planCompleted=true;
             return false;
         }
 
@@ -72,7 +72,7 @@ public class TaskExecutor extends ClockObserver {
         ClockObserver.addState(currentState);
 
         System.out.println(block.getTask());
-        System.out.println(currentState);
+        System.out.println("Current State: "+ currentState);
         System.out.println(time);
 
         System.out.println(currentState.equals(block.getState()));
