@@ -11,8 +11,6 @@ import ai.promethean.TestCaseGenerator.*;
 public class Main {
 
     public static void main(String[] args) {
-        API api = new API();
-        // api.generatePlan("JSON_input/InputFiles/test.json", true);
 
         SystemState start = new SystemState();
         start.addProperty("Battery", 100.0);
@@ -33,16 +31,28 @@ public class Main {
         goal.addRequirement("Gremlins", false, "==");
         goal.addRequirement("Altitude", 75.0, ">=");
         goal.addRequirement("CPU_temperature", 45.0, "<=");
-        TestCaseGenerator test_case = new TestCaseGenerator(start, goal);
-        ArrayList<PropertyDelta> deltas = test_case.getPropertyDeltas();
 
-        ArrayList<Task> generated_tasks = test_case.generateTestCase();
+        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal);
+        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 500, "500_tasks");
+        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 1000, "1000_tasks");
+        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 5000, "5000_tasks");
 
-        try {
-            test_case.testCaseToJSON(generated_tasks);
-        } catch (IOException e) {
-            System.out.println("Oof");
-            System.out.println(e);
-        }
+        // **** Test case generation... Comment out to stop generating the files
+
+//        ArrayList<Task> generated_tasks = test_case.generateTestCase();
+//        ArrayList<Optimization> optimizations = test_case.generateOptimizations(3);
+//
+//        try {
+//            test_case.testCaseToJSON(generated_tasks, optimizations, 3);
+//        } catch (IOException e) {
+//            System.out.println("Oof");
+//            System.out.println(e);
+//        }
+
+
+        API api = new API();
+        api.generatePlan("JSON_input/TestCases/5000_tasks.json", true);
+        // api.generatePlan("JSON_input/InputFiles/Test.json", true);
     }
+
 }

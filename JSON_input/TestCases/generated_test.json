@@ -1,0 +1,407 @@
+{
+    "initial_state": {"properties": [
+        {
+            "name": "Gremlins",
+            "value": false
+        },
+        {
+            "name": "wheelSpeed",
+            "value": 20
+        },
+        {
+            "name": "isHappy",
+            "value": false
+        },
+        {
+            "name": "Battery",
+            "value": 100
+        },
+        {
+            "name": "scienceCollected",
+            "value": 0
+        },
+        {
+            "name": "doorsOpen",
+            "value": false
+        },
+        {
+            "name": "CPU_temperature",
+            "value": 35
+        },
+        {
+            "name": "solarPanelsOpen",
+            "value": false
+        },
+        {
+            "name": "Altitude",
+            "value": 50
+        }
+    ]},
+    "goal_state": {"requirements": [
+        {
+            "name": "Battery",
+            "value": 80,
+            "operator": ">="
+        },
+        {
+            "name": "doorsOpen",
+            "value": true,
+            "operator": "=="
+        },
+        {
+            "name": "scienceCollected",
+            "value": 50,
+            "operator": ">="
+        },
+        {
+            "name": "isHappy",
+            "value": true,
+            "operator": "=="
+        },
+        {
+            "name": "solarPanelsOpen",
+            "value": true,
+            "operator": "=="
+        },
+        {
+            "name": "Gremlins",
+            "value": false,
+            "operator": "=="
+        },
+        {
+            "name": "Altitude",
+            "value": 75,
+            "operator": ">="
+        },
+        {
+            "name": "CPU_temperature",
+            "value": 45,
+            "operator": "<="
+        }
+    ]},
+    "perturbations": [
+        {
+            "property_impacts": [{
+                "name": "wheelSpeed",
+                "type": "delta",
+                "value": 63.5
+            }],
+            "name": "wheelSpeed_pert",
+            "time": 390
+        },
+        {
+            "property_impacts": [{
+                "name": "Battery",
+                "type": "delta",
+                "value": 41.2
+            }],
+            "name": "Battery_pert",
+            "time": 18
+        },
+        {
+            "property_impacts": [{
+                "name": "CPU_temperature",
+                "type": "delta",
+                "value": 21.8
+            }],
+            "name": "CPU_temperature_pert",
+            "time": 219
+        }
+    ],
+    "tasks": [
+        {
+            "duration": 1,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "Battery",
+                "type": "delta",
+                "value": 10
+            }],
+            "name": "charge_task"
+        },
+        {
+            "duration": 24,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "doorsOpen",
+                "type": "assignment",
+                "value": true
+            }],
+            "name": "doorsOpen_assignment_task"
+        },
+        {
+            "duration": 31,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "scienceCollected",
+                "type": "delta",
+                "value": 50
+            }],
+            "name": "scienceCollected_delta_task"
+        },
+        {
+            "duration": 17,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "isHappy",
+                "type": "assignment",
+                "value": true
+            }],
+            "name": "isHappy_assignment_task"
+        },
+        {
+            "duration": 40,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "solarPanelsOpen",
+                "type": "assignment",
+                "value": true
+            }],
+            "name": "solarPanelsOpen_assignment_task"
+        },
+        {
+            "duration": 32,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "Gremlins",
+                "type": "assignment",
+                "value": false
+            }],
+            "name": "Gremlins_assignment_task"
+        },
+        {
+            "duration": 45,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "Altitude",
+                "type": "delta",
+                "value": 25
+            }],
+            "name": "Altitude_delta_task"
+        },
+        {
+            "duration": 28,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "CPU_temperature",
+                "type": "delta",
+                "value": 10
+            }],
+            "name": "CPU_temperature_delta_task"
+        },
+        {
+            "duration": 1,
+            "requirements": [
+                {
+                    "name": "isHappy",
+                    "value": false,
+                    "operator": "=="
+                },
+                {
+                    "name": "Battery",
+                    "value": 19.1,
+                    "operator": ">="
+                }
+            ],
+            "property_impacts": [{
+                "name": "isHappy",
+                "type": "assignment",
+                "value": true
+            }],
+            "name": "null_task"
+        },
+        {
+            "duration": 44,
+            "requirements": [
+                {
+                    "name": "doorsOpen",
+                    "value": false,
+                    "operator": "=="
+                },
+                {
+                    "name": "Battery",
+                    "value": 22.5,
+                    "operator": ">="
+                }
+            ],
+            "property_impacts": [
+                {
+                    "name": "wheelSpeed",
+                    "type": "delta",
+                    "value": 1
+                },
+                {
+                    "name": "CPU_temperature",
+                    "type": "delta",
+                    "value": -24.2
+                },
+                {
+                    "name": "doorsOpen",
+                    "type": "assignment",
+                    "value": true
+                }
+            ],
+            "name": "null_task"
+        },
+        {
+            "duration": 36,
+            "requirements": [
+                {
+                    "name": "Gremlins",
+                    "value": false,
+                    "operator": "=="
+                },
+                {
+                    "name": "Battery",
+                    "value": 39,
+                    "operator": ">="
+                }
+            ],
+            "property_impacts": [{
+                "name": "Gremlins",
+                "type": "assignment",
+                "value": true
+            }],
+            "name": "null_task"
+        },
+        {
+            "duration": 41,
+            "requirements": [
+                {
+                    "name": "doorsOpen",
+                    "value": false,
+                    "operator": "=="
+                },
+                {
+                    "name": "isHappy",
+                    "value": false,
+                    "operator": "=="
+                },
+                {
+                    "name": "Battery",
+                    "value": 19.1,
+                    "operator": ">="
+                }
+            ],
+            "property_impacts": [
+                {
+                    "name": "isHappy",
+                    "type": "assignment",
+                    "value": true
+                },
+                {
+                    "name": "doorsOpen",
+                    "type": "assignment",
+                    "value": true
+                }
+            ],
+            "name": "null_task"
+        },
+        {
+            "duration": 15,
+            "requirements": [
+                {
+                    "name": "isHappy",
+                    "value": false,
+                    "operator": "=="
+                },
+                {
+                    "name": "Battery",
+                    "value": 18,
+                    "operator": ">="
+                }
+            ],
+            "property_impacts": [
+                {
+                    "name": "wheelSpeed",
+                    "type": "delta",
+                    "value": 5.2
+                },
+                {
+                    "name": "isHappy",
+                    "type": "assignment",
+                    "value": true
+                }
+            ],
+            "name": "null_task"
+        },
+        {
+            "duration": 15,
+            "requirements": [
+                {
+                    "name": "isHappy",
+                    "value": false,
+                    "operator": "=="
+                },
+                {
+                    "name": "Battery",
+                    "value": 37.9,
+                    "operator": ">="
+                }
+            ],
+            "property_impacts": [
+                {
+                    "name": "isHappy",
+                    "type": "assignment",
+                    "value": true
+                },
+                {
+                    "name": "Battery",
+                    "type": "delta",
+                    "value": 4.9
+                }
+            ],
+            "name": "null_task"
+        },
+        {
+            "duration": 29,
+            "requirements": [
+                {
+                    "name": "Gremlins",
+                    "value": false,
+                    "operator": "=="
+                },
+                {
+                    "name": "Battery",
+                    "value": 26.8,
+                    "operator": ">="
+                }
+            ],
+            "property_impacts": [
+                {
+                    "name": "Gremlins",
+                    "type": "assignment",
+                    "value": true
+                },
+                {
+                    "name": "CPU_temperature",
+                    "type": "delta",
+                    "value": -1.4
+                }
+            ],
+            "name": "null_task"
+        }
+    ],
+    "optimizations": [
+        {
+            "name": "Battery",
+            "priority": 0,
+            "type": "max"
+        },
+        {
+            "name": "scienceCollected",
+            "priority": 1,
+            "type": "max"
+        },
+        {
+            "name": "doorsOpen",
+            "priority": 2,
+            "type": "max"
+        },
+        {
+            "name": "CPU_temperature",
+            "priority": 3,
+            "type": "max"
+        }
+    ]
+}
