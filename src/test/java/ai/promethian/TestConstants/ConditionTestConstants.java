@@ -4,6 +4,7 @@ import ai.promethean.DataModel.Condition;
 import ai.promethean.DataModel.NumericalCondition;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ConditionTestConstants {
 
@@ -31,8 +32,8 @@ public class ConditionTestConstants {
         return new NumericalCondition("NumProperty1", "!=", 123.123);
     }
 
-    public static ArrayList<Condition> getAllTestConditions() {
-        ArrayList<Condition> returnList = new ArrayList<>();
+    public static List<Condition> getAllTestConditions() {
+        List<Condition> returnList = new ArrayList<>();
         returnList.add(getEqualsTestCondition());
         returnList.add(getGreaterThanTestCondition());
         returnList.add(getGreaterThanEqualToCondition());
