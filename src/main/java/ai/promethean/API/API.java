@@ -1,8 +1,12 @@
 package ai.promethean.API;
+import ai.promethean.Output.JSONOutput;
+import ai.promethean.Output.Output;
 import ai.promethean.Parser.*;
+import java.io.IOException;
 import java.util.*;
 import ai.promethean.DataModel.*;
 import ai.promethean.Planner.*;
+
 
 
 /*
@@ -29,7 +33,7 @@ public class API {
     }
 
     public void generatePlan(String inputFile, Boolean isFile){
-        JSONParser p = new JSONParser();
+        ParserInterface p = new JSONParser();
         List<Object> objects = p.parse(inputFile,isFile);
         Algorithm algo = new AStar((SystemState) objects.get(1),
                 (GoalState) objects.get(2),
@@ -38,6 +42,10 @@ public class API {
 
         Planner planner = new Planner(algo);
         Plan plan = planner.plan();
+
+        Output out= new JSONOutput();
+        out.writeToFile(plan, "JSON_output/Plans/test.json");
+
 
         System.out.println("\nInitial State:\n======================");
         System.out.println(plan.getInitialState());
