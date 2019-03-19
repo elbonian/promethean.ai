@@ -25,6 +25,7 @@ public class TestCaseGenerator {
     private ArrayList<Task> tasks = new ArrayList<>();
     private int numTasks = 15;
     private String filename = null;
+    private Boolean generateOptimalPath;
 
     /**
      * Generate a new test case with given starting and goal state. Uses starting state's PropertyMap to create actions
@@ -32,11 +33,12 @@ public class TestCaseGenerator {
      * @param state The SystemState to begin generating from
      * @param goal  The SystemState to plan towards
      */
-    public TestCaseGenerator(SystemState state, GoalState goal) {
+    public TestCaseGenerator(SystemState state, GoalState goal, Boolean optimalPath) {
         this.inputState = state;
         this.goalState = goal;
         this.stateProps = state.getPropertyMap();
         this.goalReqs = goal.getRequirements();
+        this.generateOptimalPath = optimalPath;
     }
 
     /**
@@ -46,21 +48,23 @@ public class TestCaseGenerator {
      * @param goal     The SystemState to plan towards
      * @param numTasks The maximum number of tasks to generate
      */
-    public TestCaseGenerator(SystemState state, GoalState goal, int numTasks) {
+    public TestCaseGenerator(SystemState state, GoalState goal, int numTasks, Boolean optimalPath) {
         this.inputState = state;
         this.goalState = goal;
         this.stateProps = state.getPropertyMap();
         this.goalReqs = goal.getRequirements();
         this.numTasks = numTasks;
+        this.generateOptimalPath = optimalPath;
     }
 
-    public TestCaseGenerator(SystemState state, GoalState goal, int numTasks, String filename) {
+    public TestCaseGenerator(SystemState state, GoalState goal, int numTasks, Boolean optimalPath, String filename) {
         this.inputState = state;
         this.goalState = goal;
         this.stateProps = state.getPropertyMap();
         this.goalReqs = goal.getRequirements();
         this.numTasks = numTasks;
         this.filename = filename;
+        this.generateOptimalPath = optimalPath;
     }
 
     /**
@@ -289,7 +293,16 @@ public class TestCaseGenerator {
      */
     public ArrayList<Task> generateTestCase() {
         ArrayList<PropertyDelta> deltas = computePropertyDeltas();
-        ArrayList<Task> critical_path = createCriticalPathTasks(deltas);
+        ArrayList<Task> critical_path = new ArrayList<>();
+        if(generateOptimalPath) {
+            critical_path = createCriticalPathTasks(deltas);
+        }
+        else {
+            Task charge = new Task(ThreadLocalRandom.current().nextInt(1, 21), "charge");
+            charge.addProperty("Battery", 10.0, "delta");
+            tasks.add(charge);
+            critical_path.add(charge);
+        }
         ArrayList<Task> full_plan = createRemainingTasks(critical_path);
         return full_plan;
     }

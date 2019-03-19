@@ -32,27 +32,30 @@ public class Main {
         goal.addRequirement("Altitude", 75.0, ">=");
         goal.addRequirement("CPU_temperature", 45.0, "<=");
 
-        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal);
-        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 500, "500_tasks");
-        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 1000, "1000_tasks");
-        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 5000, "5000_tasks");
+        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, true);
+        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, false);
+        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 100, true, "100_tasks_nocrit");
+        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 500, true, "500_tasks");
+        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 500, false, "500_tasks_nocrit");
+        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 1000, true, "1000_tasks");
+        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 1000, false, "1000_tasks_nocrit");
+        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 5000, true, "5000_tasks");
+        TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 5000, false, "5000_tasks_nocrit");
 
         // **** Test case generation... Comment out to stop generating the files
 
-//        ArrayList<Task> generated_tasks = test_case.generateTestCase();
-//        ArrayList<Optimization> optimizations = test_case.generateOptimizations(3);
-//
-//        try {
-//            test_case.testCaseToJSON(generated_tasks, optimizations, 3);
-//        } catch (IOException e) {
-//            System.out.println("Oof");
-//            System.out.println(e);
-//        }
+        ArrayList<Task> generated_tasks = test_case.generateTestCase();
+        ArrayList<Optimization> optimizations = test_case.generateOptimizations(3);
 
+        try {
+            test_case.testCaseToJSON(generated_tasks, optimizations, 3);
+        } catch (IOException e) {
+            System.out.println("Oof");
+            System.out.println(e);
+        }
 
         API api = new API();
-        api.generatePlan("JSON_input/TestCases/5000_tasks.json", true);
-        // api.generatePlan("JSON_input/InputFiles/Test.json", true);
+        api.generatePlan("JSON_input/TestCases/5000_tasks_nocrit.json", true);
     }
 
 }
