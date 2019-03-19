@@ -32,6 +32,8 @@ public class API {
         throw new ParserError(err_msg);
     }
 
+    public void throwOutupError(String err_msg){ throw new OutputError(err_msg); }
+
     public void generatePlan(String inputFile, Boolean isFile){
         ParserInterface p = new JSONParser();
         List<Object> objects = p.parse(inputFile,isFile);
@@ -43,8 +45,11 @@ public class API {
         Planner planner = new Planner(algo);
         Plan plan = planner.plan();
 
+        //New JSON Output
+        //Input filepath- NOT Including Output file name
+        //TODO: Sam and I will refactor how output is handled in API
         Output out= new JSONOutput();
-        out.writeToFile(plan, "JSON_output/Plans/test.json");
+        out.writeToFile(plan, "JSON_output/Plans/");
 
 
         System.out.println("\nInitial State:\n======================");

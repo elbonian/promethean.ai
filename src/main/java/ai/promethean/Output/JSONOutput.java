@@ -1,7 +1,10 @@
 package ai.promethean.Output;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import ai.promethean.API.API;
 import com.fasterxml.jackson.databind.*;
 
 public class JSONOutput implements Output {
@@ -15,9 +18,16 @@ public class JSONOutput implements Output {
         ObjectMapper mapper= new ObjectMapper()
                 .enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            mapper.writeValue(new File(filePath), o);
+            //For now, create a unique file name with the current date
+            //Might include file prefix later as an argument
+            String fileName= filePath + "Plan-" + new Date()+".json";
+            fileName = fileName.replace(" ", "");
+            fileName = fileName.replace(":", "");
+
+            mapper.writeValue(new File(fileName), o);
         }catch(IOException io){
-            System.out.println("error");
+            API api= new API();
+            api.throwOutupError("Invalid Output File Path");
         }
     }
 }
