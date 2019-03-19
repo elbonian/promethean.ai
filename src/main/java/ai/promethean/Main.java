@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
         API api = new API();
-        api.generatePlan("JSON_input/InputFiles/test.json", true);
+        api.generatePlan("JSON_input/InputFiles/test.json", true,"JSON_output/Plans/");
 
 
     }
