@@ -3,7 +3,6 @@ package ai.promethean;
 
 import ai.promethean.API.*;
 
-import java.io.IOException;
 
 
 public class Main {
