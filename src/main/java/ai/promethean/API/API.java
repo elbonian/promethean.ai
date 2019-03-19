@@ -29,8 +29,14 @@ public class API {
         throw new ParserError(err_msg);
     }
 
-    public ArrayList<Object> parseInput(String inputFile, Boolean isFile){
-        Parser p = new Parser(inputFile, isFile);
+    /**
+     * Parse a JSON input
+     * @param input
+     * @param isFile
+     * @return
+     */
+    public ArrayList<Object> parseInput(String input, Boolean isFile){
+        Parser p = new Parser(input, isFile);
         ArrayList<Object> objects = p.parse();
         return objects;
     }
@@ -49,6 +55,14 @@ public class API {
         return plan;
     }
 
+    /**
+     * Generate a plan from a specific SystemState Object instead of list of parsed objects
+     * @param currentState
+     * @param goalState
+     * @param taskDictionary
+     * @param optimizations
+     * @return
+     */
     public Plan generatePlanFromSystemState(SystemState currentState, GoalState goalState, TaskDictionary taskDictionary, StaticOptimizations optimizations){
         Algorithm algo = new AStar(currentState, goalState, taskDictionary, optimizations);
         Planner planner = new Planner(algo);
@@ -59,54 +73,11 @@ public class API {
      * Parse the input file and generate a plan from the parsed objects.
      * Initialize the clock and handle perturbation or goal state responses
      */
-    public void executePlan(String inputFile, Boolean isFile){
-        boolean planCompleted = false;
-
-        ArrayList<Object> objects = parseInput(inputFile, isFile);
+    public void executePlan(String input, Boolean isFile){
+        ArrayList<Object> objects = parseInput(input, isFile);
         Plan plan = generatePlanFromParsedObjects(objects);
-
-        //Pull out the goalState, taskDict, and optimizations incase we need to replan
-        GoalState goalState = (GoalState) objects.get(2);
-        TaskDictionary taskDict = (TaskDictionary) objects.get(3);
-        StaticOptimizations optimizations = (StaticOptimizations) objects.get(0);
-
-        System.out.println("\nInitial State:\n======================");
-        System.out.println(plan.getInitialState());
-        System.out.println("\nRuntime Goal State:\n======================");
-        System.out.println(plan.getGoalState());
-        System.out.println("\nPlan:\n======================");
-        while (!planCompleted){
-            ClockObserver.addState(plan.getInitialState());
-            Clock clock = new Clock(plan.getInitialState().getTime());
-            ClockObserver tasks = new TaskExecutor(plan);
-            clock.addObserver(tasks);
-            //TODO: Should refactor parser objects to look up dictionary instead of checking size
-            if (objects.size() >= 5) {
-                ClockObserver perturbations = new PerturbationInjector((List<Perturbation>)objects.get(4));
-                clock.addObserver(perturbations);
-            }
-            clock.runClock();
-            planCompleted = ((TaskExecutor)tasks).isPlanCompleted();
-            System.out.println(planCompleted);
-            if(planCompleted){
-                //TODO: Make this call the goal state handler
-                System.out.println("Plan completed");
-            }
-            // a perturbation has occurred and needs to be handled.
-            else{
-                //get the current state of the craft for replanning
-                System.out.println("===================== Replanning =====================");
-                SystemState currentState = ClockObserver.peekLastState();
-                plan = generatePlanFromSystemState(currentState, goalState, taskDict, optimizations);
-                ArrayList<PlanBlock> list = plan.getPlanBlockList();
-             /*   for (PlanBlock block: list) {
-                    System.out.println(block.getTask());
-                    System.out.println("\n");
-                    System.out.println(block.getState());
-                    System.out.println("\n");
-                }*/
-            }
-        }
+        ClockManager clockManager = new ClockManager();
+        clockManager.runPlanClock(plan, objects);
     }
 }
 
