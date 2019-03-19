@@ -15,7 +15,7 @@ public class Task {
     private String name;
 
     private PropertyMap property_impacts=new PropertyMap();
-    private ArrayList<ai.promethean.DataModel.Condition> requirements=new ArrayList<>();
+    private List<ai.promethean.DataModel.Condition> requirements=new ArrayList<>();
 
     /**
      * Instantiates a new Task, with a defined duration and no name
@@ -101,12 +101,12 @@ public class Task {
     }
 
     /**
-     * Gets an ArrayList of the Property objects in the Task
+     * Gets an List of the Property objects in the Task
      *
-     * @return ArrayList of Property objects
+     * @return List of Property objects
      */
-    public ArrayList<Property> getProperties() {
-        ArrayList<Property> property_list = new ArrayList<>();
+    public List<Property> getProperties() {
+        List<Property> property_list = new ArrayList<>();
         for (String key : property_impacts.getKeys()) {
             property_list.add(property_impacts.getProperty(key));
         }
@@ -116,9 +116,9 @@ public class Task {
     /**
      * Get requirements for the Task to be able to be executed
      *
-     * @return An ArrayList of Condition objects which are required to be satisfied for the Task to be executed
+     * @return An List of Condition objects which are required to be satisfied for the Task to be executed
      */
-    public ArrayList<Condition> getRequirements(){
+    public List<Condition> getRequirements(){
         return requirements;
     }
 

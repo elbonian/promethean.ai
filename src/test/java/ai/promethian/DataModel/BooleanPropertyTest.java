@@ -4,9 +4,7 @@ import ai.promethean.DataModel.BooleanProperty;
 import ai.promethean.DataModel.StringCondition;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BooleanPropertyTest {
 
@@ -31,8 +29,7 @@ public class BooleanPropertyTest {
     void checkNotEqualsBool(){assertFalse(bp.equals(bp3));}
 
     @Test
-    void checkDelta(){assertTrue(bp.getType().equals("assignment"));}
-
+    void checkDelta(){assertNull(bp.getType());}
     @Test
     void checkChangeDelta(){
         BooleanProperty bp5= new BooleanProperty("doorClosed", false, "delta");

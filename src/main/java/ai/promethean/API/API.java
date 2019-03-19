@@ -35,13 +35,10 @@ public class API {
     public void generatePlan(String inputFile, Boolean isFile, String outputFilePath){
         ParserInterface p = new JSONParser();
         List<Object> objects = p.parse(inputFile,isFile);
-        Algorithm algo = new AStar((SystemState) objects.get(1),
-                (GoalState) objects.get(2),
-                (TaskDictionary) objects.get(3),
-                (StaticOptimizations) objects.get(0));
+        Algorithm algo = new AStar();
 
         Planner planner = new Planner(algo);
-        Plan plan = planner.plan();
+        Plan plan = planner.plan((SystemState) objects.get(1), (GoalState) objects.get(2), (TaskDictionary) objects.get(3), (StaticOptimizations) objects.get(0));
 
         //New JSON Output
         //Input filepath- NOT Including Output file name
@@ -55,7 +52,7 @@ public class API {
         System.out.println("\nRuntime Goal State:\n======================");
         System.out.println(plan.getGoalState());
         System.out.println("\nPlan:\n======================");
-        ArrayList<PlanBlock> list = plan.getPlanBlockList();
+        List<PlanBlock> list = plan.getPlanBlockList();
         for (PlanBlock block: list) {
             System.out.println(block.getTask());
             System.out.println("\n");

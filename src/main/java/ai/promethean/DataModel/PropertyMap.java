@@ -1,8 +1,5 @@
 package ai.promethean.DataModel;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A Map of (name, Property object) to easily retrieve a Property with a given name
@@ -116,12 +113,12 @@ public class PropertyMap {
     }
 
     /**
-     * Retrieves an ArrayList of all Property objects in the PropertyMap
+     * Retrieves an List of all Property objects in the PropertyMap
      *
-     * @return ArrayList of Property objects
+     * @return List of Property objects
      */
-    public ArrayList<Property> getProperties() {
-        ArrayList<Property> properties =  new ArrayList<>();
+    public List<Property> getProperties() {
+        List<Property> properties =  new ArrayList<>();
         for (String key : this.getKeys()) {
             properties.add(getProperty(key));
         }
