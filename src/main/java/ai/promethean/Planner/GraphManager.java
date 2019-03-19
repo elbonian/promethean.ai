@@ -3,8 +3,12 @@ package ai.promethean.Planner;
 import ai.promethean.DataModel.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
 
+/**
+ * The type Graph manager.
+ */
 public class GraphManager {
 
     private SystemState initState;
@@ -13,6 +17,14 @@ public class GraphManager {
     private StaticOptimizations optimizations;
     private PriorityQueue<StateTemplate> frontier = new PriorityQueue<StateTemplate>(1, new FrontierComparator());
 
+    /**
+     * Instantiates a new Graph manager.
+     *
+     * @param initState     the init state
+     * @param goalState     the goal state
+     * @param taskDict      the task dict
+     * @param optimizations the optimizations
+     */
     public GraphManager(SystemState initState, GoalState goalState, TaskDictionary taskDict, StaticOptimizations optimizations) {
         this.initState = initState;
         this.goalState = goalState;
@@ -24,11 +36,14 @@ public class GraphManager {
         return frontier.peek() == null;
     }
 
-    /*
-     * returns list of tasks that can be executed at a given SystemState
+    /**
+     * Returns list of tasks that can be executed at a given state
+     *
+     * @param state the state in question
+     * @return the list of tasks
      */
-    public ArrayList<Task> validTasks(SystemState state) {
-        ArrayList<Task> validTasks = new ArrayList<>();
+    public List<Task> validTasks(SystemState state) {
+        List<Task> validTasks = new ArrayList<>();
 
         for (String name : taskDict.getKeys()) {
             boolean valid = true;
@@ -49,8 +64,13 @@ public class GraphManager {
         return validTasks;
     }
 
-    /*
-     * returns a SystemState created by applying task's property impacts to previous state
+    /**
+     * Create a new system state from a previous state and a task to apply
+     *
+     * @param previousState the previous state
+     * @param task          the task to apply
+     * @param g_value       the g value of the new state
+     * @return the system state
      */
     public SystemState createState(SystemState previousState, Task task, Double g_value) {
         PropertyMap prev_properties = previousState.getPropertyMap();
@@ -74,11 +94,15 @@ public class GraphManager {
         return nextState;
     }
 
-    /*
-     * Returns list of state templates given previous state and valid tasks
+    /**
+     * Creates a StateTemplate given a previous state and a potential task to be executed
+     *
+     * @param state the state in question
+     * @param tasks a list of tasks that could be executed at that state
+     * @return a list of StateTemplates
      */
-    private ArrayList<StateTemplate> templateGeneration(SystemState state, ArrayList<Task> tasks) {
-        ArrayList<StateTemplate> templates = new ArrayList<>();
+    private List<StateTemplate> templateGeneration(SystemState state, List<Task> tasks) {
+        List<StateTemplate> templates = new ArrayList<>();
 
         for (Task task : tasks) {
             Double g_value = Heuristic.g_value(state, task, optimizations);
@@ -89,10 +113,20 @@ public class GraphManager {
         return templates;
     }
 
+    /**
+     * Add a stateTemplate for every valid task to the frontier.
+     *
+     * @param state the state in question
+     */
     public void addNeighborsToFrontier(SystemState state) {
         frontier.addAll(templateGeneration(state, validTasks(state)));
     }
 
+    /**
+     * Retrieve the best stateTemplate from the frontier and return a State
+     *
+     * @return the best next state
+     */
     public SystemState poll() {
         StateTemplate template = frontier.poll();
         return createState(template.getPreviousState(), template.getTask(), template.getG());

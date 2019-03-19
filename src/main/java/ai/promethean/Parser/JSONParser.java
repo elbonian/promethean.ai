@@ -29,10 +29,10 @@ public class JSONParser implements ParserInterface{
 
     private JsonParser parser = new JsonParser();
     private String json;
-    private ArrayList<Object> parsedObjects = new ArrayList<>();
+    private List<Object> parsedObjects = new ArrayList<>();
     private TaskDictionary taskDictionary = new TaskDictionary();
     private StaticOptimizations optimizationList =  new StaticOptimizations();
-    private ArrayList<Object> perturbationList =  new ArrayList<>();
+    private List<Object> perturbationList =  new ArrayList<>();
     private API api= new API();
 
     /* Parser set JSON with input

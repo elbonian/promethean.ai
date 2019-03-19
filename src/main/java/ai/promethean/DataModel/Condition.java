@@ -23,7 +23,7 @@ public abstract class Condition {
      * @param _operator The operator used to compare the value assigned in the specific TypeCondition
      */
     public Condition(String _name,  String _operator){
-        if (_operator.equals("==") || _operator.equals(">") || _operator.equals(">=") || _operator.equals("<") || _operator.equals("<=") || _operator.equals("!=")){
+        if (Operators.ValidOperator(_operator)){
             setName(_name);
             setOperator(_operator);
         }

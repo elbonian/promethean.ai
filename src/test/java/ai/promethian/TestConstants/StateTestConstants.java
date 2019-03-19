@@ -4,6 +4,7 @@ import ai.promethean.DataModel.Property;
 import ai.promethean.DataModel.SystemState;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class StateTestConstants {
     public static SystemState getFullState() {
@@ -42,8 +43,8 @@ public class StateTestConstants {
         return returnState;
     }
 
-    public static ArrayList<SystemState> getAllTestStates() {
-        ArrayList<SystemState> returnList = new ArrayList<>();
+    public static List<SystemState> getAllTestStates() {
+        List<SystemState> returnList = new ArrayList<>();
         returnList.add(getFullState());
         returnList.add(getNumericState());
         returnList.add(getBooleanState());
