@@ -28,7 +28,7 @@ public class API {
         throw new ParserError(err_msg);
     }
 
-    public void generatePlan(String inputFile, Boolean isFile){
+    public Plan generatePlan(String inputFile, Boolean isFile){
         JSONParser p = new JSONParser();
         List<Object> objects = p.parse(inputFile,isFile);
         Algorithm algo = new AStar();
@@ -48,6 +48,8 @@ public class API {
             System.out.println(block.getState());
             System.out.println("\n");
         }
+
+        return plan;
     }
 }
 
