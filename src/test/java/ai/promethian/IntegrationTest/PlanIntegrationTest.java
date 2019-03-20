@@ -3,6 +3,9 @@ package ai.promethian.IntegrationTest;
 import ai.promethean.API.API;
 import ai.promethean.Planner.Plan;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlanIntegrationTest {
@@ -10,12 +13,13 @@ public class PlanIntegrationTest {
 
     @Test
     void generatePlanNoError() {
-        api.generatePlan("JSON_input/InputFiles/test.json", true,"JSON_output/Plans/");
+        api.executePlan("JSON_input/InputFiles/test.json", true);
     }
 
     @Test
     void generatePlanHasPlan() {
-        Plan plan = api.generatePlan("JSON_input/InputFiles/test.json", true,"JSON_output/Plans/");
+        Map<String, Object> objects= api.parseInput("JSON_input/InputFiles/test.json", true);
+        Plan plan = api.generatePlanFromParsedObjects(objects);
         assertNotNull(plan);
     }
 

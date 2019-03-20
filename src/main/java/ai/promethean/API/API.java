@@ -32,7 +32,7 @@ public class API {
     public void throwParserError(String err_msg){
         throw new ParserError(err_msg);
     }
-    public void throwOutupError(String err_msg){ throw new OutputError(err_msg); }
+    public void throwOutputError(String err_msg){ throw new OutputError(err_msg); }
 
 
     public Map<String, Object> parseInput(String inputFile, Boolean isFile){
@@ -49,13 +49,12 @@ public class API {
 
 
     public Plan generatePlanFromParsedObjects(Map<String, Object> parsedObjects){
-        Algorithm algo = new AStar((SystemState) parsedObjects.get("initialState"),
+        Algorithm algo = new AStar();
+        Planner planner = new Planner(algo);
+        Plan plan = planner.plan((SystemState) parsedObjects.get("initialState"),
                 (GoalState) parsedObjects.get("goalState"),
                 (TaskDictionary) parsedObjects.get("tasks"),
                 (StaticOptimizations) parsedObjects.get("optimizations"));
-        Planner planner = new Planner(algo);
-
-        Plan plan = planner.plan();
         return plan;
     }
 
@@ -68,9 +67,9 @@ public class API {
      * @return
      */
     public Plan generatePlanFromSystemState(SystemState currentState, GoalState goalState, TaskDictionary taskDictionary, StaticOptimizations optimizations){
-        Algorithm algo = new AStar(currentState, goalState, taskDictionary, optimizations);
+        Algorithm algo = new AStar();
         Planner planner = new Planner(algo);
-        Plan plan = planner.plan();
+        Plan plan = planner.plan(currentState, goalState, taskDictionary, optimizations);
         return plan;
     }
     /**

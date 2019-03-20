@@ -47,7 +47,7 @@ public class ClockManager {
                 System.out.println("===================== Replanning =====================");
                 SystemState currentState = ClockObserver.peekLastState();
                 plan = generatePlanFromSystemState(currentState, goalState, taskDict, optimizations);
-                ArrayList<PlanBlock> list = plan.getPlanBlockList();
+                List<PlanBlock> list = plan.getPlanBlockList();
             }
         }
     }
@@ -61,9 +61,9 @@ public class ClockManager {
      * @return
      */
     public Plan generatePlanFromSystemState(SystemState currentState, GoalState goalState, TaskDictionary taskDictionary, StaticOptimizations optimizations){
-        Algorithm algo = new AStar(currentState, goalState, taskDictionary, optimizations);
+        Algorithm algo = new AStar();
         Planner planner = new Planner(algo);
-        Plan plan = planner.plan();
+        Plan plan = planner.plan(currentState, goalState, taskDictionary, optimizations);
         return plan;
     }
 }
