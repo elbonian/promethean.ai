@@ -32,7 +32,7 @@ public class API {
 
     public void throwOutupError(String err_msg){ throw new OutputError(err_msg); }
 
-    public Plan generatePlan(String inputFile, Boolean isFile){
+    public Plan generatePlan(String inputFile, Boolean isFile, String outputFilePath){
         JSONParser p = new JSONParser();
       
         List<Object> objects = p.parse(inputFile,isFile);
