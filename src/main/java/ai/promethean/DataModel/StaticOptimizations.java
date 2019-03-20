@@ -5,7 +5,7 @@ import java.util.*;
  * The type Static optimizations.
  */
 public class StaticOptimizations {
-    private ArrayList<Optimization> Optimizations = new ArrayList<Optimization>();
+    private List<Optimization> Optimizations = new ArrayList<Optimization>();
 
     /**
      * Add optimization.
@@ -21,7 +21,7 @@ public class StaticOptimizations {
      *
      * @return the optimizations
      */
-    public ArrayList<Optimization> getOptimizations() {
+    public List<Optimization> getOptimizations() {
         return Optimizations;
     }
 

@@ -3,8 +3,7 @@ package ai.promethian.PlannerTest;
 import ai.promethean.DataModel.*;
 import ai.promethean.Planner.GraphManager;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -51,7 +50,7 @@ public class GraphManagerTest {
         task2.addRequirement(new BooleanCondition("alwaysFalse", "==", true));
         td.addTask(task2);
 
-        ArrayList<Task> validTasks = gm.validTasks(startingState);
+        List<Task> validTasks = gm.validTasks(startingState);
 
         assertEquals(1, validTasks.size());
 
@@ -79,7 +78,7 @@ public class GraphManagerTest {
         SystemState generatedState = gm.createState(startingState, simpleTask, 10.0);
         assertFalse((Boolean) generatedState.getProperty("doorClosed").getValue());
 
-        ArrayList<Property> generatedProperties = generatedState.getProperties();
+        List<Property> generatedProperties = generatedState.getProperties();
 
         for (Property property: generatedProperties) {
             String propertyName = property.getName();

@@ -3,6 +3,7 @@ package ai.promethian.TestConstants;
 import ai.promethean.DataModel.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PropertyTestConstants {
     public static NumericalProperty getNumericProperty1() {
@@ -17,8 +18,8 @@ public class PropertyTestConstants {
         return new NumericalProperty("NumProperty3",1.2343);
     }
 
-    public static ArrayList<NumericalProperty> getAllNumericProperties() {
-        ArrayList<NumericalProperty> returnList = new ArrayList<>();
+    public static List<NumericalProperty> getAllNumericProperties() {
+        List<NumericalProperty> returnList = new ArrayList<>();
         returnList.add(getNumericProperty1());
         returnList.add(getNumericProperty2());
         returnList.add(getNumericProperty3());
@@ -37,8 +38,8 @@ public class PropertyTestConstants {
         return new BooleanProperty("BoolProperty3", true);
     }
 
-    public static ArrayList<BooleanProperty> getAllBooleanProperties() {
-        ArrayList<BooleanProperty> returnList = new ArrayList<>();
+    public static List<BooleanProperty> getAllBooleanProperties() {
+        List<BooleanProperty> returnList = new ArrayList<>();
         returnList.add(getBooleanProperty1());
         returnList.add(getBooleanProperty2());
         returnList.add(getBooleanProperty3());
@@ -57,16 +58,16 @@ public class PropertyTestConstants {
         return new StringProperty("StringProperty3", "Some String I Guess");
     }
 
-    public static ArrayList<StringProperty> getAllStringProperties () {
-        ArrayList<StringProperty> returnList = new ArrayList<>();
+    public static List<StringProperty> getAllStringProperties () {
+        List<StringProperty> returnList = new ArrayList<>();
         returnList.add(getStringProperty1());
         returnList.add(getStringProperty2());
         returnList.add(getStringProperty3());
         return returnList;
     }
 
-    public static ArrayList<Property> getAllTestProperties () {
-        ArrayList<Property> returnList = new ArrayList<>();
+    public static List<Property> getAllTestProperties () {
+        List<Property> returnList = new ArrayList<>();
         returnList.addAll(getAllNumericProperties());
         returnList.addAll(getAllBooleanProperties());
         returnList.addAll(getAllStringProperties());

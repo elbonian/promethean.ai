@@ -90,10 +90,10 @@ public class SystemState {
     /**
      * Gets the properties of the SystemState
      *
-     * @return An ArrayList of Property objects
+     * @return An List of Property objects
      */
-    public ArrayList<Property> getProperties() {
-        ArrayList<Property> property_list = new ArrayList<>();
+    public List<Property> getProperties() {
+        List<Property> property_list = new ArrayList<>();
         for (String key : properties.getKeys()) {
             property_list.add(properties.getProperty(key));
         }
