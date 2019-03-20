@@ -32,8 +32,9 @@ public class API {
 
     public void throwOutupError(String err_msg){ throw new OutputError(err_msg); }
 
-    public void generatePlan(String inputFile, Boolean isFile, String outputFilePath){
-        ParserInterface p = new JSONParser();
+    public Plan generatePlan(String inputFile, Boolean isFile){
+        JSONParser p = new JSONParser();
+      
         List<Object> objects = p.parse(inputFile,isFile);
         Algorithm algo = new AStar();
 
@@ -59,6 +60,8 @@ public class API {
             System.out.println(block.getState());
             System.out.println("\n");
         }
+
+        return plan;
     }
 }
 
