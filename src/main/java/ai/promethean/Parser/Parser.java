@@ -8,11 +8,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Parser {
     private JsonParser parser = new JsonParser();
     private String json;
-    private ArrayList<Object> parsedObjects = new ArrayList<Object>();
+    private Map<String, Object> parsedObjects = new HashMap<>();
     private TaskDictionary taskDictionary = new TaskDictionary();
     private StaticOptimizations optimizationList =  new StaticOptimizations();
     private ArrayList<Object> perturbationList =  new ArrayList<Object>();
@@ -56,7 +58,7 @@ public class Parser {
     * OptimizationList Object (Optional)
     * List of Perturbation Objects (Optional)
     */
-    public ArrayList<Object> parse() {
+    public Map<String, Object> parse() {
         JsonElement jsonTree = parser.parse(json);
         if (jsonTree.isJsonObject()) {
             JsonObject jsonObject = jsonTree.getAsJsonObject();
@@ -100,7 +102,7 @@ public class Parser {
                 //Sort optimizations by priority
                 //Add parsed optimization Java objects to return list
                 optimizationList.sortOptimizations();
-                parsedObjects.add(optimizationList);
+                parsedObjects.put("optimizations",optimizationList);
             }
 
             //Section that parses json into an initial SystemState object (Required field)
@@ -128,7 +130,7 @@ public class Parser {
                 }
             }
             //Add parsed initial SystemState object to return list
-            parsedObjects.add(systemState);
+            parsedObjects.put("initialState",systemState);
 
             //Section parses json into GoalState object (required field)
             JsonObject gs = jsonObject.get("goal_state").getAsJsonObject();
@@ -156,7 +158,7 @@ public class Parser {
                 }
             }
             //Add java GoalSate object to return list
-            parsedObjects.add(goalState);
+            parsedObjects.put("goalState",goalState);
 
             //Section parses json objects into Task java objects (required field)
             JsonArray tasks = jsonObject.get("tasks").getAsJsonArray();
@@ -235,7 +237,7 @@ public class Parser {
                     }
                 }
                 //Add final TaskDictionary to return list
-                parsedObjects.add(taskDictionary);
+                parsedObjects.put("tasks",taskDictionary);
             }
 
             //Section parses json objects into Perturbation java objects
@@ -289,7 +291,7 @@ public class Parser {
                         perturbationList.add(perturbation);
                     }
                     //Add final perturbation list to return list
-                    parsedObjects.add(perturbationList);
+                    parsedObjects.put("perturbations",perturbationList);
                 }
             }
         }
