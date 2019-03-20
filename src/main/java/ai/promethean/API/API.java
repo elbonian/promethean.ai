@@ -1,8 +1,10 @@
 package ai.promethean.API;
+import ai.promethean.Output.*;
 import ai.promethean.Parser.*;
 import java.util.*;
 import ai.promethean.DataModel.*;
 import ai.promethean.Planner.*;
+
 
 
 /*
@@ -28,13 +30,23 @@ public class API {
         throw new ParserError(err_msg);
     }
 
-    public Plan generatePlan(String inputFile, Boolean isFile){
+    public void throwOutupError(String err_msg){ throw new OutputError(err_msg); }
+
+    public Plan generatePlan(String inputFile, Boolean isFile, String outputFilePath){
         JSONParser p = new JSONParser();
+      
         List<Object> objects = p.parse(inputFile,isFile);
         Algorithm algo = new AStar();
 
         Planner planner = new Planner(algo);
         Plan plan = planner.plan((SystemState) objects.get(1), (GoalState) objects.get(2), (TaskDictionary) objects.get(3), (StaticOptimizations) objects.get(0));
+
+        //New JSON Output
+        //Input filepath- NOT Including Output file name
+        //TODO: Sam and I will refactor how output is handled in API
+        Output out= new JSONOutput();
+        out.writeToFile(plan, outputFilePath);
+
 
         System.out.println("\nInitial State:\n======================");
         System.out.println(plan.getInitialState());

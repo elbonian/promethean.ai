@@ -10,12 +10,12 @@ public class PlanIntegrationTest {
 
     @Test
     void generatePlanNoError() {
-        api.generatePlan("JSON_input/InputFiles/test.json", true);
+        api.generatePlan("JSON_input/InputFiles/test.json", true,"JSON_output/Plans/");
     }
 
     @Test
     void generatePlanHasPlan() {
-        Plan plan = api.generatePlan("JSON_input/InputFiles/test.json", true);
+        Plan plan = api.generatePlan("JSON_input/InputFiles/test.json", true,"JSON_output/Plans/");
         assertNotNull(plan);
     }
 

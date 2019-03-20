@@ -3,7 +3,6 @@ package ai.promethian.PlannerTest;
 import ai.promethean.DataModel.*;
 import ai.promethean.Planner.GraphManager;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
