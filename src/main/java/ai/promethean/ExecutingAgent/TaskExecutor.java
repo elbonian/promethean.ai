@@ -73,7 +73,7 @@ public class TaskExecutor extends ClockObserver {
 
         System.out.println(block.getTask());
         System.out.println("Current State: "+ currentState);
-        System.out.println(time);
+        System.out.println("Task Execution End Time: " + time);
 
         return currentState.equals(block.getState());
     }

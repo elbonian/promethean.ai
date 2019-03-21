@@ -25,6 +25,8 @@ public class ClockManager {
         System.out.println("\nRuntime Goal State:\n======================");
         System.out.println(plan.getGoalState());
         System.out.println("\nPlan:\n======================");
+
+
         while (!planCompleted){
             ClockObserver.addState(plan.getInitialState());
             Clock clock = new Clock(plan.getInitialState().getTime());
@@ -35,7 +37,9 @@ public class ClockManager {
                 ClockObserver perturbations = new PerturbationInjector((List<Perturbation>)planObjects.get("perturbations"));
                 clock.addObserver(perturbations);
             }
+            System.out.println("\nExecuting Plan:\n======================");
             clock.runClock();
+
             planCompleted = ((TaskExecutor)tasks).isPlanCompleted();
             if(planCompleted){
                 //TODO: Make this call the goal state handler
