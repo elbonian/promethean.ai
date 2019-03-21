@@ -131,8 +131,21 @@ public class PropertyMap {
      * @param p the PropertyMap to compare to this one
      * @return Boolean whether the input PropertyMap is identical to this one
      */
-    public Boolean equals(PropertyMap p) {
-        return property_map.equals(p.getPropertyMap());
+    @Override
+    public boolean equals(Object p){
+        if(p instanceof PropertyMap) {
+            Map<String, Property> propertyMap1= ((PropertyMap)p).getPropertyMap();
+            if(propertyMap1.size()!=property_map.size()){
+                return false;
+            }
+            for(String key: property_map.keySet()){
+                if(!property_map.get(key).equals(propertyMap1.get(key))){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
 

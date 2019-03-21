@@ -3,12 +3,14 @@ package ai.promethean.Parser;
 import ai.promethean.API.API;
 import ai.promethean.DataModel.*;
 import com.google.gson.*;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
 
 public class JSONParser implements ParserInterface{
     //Constants specific to the JSON language
@@ -29,7 +31,11 @@ public class JSONParser implements ParserInterface{
 
     private JsonParser parser = new JsonParser();
     private String json;
-    private List<Object> parsedObjects = new ArrayList<>();
+
+
+    private Map<String, Object> parsedObjects = new HashMap<>();
+
+
     private TaskDictionary taskDictionary = new TaskDictionary();
     private StaticOptimizations optimizationList =  new StaticOptimizations();
     private List<Object> perturbationList =  new ArrayList<>();
@@ -68,7 +74,8 @@ public class JSONParser implements ParserInterface{
     * OptimizationList Object (Optional)
     * List of Perturbation Objects (Optional)
     */
-    public List<Object> parse(String json, Boolean isFile) {
+
+    public Map<String, Object> parse(String json, Boolean isFile) {
         setJson(json,isFile);
         JsonElement jsonTree = parser.parse(this.json);
         if (jsonTree.isJsonObject()) {
@@ -117,7 +124,7 @@ public class JSONParser implements ParserInterface{
                 //Sort optimizations by priority
                 //Add parsed optimization Java objects to return list
                 optimizationList.sortOptimizations();
-                parsedObjects.add(optimizationList);
+                parsedObjects.put("optimizations",optimizationList);
             }
 
             //Section that parses json into an initial SystemState object (Required field)
@@ -151,7 +158,7 @@ public class JSONParser implements ParserInterface{
                 }
             }
             //Add parsed initial SystemState object to return list
-            parsedObjects.add(systemState);
+            parsedObjects.put("initialState",systemState);
 
             //Section parses json into GoalState object (required field)
             if(jsonObject.get(GOALSTATE_FIELD)==null){
@@ -185,7 +192,7 @@ public class JSONParser implements ParserInterface{
                 }
             }
             //Add java GoalSate object to return list
-            parsedObjects.add(goalState);
+            parsedObjects.put("goalState",goalState);
 
             //Section parses json objects into Task java objects (required field)
             if(jsonObject.get(TASK_FIELD)==null){
@@ -277,7 +284,7 @@ public class JSONParser implements ParserInterface{
                     }
                 }
                 //Add final TaskDictionary to return list
-                parsedObjects.add(taskDictionary);
+                parsedObjects.put("tasks",taskDictionary);
             }
             else{
                 api.throwParserError("JSON tasks must be a JSON array");
@@ -341,7 +348,7 @@ public class JSONParser implements ParserInterface{
                         perturbationList.add(perturbation);
                     }
                     //Add final perturbation list to return list
-                    parsedObjects.add(perturbationList);
+                    parsedObjects.put("perturbations",perturbationList);
                 }
                 else{
                     api.throwParserError("JSON perturbation must be a JSON array");

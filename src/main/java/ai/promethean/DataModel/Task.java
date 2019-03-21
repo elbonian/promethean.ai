@@ -3,7 +3,6 @@ package ai.promethean.DataModel;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ai.promethean.Planner.OptimizationWeight;
 
 /**
  * Defined a Task which can be executed from a SystemState to transition to a different state
@@ -230,6 +229,28 @@ public class Task {
     public void addRequirement(String name, String value, String operator){
         StringCondition c= new StringCondition(name, operator,value);
         requirements.add(c);
+    }
+
+    /**
+     * Applies the task's property impacts onto a state and returns the resulting new state
+     * @param previousState The original system state
+     * @return a new System state with the task property impacts applied to the original state
+     */
+    public SystemState applyTask(SystemState previousState){
+        SystemState newState= new SystemState();
+        PropertyMap prevProperties = previousState.getPropertyMap();
+        for(String propertyName: prevProperties.getKeys()){
+            Property previousProperty = previousState.getProperty(propertyName);
+            Property impact = this.getProperty(propertyName);
+            if(impact!=null){
+                Property newProperty = previousProperty.applyImpact(impact);
+                newState.addProperty(newProperty);
+            }
+            else{
+                newState.addProperty(previousProperty);
+            }
+        }
+        return newState;
     }
 
     @Override

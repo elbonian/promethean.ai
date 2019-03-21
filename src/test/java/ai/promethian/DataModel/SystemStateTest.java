@@ -65,6 +65,27 @@ public class SystemStateTest {
         assertTrue(s.getProperty("Altitude")==null);
     }
 
+    @Test
+    void checkCheckStateEquals(){
+        s.addProperty(bp);
+        s1.addProperty(bp);
+        assertTrue(s.equals(s1));
+    }
+
+    @Test
+    void checkCheckStateNotEquals(){
+        s.addProperty(bp);
+        assertFalse(s.equals(s1));
+    }
+
+    @Test
+    void checkCheckStateNotEqualsTime(){
+        s.addProperty(bp);
+        s1.addProperty(bp);
+        s1.setTime(320);
+        assertFalse(s.equals(s1));
+    }
+
     
 
 }

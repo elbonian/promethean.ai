@@ -149,6 +149,30 @@ public class Perturbation {
         property_impacts.addProperty(name, value,type);
     }
 
+    /**
+     * Applies this Perturbation's property impacts onto a SystemState
+     * @param previousState the SystemState before the perturbation occurred
+     * @return the new System State with the perturbation impacts applied
+     */
+    public SystemState applyPerturbation(SystemState previousState){
+        SystemState newState= new SystemState();
+
+        PropertyMap prevProperties = previousState.getPropertyMap();
+
+        for (String propertyName : prevProperties.getKeys()) {
+            Property previousProperty = previousState.getProperty(propertyName);
+            Property impact = this.getProperty(propertyName);
+            if (impact != null) {
+                Property newProperty = previousProperty.applyImpact(impact);
+                newState.addProperty(newProperty);
+            } else {
+                newState.addProperty(previousProperty);
+            }
+        }
+
+        return newState;
+    }
+
     @Override
     public String toString() {
         return "Perturbation Name: "+this.name+ ", Time: " + this.time

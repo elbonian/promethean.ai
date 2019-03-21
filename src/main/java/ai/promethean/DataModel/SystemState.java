@@ -205,14 +205,14 @@ public class SystemState {
         return properties.getProperty(name);
     }
 
-/*
-    //TODO needs more testing
-    public Boolean equals(SystemState systemState){
-        this.sortProperties();
-        systemState.sortProperties();
-        return properties.equals(systemState.getProperties());
+    @Override
+    public boolean equals(Object systemState){
+        if(systemState instanceof SystemState) {
+            return properties.equals(((SystemState)systemState).getPropertyMap()) && this.time==((SystemState) systemState).getTime();
+        }
+        return false;
+
     }
-    */
 
     @Override
     public String toString() {
