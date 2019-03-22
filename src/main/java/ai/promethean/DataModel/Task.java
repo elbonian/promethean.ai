@@ -3,7 +3,6 @@ package ai.promethean.DataModel;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ai.promethean.Planner.OptimizationWeight;
 
 /**
  * Defined a Task which can be executed from a SystemState to transition to a different state
@@ -15,7 +14,7 @@ public class Task {
     private String name;
 
     private PropertyMap property_impacts=new PropertyMap();
-    private ArrayList<ai.promethean.DataModel.Condition> requirements=new ArrayList<>();
+    private List<ai.promethean.DataModel.Condition> requirements=new ArrayList<>();
 
     /**
      * Instantiates a new Task, with a defined duration and no name
@@ -101,12 +100,12 @@ public class Task {
     }
 
     /**
-     * Gets an ArrayList of the Property objects in the Task
+     * Gets an List of the Property objects in the Task
      *
-     * @return ArrayList of Property objects
+     * @return List of Property objects
      */
-    public ArrayList<Property> getProperties() {
-        ArrayList<Property> property_list = new ArrayList<>();
+    public List<Property> getProperties() {
+        List<Property> property_list = new ArrayList<>();
         for (String key : property_impacts.getKeys()) {
             property_list.add(property_impacts.getProperty(key));
         }
@@ -116,9 +115,9 @@ public class Task {
     /**
      * Get requirements for the Task to be able to be executed
      *
-     * @return An ArrayList of Condition objects which are required to be satisfied for the Task to be executed
+     * @return An List of Condition objects which are required to be satisfied for the Task to be executed
      */
-    public ArrayList<Condition> getRequirements(){
+    public List<Condition> getRequirements(){
         return requirements;
     }
 
@@ -230,6 +229,28 @@ public class Task {
     public void addRequirement(String name, String value, String operator){
         StringCondition c= new StringCondition(name, operator,value);
         requirements.add(c);
+    }
+
+    /**
+     * Applies the task's property impacts onto a state and returns the resulting new state
+     * @param previousState The original system state
+     * @return a new System state with the task property impacts applied to the original state
+     */
+    public SystemState applyTask(SystemState previousState){
+        SystemState newState= new SystemState();
+        PropertyMap prevProperties = previousState.getPropertyMap();
+        for(String propertyName: prevProperties.getKeys()){
+            Property previousProperty = previousState.getProperty(propertyName);
+            Property impact = this.getProperty(propertyName);
+            if(impact!=null){
+                Property newProperty = previousProperty.applyImpact(impact);
+                newState.addProperty(newProperty);
+            }
+            else{
+                newState.addProperty(previousProperty);
+            }
+        }
+        return newState;
     }
 
     @Override

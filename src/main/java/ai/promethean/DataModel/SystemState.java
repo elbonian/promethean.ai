@@ -90,10 +90,10 @@ public class SystemState {
     /**
      * Gets the properties of the SystemState
      *
-     * @return An ArrayList of Property objects
+     * @return An List of Property objects
      */
-    public ArrayList<Property> getProperties() {
-        ArrayList<Property> property_list = new ArrayList<>();
+    public List<Property> getProperties() {
+        List<Property> property_list = new ArrayList<>();
         for (String key : properties.getKeys()) {
             property_list.add(properties.getProperty(key));
         }
@@ -205,14 +205,14 @@ public class SystemState {
         return properties.getProperty(name);
     }
 
-/*
-    //TODO needs more testing
-    public Boolean equals(SystemState systemState){
-        this.sortProperties();
-        systemState.sortProperties();
-        return properties.equals(systemState.getProperties());
+    @Override
+    public boolean equals(Object systemState){
+        if(systemState instanceof SystemState) {
+            return properties.equals(((SystemState)systemState).getPropertyMap()) && this.time==((SystemState) systemState).getTime();
+        }
+        return false;
+
     }
-    */
 
     @Override
     public String toString() {

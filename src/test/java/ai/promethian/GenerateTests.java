@@ -56,8 +56,5 @@ public class GenerateTests {
             System.out.println("Oof");
             System.out.println(e);
         }
-
-        API api = new API();
-        api.generatePlan("JSON_input/TestCases/500_tasks.json", true);
     }
 }

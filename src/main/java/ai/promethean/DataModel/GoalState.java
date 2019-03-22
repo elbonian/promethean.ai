@@ -6,14 +6,14 @@ import java.util.*;
  * Class defining the GoalState of the planning system
  */
 public class GoalState {
-    private ArrayList<Condition> requirements=new ArrayList<Condition>();
+    private List<Condition> requirements=new ArrayList<Condition>();
 
     /**
-     * Gets the ArrayList of Condition objects which are the requirements to be in the goal state
+     * Gets the List of Condition objects which are the requirements to be in the goal state
      *
      * @return the requirements
      */
-    public ArrayList<Condition> getRequirements() {
+    public List<Condition> getRequirements() {
         return requirements;
     }
 

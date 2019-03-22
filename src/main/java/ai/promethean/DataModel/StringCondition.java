@@ -15,7 +15,7 @@ public class StringCondition extends Condition {
      */
     public StringCondition(String _name, String _operator, String _value){
         super(_name);
-        if(_operator.equals("==")|| _operator.equals("!=")) {
+        if(Operators.ValidBooleanOperator(_operator)) {
             super.setOperator(_operator);
             setValue(_value);
         }
