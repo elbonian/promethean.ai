@@ -8,3 +8,9 @@ out/
 build/
 .gradle
 .scannerwork
+
+JSON_input/TestCases/100_tasks*
+JSON_input/TestCases/500_tasks*
+JSON_input/TestCases/1000_tasks*
+JSON_input/TestCases/5000_tasks*
+JSON_input/TestCases/generated_test.json

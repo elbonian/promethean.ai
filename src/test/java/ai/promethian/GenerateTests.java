@@ -1,14 +1,16 @@
-package ai.promethean;
+package ai.promethian;
 
 import java.io.IOException;
 import java.util.*;
 
-import ai.promethean.DataModel.*;
-import ai.promethean.API.*;
+import ai.promethean.API.API;
+import ai.promethean.DataModel.GoalState;
+import ai.promethean.DataModel.Optimization;
+import ai.promethean.DataModel.SystemState;
+import ai.promethean.DataModel.Task;
 import ai.promethean.TestCaseGenerator.*;
 
-
-public class Main {
+public class GenerateTests {
 
     public static void main(String[] args) {
 
@@ -34,13 +36,14 @@ public class Main {
 
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, true);
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, false);
-        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 100, true, "100_tasks_nocrit");
+        TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 100, true);
+        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 100, false, "100_tasks_nocrit");
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 500, true, "500_tasks");
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 500, false, "500_tasks_nocrit");
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 1000, true, "1000_tasks");
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 1000, false, "1000_tasks_nocrit");
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 5000, true, "5000_tasks");
-        TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 5000, false, "5000_tasks_nocrit");
+        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 5000, false, "5000_tasks_nocrit");
 
         // **** Test case generation... Comment out to stop generating the files
 
@@ -55,7 +58,6 @@ public class Main {
         }
 
         API api = new API();
-        api.generatePlan("JSON_input/TestCases/5000_tasks_nocrit.json", true);
+        api.generatePlan("JSON_input/TestCases/500_tasks.json", true);
     }
-
 }
