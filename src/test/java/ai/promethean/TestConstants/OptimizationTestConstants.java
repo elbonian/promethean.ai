@@ -1,9 +1,7 @@
-package ai.promethian.TestConstants;
+package ai.promethean.TestConstants;
 
 import ai.promethean.DataModel.Optimization;
 import ai.promethean.DataModel.StaticOptimizations;
-
-import java.util.ArrayList;
 
 public class OptimizationTestConstants {
 
