@@ -1,6 +1,4 @@
-package ai.promethian.DataModel;
-import ai.promethean.DataModel.Optimization;
-import ai.promethean.DataModel.StaticOptimizations;
+package ai.promethean.DataModel;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

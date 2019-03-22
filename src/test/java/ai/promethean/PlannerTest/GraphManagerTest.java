@@ -1,4 +1,4 @@
-package ai.promethian.PlannerTest;
+package ai.promethean.PlannerTest;
 
 import ai.promethean.DataModel.*;
 import ai.promethean.Planner.GraphManager;
