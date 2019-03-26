@@ -23,7 +23,7 @@ public abstract class Property {
      */
     public Property(String _name){
         setName(_name);
-        setType("assignment");
+        setType(null);
     }
 
     /**

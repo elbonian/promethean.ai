@@ -5,21 +5,24 @@ import ai.promethean.DataModel.StaticOptimizations;
 import ai.promethean.DataModel.SystemState;
 import ai.promethean.DataModel.TaskDictionary;
 
+/**
+ * The type A star.
+ */
 public class AStar implements Algorithm {
-    private GraphManager graph;
-    private SystemState initState;
-    private GoalState goalState;
+    private Double ceiling;
 
-    public AStar(SystemState initState, GoalState goalState, TaskDictionary taskDict, StaticOptimizations optimizations) {
-        this.graph = new GraphManager(initState, goalState, taskDict, optimizations);
-        this.initState = initState;
-        this.goalState = goalState;
-    }
+    public AStar() {}
 
-    public SystemState run() {
+    /**
+     * High-Level A-Star Algorithm
+     * @return RuntimeGoalState, or null if no path is valid
+     */
+    public SystemState run(SystemState initState, GoalState goalState, TaskDictionary tasks, StaticOptimizations optimizations) {
+        GraphManager graph = new GraphManager(initState, goalState, tasks, optimizations);
         if (goalState.meetsGoal(initState)) {
             return initState;
         }
+
         graph.addNeighborsToFrontier(initState);
         boolean clfActive = true;
         while (!(graph.frontierIsEmpty() || !clfActive)) {

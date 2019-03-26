@@ -2,8 +2,18 @@ package ai.promethean.Planner;
 
 import ai.promethean.DataModel.*;
 
+/**
+ * The type Heuristic.
+ */
 public class Heuristic {
 
+    /**
+     * Returns the h_value of a state.
+     *
+     * @param currentState the current state
+     * @param goalState the goal state
+     * @return the current state h_value
+     */
     public static Double h_value(SystemState currentState, GoalState goalState) {
         Double squaredSum = 0.0;
 

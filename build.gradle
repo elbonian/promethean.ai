@@ -1,11 +1,15 @@
 plugins {
     id 'java'
+    id 'jacoco'
+    id 'application'
 }
 
-group 'ai.promethian'
-version '1.0-SNAPSHOT'
+group 'ai.promethean'
+version 'v1.0.0'
 
 sourceCompatibility = 1.8
+
+mainClassName = 'ai.promethean.Main'
 
 repositories {
     mavenCentral()
@@ -18,8 +22,27 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     compile group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.6.0'
+
 }
 
 test {
     useJUnitPlatform()
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ai.promethean.Main'
+    }
+}
+
+check.dependsOn jacocoTestReport
