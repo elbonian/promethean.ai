@@ -15,6 +15,7 @@ public class SystemState {
     private SystemState previousState;
     private Task previousTask;
     private double gValue=0.0;
+    private double hValue;
 
     /**
      * Instantiates a new SystemState with no given time
@@ -31,6 +32,18 @@ public class SystemState {
     public SystemState(int time){
         setUID();
         setTime(time);
+    }
+
+    /**
+     * Instantiates a new System state which the system is in at a given time
+     *
+     * @param time The time the system is in the state
+     * @param h_value The heuristic distance to the goal
+     */
+    public SystemState(int time, double h_value){
+        setUID();
+        setTime(time);
+        this.hValue = h_value;
     }
 
     /**
@@ -86,6 +99,13 @@ public class SystemState {
         return gValue;
     }
 
+    /**
+     * Gets the H-value of the state
+     *
+     * @return The state's heuristic distance to the goal state
+     */
+
+    public double gethValue() { return hValue; }
 
     /**
      * Gets the properties of the SystemState
