@@ -1,8 +1,5 @@
-package ai.promethian.DataModel;
+package ai.promethean.DataModel;
 
-import ai.promethean.DataModel.BooleanProperty;
-import ai.promethean.DataModel.NumericalProperty;
-import ai.promethean.DataModel.Perturbation;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

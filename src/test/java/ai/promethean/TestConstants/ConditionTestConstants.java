@@ -1,4 +1,4 @@
-package ai.promethian.TestConstants;
+package ai.promethean.TestConstants;
 
 import ai.promethean.DataModel.Condition;
 import ai.promethean.DataModel.NumericalCondition;
