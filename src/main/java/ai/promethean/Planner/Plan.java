@@ -53,4 +53,11 @@ public class Plan {
      */
     public List<PlanBlock> getPlanBlockList() { return planBlockList; }
 
+    @Override
+    public String toString() {
+        return "Initial State: "+ this.initialState
+                +"\n Goal State: "+ this.goalState
+                +"\n Plan: \n"
+                +this.planBlockList;
+    }
 }

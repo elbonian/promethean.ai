@@ -35,4 +35,9 @@ public class PlanBlock {
      */
     public SystemState getState() { return state; }
 
+    @Override
+    public String toString() {
+        return "\n Task: " +this.task+
+                "State: "+ this.state;
+    }
 }
