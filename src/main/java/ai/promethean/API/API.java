@@ -110,16 +110,32 @@ public class API {
         Plan plan = planner.plan(currentState, goalState, taskDictionary, optimizations);
         return plan;
     }
+
+    public List<SystemState> executeExistingPlan(Plan plan, Map<String, Object> parsedObjects){
+        ClockManager clockManager = new ClockManager();
+        return clockManager.runPlanClock(plan, parsedObjects);
+    }
+
     /**
      * Parse the input file and generate a plan from the parsed objects.
      * Initialize the clock and handle perturbation or goal state responses
      */
 
-    public void executePlan(String input, Boolean isFile){
+    public List<SystemState> executePlan(String input, Boolean isFile){
         Map <String, Object> objects = parseInput(input, isFile);
         Plan plan = generatePlanFromParsedObjects(objects);
-        ClockManager clockManager = new ClockManager();
-        clockManager.runPlanClock(plan, objects);
+        return executeExistingPlan(plan,objects);
+    }
+
+
+
+    public List<SystemState> executePlan(String input, Boolean isFile, String outputPlanPath, String outputStatesPath){
+        Map <String, Object> objects = parseInput(input, isFile);
+        Plan plan = generatePlanFromParsedObjects(objects,outputPlanPath);
+        List<SystemState> executedStates = executeExistingPlan(plan,objects);
+        Output output= new JSONOutput();
+        output.writeToFile(executedStates,outputStatesPath);
+        return executedStates;
     }
 }
 
