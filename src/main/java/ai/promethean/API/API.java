@@ -66,7 +66,7 @@ public class API {
     public Plan generatePlanFromParsedObjects(Map<String, Object> parsedObjects, String outputFilePath) {
         Plan plan= generatePlanFromParsedObjects(parsedObjects);
         Output output= new JSONOutput();
-        output.writeToFile(plan, outputFilePath);
+        output.writeToFile(plan, outputFilePath, "Plan");
         return plan;
     }
 
@@ -92,7 +92,7 @@ public class API {
     public Plan generatePlanFromJSON(String inputFile, Boolean isFile, String outputFilePath){
         Plan plan= generatePlanFromJSON(inputFile,isFile);
         Output output= new JSONOutput();
-        output.writeToFile(plan, outputFilePath);
+        output.writeToFile(plan, outputFilePath, "Plan");
         return plan;
     }
 
@@ -134,7 +134,7 @@ public class API {
         Plan plan = generatePlanFromParsedObjects(objects,outputPlanPath);
         List<SystemState> executedStates = executeExistingPlan(plan,objects);
         Output output= new JSONOutput();
-        output.writeToFile(executedStates,outputStatesPath);
+        output.writeToFile(executedStates,outputStatesPath, "SystemState");
         return executedStates;
     }
 }
