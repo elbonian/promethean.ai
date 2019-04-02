@@ -16,4 +16,11 @@ public interface Algorithm {
      * @return the system state
      */
     SystemState run(SystemState initState, GoalState goalState, TaskDictionary tasks, StaticOptimizations optimizations);
+
+    /**
+     * Run system state.
+     *
+     * @return the system state
+     */
+    SystemState run(SystemState initState, GoalState goalState, TaskDictionary tasks, StaticOptimizations optimizations, int minutesAllowed);
 }

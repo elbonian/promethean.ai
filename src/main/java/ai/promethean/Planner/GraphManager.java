@@ -80,6 +80,7 @@ public class GraphManager {
         nextState.setgValue(g_value);
         nextState.setPreviousState(previousState);
         nextState.setPreviousTask(task);
+        nextState.setMilliTime(System.currentTimeMillis());
 
         for (String propertyName : prev_properties.getKeys()) {
             Property previousProperty = previousState.getProperty(propertyName);

@@ -9,6 +9,7 @@ public class SystemState {
     private int UID;
     private static AtomicInteger ID_GENERATOR = new AtomicInteger(1);
     private int time;
+    private long milliTime;
     private PropertyMap properties = new PropertyMap();
 
     //Members for graph-search in planning
@@ -56,6 +57,15 @@ public class SystemState {
     }
 
     /**
+     * Sets time the system is in a state
+     *
+     * @param time The time the state will be valid
+     */
+    public void setMilliTime(long time) {
+        this.milliTime = time;
+    }
+
+    /**
      * Sets the UID of the SystemState. Will automatically increment and assign properly
      */
     private void setUID(){
@@ -79,6 +89,15 @@ public class SystemState {
      */
     public int getTime(){
         return time;
+    }
+
+    /**
+     * Get the time a system is in the state
+     *
+     * @return The time
+     */
+    public long getMilliTime(){
+        return milliTime;
     }
 
     /**

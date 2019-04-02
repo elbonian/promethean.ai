@@ -19,14 +19,35 @@ public class Planner {
     }
 
     /**
-     * return a plan from initial to goal state
+     * return a plan from initial to goal state or null if none are found
      *
      * @return the plan
      */
     public Plan plan(SystemState initialState, GoalState goalState, TaskDictionary tasks, StaticOptimizations optimizations) {
-        SystemState runtimeGoalState = this.algorithm.run(initialState, goalState, tasks, optimizations);
-        if (runtimeGoalState != null) {
-            return new Plan(runtimeGoalState);
+        SystemState runtimeEndState = this.algorithm.run(initialState, goalState, tasks, optimizations);
+        if (runtimeEndState != null) {
+            if (goalState.meetsGoal(runtimeEndState)) {
+                return new Plan(runtimeEndState, true);
+            } else {
+                return new Plan(runtimeEndState, false);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * return a plan from initial to end state or null if none are found
+     *
+     * @return the plan
+     */
+    public Plan plan(SystemState initialState, GoalState goalState, TaskDictionary tasks, StaticOptimizations optimizations, int minutesAllowed) {
+        SystemState runtimeEndState = this.algorithm.run(initialState, goalState, tasks, optimizations, minutesAllowed);
+        if (runtimeEndState != null) {
+            if (goalState.meetsGoal(runtimeEndState)) {
+                return new Plan(runtimeEndState, true);
+            } else {
+                return new Plan(runtimeEndState, false);
+            }
         }
         return null;
     }

@@ -42,8 +42,8 @@ public class TaskWeight {
                 taskWeight +=1;
             }
         }
-        // Double numericalAverage = numericalSum/numNumericalProperties;
-        // taskWeight += numericalAverage * numNonNumericalProperties;
+        Double numericalAverage = numericalSum/numNumericalProperties;
+        taskWeight += numericalAverage * numNonNumericalProperties;
 
         return taskWeight;
     }

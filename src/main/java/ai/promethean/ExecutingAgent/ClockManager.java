@@ -23,7 +23,7 @@ public class ClockManager {
         System.out.println("\nInitial State:\n======================");
         System.out.println(plan.getInitialState());
         System.out.println("\nRuntime Goal State:\n======================");
-        System.out.println(plan.getGoalState());
+        System.out.println(plan.getEndState());
         System.out.println("\nPlan:\n======================");
 
 
