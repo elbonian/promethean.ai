@@ -1,9 +1,6 @@
-package ai.promethian.TestConstants;
+package ai.promethean.TestConstants;
 
 import ai.promethean.DataModel.Perturbation;
-import ai.promethean.DataModel.Property;
-
-import java.util.ArrayList;
 
 public class PerturbationTestConstants {
 

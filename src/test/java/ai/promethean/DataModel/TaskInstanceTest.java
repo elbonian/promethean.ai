@@ -1,4 +1,4 @@
-package ai.promethian.DataModel;
+package ai.promethean.DataModel;
 
 public class TaskInstanceTest {
 

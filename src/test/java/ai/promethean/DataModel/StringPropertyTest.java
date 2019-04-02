@@ -1,8 +1,5 @@
-package ai.promethian.DataModel;
+package ai.promethean.DataModel;
 
-import ai.promethean.DataModel.BooleanProperty;
-import ai.promethean.DataModel.StringCondition;
-import ai.promethean.DataModel.StringProperty;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;

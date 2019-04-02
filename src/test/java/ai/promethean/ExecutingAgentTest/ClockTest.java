@@ -1,4 +1,4 @@
-package ai.promethian.ExecutingAgentTest;
+package ai.promethean.ExecutingAgentTest;
 
 import ai.promethean.ExecutingAgent.Clock;
 import org.junit.jupiter.api.Test;

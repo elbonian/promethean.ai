@@ -1,5 +1,7 @@
 language: java
 
+os: linux
+
 addons:
   sonarcloud:
     organization: "promethean-jpl"
