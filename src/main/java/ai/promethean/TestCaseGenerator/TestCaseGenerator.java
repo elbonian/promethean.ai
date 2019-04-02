@@ -11,9 +11,6 @@ import java.io.IOException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-// TODO:
-//  - Implement requirement generation
-
 /**
  * A class to generate test cases (hopefully) with a given depth / complexity
  */
@@ -21,7 +18,7 @@ public class TestCaseGenerator {
     private SystemState inputState;
     private GoalState goalState;
     private PropertyMap stateProps;
-    private ArrayList<Condition> goalReqs;
+    private List<Condition> goalReqs;
     private ArrayList<Task> tasks = new ArrayList<>();
     private int numTasks = 15;
     private String filename = null;
@@ -176,7 +173,7 @@ public class TestCaseGenerator {
             // init new Task with random duration in range [1, 50]
             Task new_task = new Task(randomIntInRange(1, 50));
             // I can't find a way to select random elements from the props ArrayList without dups w/o deleting them from list when done?
-            ArrayList<Property> temp_props = stateProps.getProperties();
+            List<Property> temp_props = stateProps.getProperties();
             // How many properties to include in randomly generated tasks? 1 - 5
             int num_props = randomIntInRange(1, temp_props.size() % 5);
             // Randomly grab properties from the input state properties
@@ -224,7 +221,7 @@ public class TestCaseGenerator {
         ops.add(battery_op);
 
         // Duplicate input_state property list to randomly select from w/o repeats
-        ArrayList<Property> temp_props = stateProps.getProperties();
+        List<Property> temp_props = stateProps.getProperties();
         for(int i = 0; i < numOps; i++) {
             int randomIndex = randomIntInRange(temp_props.size());
             Property random_prop = temp_props.get(randomIndex);
@@ -252,7 +249,7 @@ public class TestCaseGenerator {
     private ArrayList<Perturbation> generatePerturbations(int numPerts) {
         ArrayList<Perturbation> perts = new ArrayList<>();
         // Duplicate input_state property list to randomly select from w/o repeats
-        ArrayList<Property> temp_props = stateProps.getProperties();
+        List<Property> temp_props = stateProps.getProperties();
         for(int i=0; i<numPerts; i++) {
             // Get random property to affect in Perturbation
             int randomIndex = randomIntInRange(temp_props.size());
@@ -391,7 +388,7 @@ public class TestCaseGenerator {
             this_pert.put("name", pert.getName());
             this_pert.put("time", pert.getTime());
             JSONArray property_impacts = new JSONArray();
-            ArrayList<Property> prop_impacts = pert.getProperties().getProperties();
+            List<Property> prop_impacts = pert.getProperties().getProperties();
             for(Property prop: prop_impacts) {
                 JSONObject this_impact = new JSONObject();
                 this_impact.put("name", prop.getName());
