@@ -31,4 +31,8 @@ public abstract class ClockObserver {
     public static SystemState peekLastState() {
         return stateStack.peek();
     }
+
+    public static Stack<SystemState> getStateStack() {
+        return stateStack;
+    }
 }

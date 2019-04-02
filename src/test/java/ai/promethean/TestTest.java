@@ -1,4 +1,4 @@
-package ai.promethian;
+package ai.promethean;
 
 import org.junit.jupiter.api.Test;
 

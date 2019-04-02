@@ -1,4 +1,4 @@
-package ai.promethian.PlannerTest;
+package ai.promethean.PlannerTest;
 
 import ai.promethean.DataModel.SystemState;
 import ai.promethean.DataModel.Task;
@@ -7,7 +7,6 @@ import ai.promethean.Planner.StateTemplate;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class FrontierComparatorTest {

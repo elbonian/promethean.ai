@@ -1,4 +1,4 @@
-package ai.promethian.ExecutingAgentTest;
+package ai.promethean.ExecutingAgentTest;
 
 import ai.promethean.DataModel.NumericalProperty;
 import ai.promethean.DataModel.SystemState;

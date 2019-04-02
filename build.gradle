@@ -1,12 +1,15 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id 'application'
 }
 
-group 'ai.promethian'
-version '1.0-SNAPSHOT'
+group 'ai.promethean'
+version 'v1.0.0'
 
 sourceCompatibility = 1.8
+
+mainClassName = 'ai.promethean.Main'
 
 repositories {
     mavenCentral()
@@ -33,6 +36,12 @@ jacocoTestReport {
     reports {
         xml.enabled = true
         html.enabled = true
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ai.promethean.Main'
     }
 }
 
