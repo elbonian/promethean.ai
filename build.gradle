@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '4.0.2'
 }
 
 group 'ai.promethean'
@@ -25,6 +26,8 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.6.0'
+
+    compile 'com.github.pcj:google-options:1.0.0'
 
 }
 
