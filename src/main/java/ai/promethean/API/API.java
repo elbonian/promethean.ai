@@ -141,10 +141,12 @@ public class API {
     }
 
     public void testLog(){
-        System.out.println(Logger.getLogFileName());
         Logger log = new Logger();
-        System.out.println(Logger.isLogFlag());
         Logger.logFlag = true;
+        System.out.println(log.getLogFileName());
+
+
+
 
     }
 }

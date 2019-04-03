@@ -13,11 +13,11 @@ public class Logger {
     /**
      *Generate a date-time stamp to be the file name of the log
      */
-    public static final DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd_HH:mm:ss");
-    public static Date date = new Date();
-    public static String logFileName = (sdf.format(date)+".txt");
+    public final DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd_HH:mm:ss");
+    public final Date date = new Date();
+    public final String logFileName = (sdf.format(date)+".txt");
 
-    public static String getLogFileName(){
+    public String getLogFileName(){
         return logFileName;
     }
 
