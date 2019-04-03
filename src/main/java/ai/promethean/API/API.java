@@ -2,9 +2,11 @@ package ai.promethean.API;
 import ai.promethean.ExecutingAgent.*;
 import ai.promethean.Output.*;
 import ai.promethean.Parser.*;
+import ai.promethean.Logger.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 
 import ai.promethean.DataModel.*;
 import ai.promethean.Planner.*;
@@ -136,6 +138,14 @@ public class API {
         Output output= new JSONOutput();
         output.writeToFile(executedStates,outputStatesPath, "SystemState");
         return executedStates;
+    }
+
+    public void testLog(){
+        System.out.println(Logger.getLogFileName());
+        Logger log = new Logger();
+        System.out.println(Logger.isLogFlag());
+        Logger.logFlag = true;
+
     }
 }
 
