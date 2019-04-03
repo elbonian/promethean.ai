@@ -1,6 +1,7 @@
 package ai.promethean.ExecutingAgent;
 
 import ai.promethean.DataModel.*;
+import ai.promethean.Logger.Logger;
 import ai.promethean.Planner.*;
 
 import java.util.ArrayList;
@@ -21,11 +22,11 @@ public class ClockManager {
         TaskDictionary taskDict = (TaskDictionary) planObjects.get("tasks");
         StaticOptimizations optimizations = (StaticOptimizations) planObjects.get("optimizations");
 
-        System.out.println("\nInitial State:\n======================");
-        System.out.println(plan.getInitialState());
-        System.out.println("\nRuntime Goal State:\n======================");
-        System.out.println(plan.getGoalState());
-        System.out.println("\nPlan:\n======================");
+        if (Logger.isLogFlag()){
+            Logger.writeLog("Initial State: \n" + plan.getInitialState(), "ClockManager");
+            Logger.writeLog("Runtime Goal State:: \n" + plan.getGoalState(), "ClockManager");
+            Logger.writeLog("Plan: \n" + plan.getPlanBlockList(), "ClockManager");
+        }
 
         Stack<SystemState> stateList= new Stack<SystemState>();
         while (!planCompleted){
@@ -38,20 +39,31 @@ public class ClockManager {
                 ClockObserver perturbations = new PerturbationInjector((List<Perturbation>)planObjects.get("perturbations"));
                 clock.addObserver(perturbations);
             }
-            System.out.println("\nExecuting Plan:\n======================");
+            //System.out.println("\nExecuting Plan:\n======================");
             clock.runClock();
 
             planCompleted = ((TaskExecutor)tasks).isPlanCompleted();
             if(planCompleted){
                 //TODO: Make this call the goal state handler
-                System.out.println("Plan completed");
+                if (Logger.isLogFlag()){
+                    Logger.writeLog("Plan Completed \n", "ClockManager");
+                    Logger.writeLog("Ending State: \n" + ClockObserver.peekLastState(), "ClockManager");
+                }
+                //System.out.println("Plan completed");
             }
             // a perturbation has occurred and needs to be handled.
             else{
+
+                if (Logger.isLogFlag()) {
+                    Logger.writeLog("Replanning", "ClockManager");
+                }
                 //get the current state of the craft for replanning
-                System.out.println("===================== Replanning =====================");
                 SystemState currentState = ClockObserver.peekLastState();
                 plan = generatePlanFromSystemState(currentState, goalState, taskDict, optimizations);
+
+                if (Logger.isLogFlag()) {
+                    Logger.writeLog("New Plan: \n" + plan.getPlanBlockList(), "ClockManager");
+                }
                 List<PlanBlock> list = plan.getPlanBlockList();
             }
            stateList=tasks.getStateStack();
