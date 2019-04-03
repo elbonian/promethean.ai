@@ -129,8 +129,6 @@ public class API {
         return executeExistingPlan(plan,objects);
     }
 
-
-
     public List<SystemState> executePlan(String input, Boolean isFile, String outputPlanPath, String outputStatesPath){
         Map <String, Object> objects = parseInput(input, isFile);
         Plan plan = generatePlanFromParsedObjects(objects,outputPlanPath);
@@ -140,14 +138,5 @@ public class API {
         return executedStates;
     }
 
-    public void testLog(){
-        Logger log = new Logger();
-        Logger.logFlag = true;
-        System.out.println(log.getLogFileName());
-
-
-
-
-    }
 }
 
