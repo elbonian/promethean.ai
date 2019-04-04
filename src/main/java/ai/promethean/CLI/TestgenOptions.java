@@ -3,6 +3,9 @@ package ai.promethean.CLI;
 import com.google.devtools.common.options.Option;
 import com.google.devtools.common.options.OptionsBase;
 
+/**
+ * Command-line options definition for Testgen command
+ */
 public class TestgenOptions extends OptionsBase {
     @Option(
             name = "inFile",

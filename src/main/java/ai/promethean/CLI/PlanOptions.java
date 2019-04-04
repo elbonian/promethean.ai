@@ -4,7 +4,7 @@ import com.google.devtools.common.options.Option;
 import com.google.devtools.common.options.OptionsBase;
 
 /**
- * Command-line options definition for system
+ * Command-line options definition for Plan command
  */
 public class PlanOptions extends OptionsBase {
     @Option(
