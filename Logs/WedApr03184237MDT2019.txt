@@ -1,5 +1,5 @@
 LOG:
-Wed Apr 03 13:16:11 MDT 2019
+Wed Apr 03 18:42:37 MDT 2019
 ClockManager
 Initial State: 
 System State UID: 1
@@ -14,7 +14,7 @@ System State UID: 1
  Name: Altitude Type: null Value: 0.0
 ------------------------------
 LOG:
-Wed Apr 03 13:16:11 MDT 2019
+Wed Apr 03 18:42:37 MDT 2019
 ClockManager
 Runtime Goal State:: 
 System State UID: 5
@@ -29,7 +29,7 @@ System State UID: 5
  Name: Altitude Type: null Value: 0.0
 ------------------------------
 LOG:
-Wed Apr 03 13:16:11 MDT 2019
+Wed Apr 03 18:42:37 MDT 2019
 ClockManager
 Plan: 
 [
@@ -65,7 +65,7 @@ Plan:
  Name: Altitude Type: null Value: 0.0]
 ------------------------------
 LOG:
-Wed Apr 03 13:16:11 MDT 2019
+Wed Apr 03 18:42:37 MDT 2019
 PerturbationInjector
 Perturbation: 
 Perturbation Name: Acceleration, Time: 10
@@ -74,7 +74,7 @@ Perturbation Name: Acceleration, Time: 10
 
 ------------------------------
 LOG:
-Wed Apr 03 13:16:11 MDT 2019
+Wed Apr 03 18:42:37 MDT 2019
 PerturbationInjector
 Perturbation: 
 Perturbation Name: delay, Time: 15
@@ -83,7 +83,7 @@ Perturbation Name: delay, Time: 15
 
 ------------------------------
 LOG:
-Wed Apr 03 13:16:11 MDT 2019
+Wed Apr 03 18:42:37 MDT 2019
 TaskExecutor
 Task Applied: 
 Task UID: 1, Name: Open Door
@@ -94,7 +94,7 @@ Task UID: 1, Name: Open Door
  Name: Fuel Type: delta Value: -10.0
 ------------------------------
 LOG:
-Wed Apr 03 13:16:11 MDT 2019
+Wed Apr 03 18:42:37 MDT 2019
 TaskExecutor
 Current State: 
 System State UID: 8
@@ -109,18 +109,18 @@ System State UID: 8
  Name: Altitude Type: null Value: 0.0
 ------------------------------
 LOG:
-Wed Apr 03 13:16:11 MDT 2019
+Wed Apr 03 18:42:37 MDT 2019
 TaskExecutor
 Task Execution End Time: 
 30
 ------------------------------
 LOG:
-Wed Apr 03 13:16:11 MDT 2019
+Wed Apr 03 18:42:37 MDT 2019
 ClockManager
 Replanning
 ------------------------------
 LOG:
-Wed Apr 03 13:16:11 MDT 2019
+Wed Apr 03 18:42:37 MDT 2019
 ClockManager
 New Plan: 
 [
@@ -141,7 +141,7 @@ New Plan:
  Name: Altitude Type: null Value: 0.0]
 ------------------------------
 LOG:
-Wed Apr 03 13:16:11 MDT 2019
+Wed Apr 03 18:42:37 MDT 2019
 TaskExecutor
 Task Applied: 
 Task UID: 2, Name: Wheels Down
@@ -152,7 +152,7 @@ Task UID: 2, Name: Wheels Down
  Name: Fuel Type: delta Value: -10.0
 ------------------------------
 LOG:
-Wed Apr 03 13:16:11 MDT 2019
+Wed Apr 03 18:42:37 MDT 2019
 TaskExecutor
 Current State: 
 System State UID: 11
@@ -167,19 +167,19 @@ System State UID: 11
  Name: Altitude Type: null Value: 0.0
 ------------------------------
 LOG:
-Wed Apr 03 13:16:11 MDT 2019
+Wed Apr 03 18:42:37 MDT 2019
 TaskExecutor
 Task Execution End Time: 
 60
 ------------------------------
 LOG:
-Wed Apr 03 13:16:11 MDT 2019
+Wed Apr 03 18:42:37 MDT 2019
 ClockManager
 Plan Completed 
 
 ------------------------------
 LOG:
-Wed Apr 03 13:16:11 MDT 2019
+Wed Apr 03 18:42:37 MDT 2019
 ClockManager
 Ending State: 
 System State UID: 11

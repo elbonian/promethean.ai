@@ -44,12 +44,10 @@ public class ClockManager {
 
             planCompleted = ((TaskExecutor)tasks).isPlanCompleted();
             if(planCompleted){
-                //TODO: Make this call the goal state handler
                 if (Logger.isLogFlag()){
                     Logger.writeLog("Plan Completed \n", "ClockManager");
                     Logger.writeLog("Ending State: \n" + ClockObserver.peekLastState(), "ClockManager");
                 }
-                //System.out.println("Plan completed");
             }
             // a perturbation has occurred and needs to be handled.
             else{

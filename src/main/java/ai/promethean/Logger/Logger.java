@@ -29,18 +29,17 @@ public class Logger {
      * @param msg Contents to be written to log
      * @param component Component which message is coming from
      */
+
     public static void writeLog(String msg, String component){
+        //Generate a new date timestamp for the specific log entry
         Date writeTime = new Date();
         try {
             FileWriter fw = new FileWriter(logFileName, true);
-            fw.write("LOG:\n" +writeTime + "\n" + component +  "\n" + msg + "\n");
+            fw.write("LOG:\n" + writeTime + "\n" + component +  "\n" + msg + "\n");
             fw.write("------------------------------\n");
-
             fw.close();
         }catch(IOException e){
             System.out.println("Logging Failed");
         }
-
     }
-
 }
