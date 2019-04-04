@@ -33,13 +33,24 @@ public class Logger {
     public static void writeLog(String msg, String component){
         //Generate a new date timestamp for the specific log entry
         Date writeTime = new Date();
+        FileWriter fw = null;
         try {
-            FileWriter fw = new FileWriter(logFileName, true);
+            fw = new FileWriter(logFileName, true);
             fw.write("LOG:\n" + writeTime + "\n" + component +  "\n" + msg + "\n");
             fw.write("------------------------------\n");
             fw.close();
         }catch(IOException e){
             System.out.println("Logging Failed");
+        }
+        finally{
+            if (fw != null) {
+                try {
+                    fw.close();
+                } catch (IOException e) {
+                    // This is unrecoverable. Just report it and move on
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
