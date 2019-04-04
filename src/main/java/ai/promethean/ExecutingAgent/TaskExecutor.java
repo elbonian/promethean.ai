@@ -12,6 +12,7 @@ public class TaskExecutor extends ClockObserver {
     private Plan plan;
     private int initTime;
     private boolean planCompleted;
+    private String className = "TaskExecutor";
 
     public TaskExecutor(Plan _plan) {
         plan = _plan;
@@ -73,9 +74,9 @@ public class TaskExecutor extends ClockObserver {
         ClockObserver.addState(currentState);
 
         if (Logger.isLogFlag()) {
-            Logger.writeLog("Task Applied: \n" + block.getTask(), "TaskExecutor");
-            Logger.writeLog("Current State: \n" + currentState, "TaskExecutor");
-            Logger.writeLog("Task Execution End Time: \n" + time, "TaskExecutor");
+            Logger.writeLog("Task Applied: \n" + block.getTask(), this.className);
+            Logger.writeLog("Current State: \n" + currentState, this.className);
+            Logger.writeLog("Task Execution End Time: \n" + time, this.className);
         }
         return currentState.equals(block.getState());
     }
