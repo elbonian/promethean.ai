@@ -12,7 +12,7 @@ public class TaskExecutor extends ClockObserver {
     private Plan plan;
     private int initTime;
     private boolean planCompleted;
-    private String className = "TaskExecutor";
+    private String className =  this.getClass().getSimpleName();
 
     public TaskExecutor(Plan _plan) {
         plan = _plan;
