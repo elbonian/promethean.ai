@@ -10,6 +10,7 @@ public class Logger {
      * logFlag will be set to True if verbose is enabled
      */
     public static boolean logFlag = false;
+    public static boolean printFlag = false;
 
     /**
      *Generate a date-time stamp to be the file name of the log
@@ -20,6 +21,8 @@ public class Logger {
     public static String getLogFileName(){
         return logFileName;
     }
+
+    public static boolean isPrintFlag(){ return printFlag;}
 
     public static boolean isLogFlag() {
         return logFlag;
@@ -36,9 +39,14 @@ public class Logger {
         FileWriter fw = null;
         try {
             fw = new FileWriter(logFileName, true);
-            fw.write("LOG:\n" + writeTime + "\n" + component +  "\n" + msg + "\n");
+            String writeString = "LOG:\n" + writeTime + "\n" + component +  "\n" + msg + "\n";
+            fw.write(writeString);
             fw.write("------------------------------\n");
             fw.close();
+            if (isPrintFlag()){
+                System.out.println(writeString);
+                System.out.println("------------------------------\n");
+            }
         }catch(IOException e){
             System.out.println("Logging Failed");
         }
