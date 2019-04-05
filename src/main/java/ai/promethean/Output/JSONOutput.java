@@ -23,12 +23,12 @@ public class JSONOutput implements Output {
             String fileName= filePath + fileIdentifier+ "-" + new Date()+".json";
             fileName = fileName.replace(" ", "");
             fileName = fileName.replace(":", "");
-
             mapper.writeValue(new File(fileName), o);
         }catch(IOException io){
             API api= new API();
-            api.throwOutputError("Invalid Output File Path");
+            api.throwOutputError("Invalid Output File Path: "+ io);
         }
     }
+
 }
 
