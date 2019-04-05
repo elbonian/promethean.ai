@@ -1,5 +1,6 @@
 package ai.promethean.Logger;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
@@ -15,7 +16,8 @@ public class Logger {
     /**
      *Generate a date-time stamp to be the file name of the log
      */
-    public static String logFileName= ("Logs/" + new Date()+".txt").replace(" ", "").replace(":", "");
+    public static String directoryName="Logs";
+    public static String logFileName= (new Date()+".txt").replace(" ", "").replace(":", "");
 
 
     public static String getLogFileName(){
@@ -28,6 +30,7 @@ public class Logger {
         return logFlag;
     }
 
+
     /**
      * @param msg Contents to be written to log
      * @param component Component which message is coming from
@@ -38,7 +41,11 @@ public class Logger {
         Date writeTime = new Date();
         FileWriter fw = null;
         try {
-            fw = new FileWriter(logFileName, true);
+            File directory= new File(directoryName);
+            if(!directory.exists()){
+                directory.mkdir();
+            }
+            fw = new FileWriter(directoryName+ "/"+logFileName, true);
             String writeString = "LOG:\n" + writeTime + "\n" + component +  "\n" + msg + "\n";
             fw.write(writeString);
             fw.write("------------------------------\n");
@@ -48,7 +55,7 @@ public class Logger {
                 System.out.println("------------------------------\n");
             }
         }catch(IOException e){
-            System.out.println("Logging Failed");
+            System.out.println("Logging Failed" + e);
         }
         finally{
             if (fw != null) {
