@@ -59,7 +59,7 @@ public class JSONParser implements ParserInterface{
             catch (IOException e)
             {
 
-               api.throwParserError("Invalid File Path");
+               api.throwParserError("Invalid File Path: "+ e);
             }
 
         }

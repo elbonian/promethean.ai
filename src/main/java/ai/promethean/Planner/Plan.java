@@ -62,4 +62,11 @@ public class Plan {
      */
     public boolean getGoalHasBeenReached() { return goalHasBeenReached; }
 
+    @Override
+    public String toString() {
+        return "Initial State: "+ this.initialState
+                +"\n Goal State: "+ this.endState
+                +"\n Plan: \n"
+                +this.planBlockList;
+    }
 }

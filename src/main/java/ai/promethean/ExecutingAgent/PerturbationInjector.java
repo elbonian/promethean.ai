@@ -1,6 +1,7 @@
 package ai.promethean.ExecutingAgent;
 
 import ai.promethean.DataModel.*;
+import ai.promethean.Logger.Logger;
 
 import java.util.Comparator;
 import java.util.List;
@@ -49,7 +50,10 @@ public class PerturbationInjector extends ClockObserver {
         SystemState currentState = perturbation.applyPerturbation(previousState);
         currentState.setTime(time);
 
-        System.out.println(perturbation);
+        if (Logger.isLogFlag()){
+            Logger.writeLog("Perturbation: \n" + perturbation, "PerturbationInjector");
+        }
+
         ClockObserver.addState(currentState);
     }
 
