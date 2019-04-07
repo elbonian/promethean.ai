@@ -23,8 +23,13 @@ public class Planner {
      *
      * @return the plan
      */
-    public Plan plan(SystemState initialState, GoalState goalState, TaskDictionary tasks, StaticOptimizations optimizations) {
-        SystemState runtimeEndState = this.algorithm.run(initialState, goalState, tasks, optimizations);
+    public Plan plan(SystemState initialState,
+                     GoalState goalState,
+                     TaskDictionary tasks,
+                     StaticOptimizations optimizations,
+                     int stopTime,
+                     boolean activateCLF) {
+        SystemState runtimeEndState = this.algorithm.run(initialState, goalState, tasks, optimizations, stopTime, activateCLF);
         if (runtimeEndState != null) {
             if (goalState.meetsGoal(runtimeEndState)) {
                 return new Plan(runtimeEndState, true);
@@ -34,22 +39,4 @@ public class Planner {
         }
         return null;
     }
-
-    /**
-     * return a plan from initial to end state or null if none are found
-     *
-     * @return the plan
-     */
-    public Plan plan(SystemState initialState, GoalState goalState, TaskDictionary tasks, StaticOptimizations optimizations, int minutesAllowed) {
-        SystemState runtimeEndState = this.algorithm.run(initialState, goalState, tasks, optimizations, minutesAllowed);
-        if (runtimeEndState != null) {
-            if (goalState.meetsGoal(runtimeEndState)) {
-                return new Plan(runtimeEndState, true);
-            } else {
-                return new Plan(runtimeEndState, false);
-            }
-        }
-        return null;
-    }
-
 }

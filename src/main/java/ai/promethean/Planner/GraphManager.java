@@ -17,6 +17,7 @@ public class GraphManager {
     private TaskDictionary taskDict;
     private StaticOptimizations optimizations;
     private PriorityQueue<StateTemplate> frontier = new PriorityQueue<StateTemplate>(1, new FrontierComparator());
+    private long stopTime;
 
     /**
      * Instantiates a new Graph manager.
@@ -80,7 +81,6 @@ public class GraphManager {
         nextState.setgValue(g_value);
         nextState.setPreviousState(previousState);
         nextState.setPreviousTask(task);
-        nextState.setMilliTime(System.currentTimeMillis());
 
         for (String propertyName : prev_properties.getKeys()) {
             Property previousProperty = previousState.getProperty(propertyName);
@@ -108,7 +108,7 @@ public class GraphManager {
 
         for (Task task : tasks) {
             Double g_value = TaskWeight.calculateTaskWeight(task, optimizations) + state.getgValue();
-            double h_value = Heuristic.h_value(state,goalState);
+            double h_value = Heuristic.h_value(state,goalState,task);
             double f_value = g_value + h_value;
             templates.add(new StateTemplate(state, task, f_value, g_value, h_value));
         }
@@ -147,4 +147,8 @@ public class GraphManager {
         StateTemplate template = frontier.poll();
         return createState(template.getPreviousState(), template.getTask(), template.getG(), template.getH());
     }
+
+    public void setStopTime(long time) { stopTime = time; }
+
+    public long getStopTime() { return stopTime; }
 }
