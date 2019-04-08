@@ -135,5 +135,16 @@ public class API {
         output.writeToFile(executedStates,outputStatesPath, "SystemState");
         return executedStates;
     }
+
+    /**
+     * Parse the input file and generate a plan from the parsed objects.
+     * Initialize the clock and handle perturbation or goal state responses
+     */
+    public List<SystemState> executePlan(String input, Boolean isFile, int stopTime, boolean activateCLF){
+        Map <String, Object> objects = parseInput(input, isFile);
+        Plan plan = generatePlanFromParsedObjects(objects, stopTime, activateCLF);
+        List<SystemState> executedStates = executeExistingPlan(plan,objects, stopTime, activateCLF);
+        return executedStates;
+    }
 }
 
