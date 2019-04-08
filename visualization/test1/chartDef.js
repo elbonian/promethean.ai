@@ -1,4 +1,4 @@
-// Author: Evan James, evjja3477@colorado.edu
+// Author: Evan James, evja3477@colorado.edu
 // Adapted from Bo Ericsson's "D3 Based Real Time Chart" via https://bl.ocks.org/boeric/
 //      Inspiration from numerous examples by Mike Bostock, http://bl.ocks.org/mbostock
 //      and example by Andy Aiken, http://blog.scottlogic.com/2014/09/19/interactive.html
@@ -13,12 +13,13 @@ function realTimeChart() {
         margin = { top: 20, bottom: 20, left: 50, right: 30, topNav: 10, bottomNav: 20 },
         dimension = { chartTitle: 20, xAxis: 20, yAxis: 20, xTitle: 20, yTitle: 20, navChart: 70 },
         barWidth = 3,
-        maxY = 100, minY = 0,
+        maxY, minY,
         chartTitle, yTitle, xTitle,
         drawXAxis = true, drawYAxis = true, drawNavChart = true,
         border,
         selection,
-        barId = 0;
+        barId = 0,
+        maxTime;
 
     // create the chart
     var chart = function(s) {
@@ -181,8 +182,11 @@ function realTimeChart() {
             .x(function (d) { return xNav(d.time); })
             .y(function (d) { return yNav(d.value); });
 
-        // compute initial time domains...
-        var ts = new Date().getTime();
+        // TODO: Change all instances of TIME to be represented in the time ticks of the system state
+        //  or find a way to normalize to begin at 0 and step by 1
+        // compute initial time domains...        var interval = endTime.getTime() - startTime.getTime();
+
+        var ts = 1;
 
         // first, the full time domain
         var endTime = new Date(ts);
@@ -422,6 +426,24 @@ function realTimeChart() {
         if (arguments.length == 0) return barWidth;
         barWidth = _;
         return chart;
+    }
+
+    // max time
+    chart.maxTime = function(_) {
+        if (arguments.length == 0) return maxTime;
+        maxTime = _;
+        return chart;
+    }
+
+    // data type: boolean or numerical
+    chart.type = function(_) {
+        if (_ == "number") {
+            minY = 0;
+            maxY = 100;
+        } else {
+            minY = 0;
+            maxY = 1;
+        }
     }
 
     // version

@@ -1,0 +1,67 @@
+html,body,#wrapper {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+}
+
+.chart {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+}
+
+.axis path,.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.task-tooltip, .state-tooltip {
+    background: #eee;
+    box-shadow: 0 0 5px #999999;
+    color: #333;
+    font-size: 12px;
+    left: 130px;
+    padding: 10px;
+    position: absolute;
+    text-align: center;
+    top: 95px;
+    z-index: 10;
+    display: block;
+    opacity: 0;
+}
+
+.bar {
+    fill: #33b5e5;
+}
+
+.bar-state {
+    fill: #99401D;
+}
+
+.bar-state:hover {
+    fill: #B95F3B;
+}
+
+.bar-running {
+    fill: #184262;
+}
+
+.bar-running:hover {
+    fill: #2C5677;
+}
+
+.bar-completed {
+    fill: #146945;
+}
+
+.bar-completed:hover {
+    fill: #297F5A;
+}
+
+.bar-queued {
+    fill: #99641D;
+}
+
+.bar-queued:hover {
+    fill: #B9833B;
+}
