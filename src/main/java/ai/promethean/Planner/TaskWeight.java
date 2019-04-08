@@ -9,6 +9,12 @@ public class TaskWeight {
 
     private TaskWeight() {}
 
+    /**
+     *
+     * @param task the current task
+     * @param optimizations any optimizations given to the planner
+     * @return a Task edge weight based on the property impacts of the task and optimizations of those properties
+     */
     public static Double calculateTaskWeight(Task task, StaticOptimizations optimizations) {
         Double taskWeight = 0.0;
         int optimizationsLength = optimizations.size();

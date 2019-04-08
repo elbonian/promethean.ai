@@ -125,6 +125,11 @@ public class GraphManager {
         frontier.addAll(templateGeneration(state, validTasks(state)));
     }
 
+    /**
+     *
+     * @param currentState the state in question
+     * @return true if there is a state template within the frontier with a lower heuristic value than the given state
+     */
     public boolean checkCLF(SystemState currentState) {
         Iterator<StateTemplate> template = frontier.iterator();
         if(template.next().getH() < currentState.gethValue()) {
