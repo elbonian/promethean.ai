@@ -2,9 +2,11 @@ package ai.promethean.API;
 import ai.promethean.ExecutingAgent.*;
 import ai.promethean.Output.*;
 import ai.promethean.Parser.*;
-import java.util.ArrayList;
+import ai.promethean.Logger.*;
+
 import java.util.List;
 import java.util.Map;
+
 
 import ai.promethean.DataModel.*;
 import ai.promethean.Planner.*;
@@ -127,8 +129,6 @@ public class API {
         return executeExistingPlan(plan,objects);
     }
 
-
-
     public List<SystemState> executePlan(String input, Boolean isFile, String outputPlanPath, String outputStatesPath){
         Map <String, Object> objects = parseInput(input, isFile);
         Plan plan = generatePlanFromParsedObjects(objects,outputPlanPath);
@@ -137,5 +137,6 @@ public class API {
         output.writeToFile(executedStates,outputStatesPath, "SystemState");
         return executedStates;
     }
+
 }
 
