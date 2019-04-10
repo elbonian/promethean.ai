@@ -5,5 +5,5 @@ package ai.promethean.Output;
  * Extensible for any output language type or format
  */
 public interface Output {
-    void writeToFile(Object o, String filePath, String fileIdentifier);
+    void writeToFile(Object o, String fileDir, String fileIdentifier);
 }
