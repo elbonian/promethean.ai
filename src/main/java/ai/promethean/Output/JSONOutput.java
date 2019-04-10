@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
+
 import ai.promethean.API.API;
 import com.fasterxml.jackson.databind.*;
 
@@ -18,14 +19,16 @@ public class JSONOutput implements Output {
         ObjectMapper mapper= new ObjectMapper()
                 .enable(SerializationFeature.INDENT_OUTPUT);
         try {
+
             File directory= new File(fileDir);
             if(!directory.exists()){
-                directory.mkdir();
+                directory.mkdirs();
             }
+
 
             //For now, create a unique file name with the current date
             //Might include file prefix later as an argument
-            String fileName= fileDir + fileIdentifier+ "-" + new Date()+".json";
+            String fileName= fileDir + "/" + fileIdentifier+ "-" + new Date()+".json";
             fileName = fileName.replace(" ", "");
             fileName = fileName.replace(":", "");
             mapper.writeValue(new File(fileName), o);

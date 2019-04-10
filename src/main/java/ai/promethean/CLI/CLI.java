@@ -72,7 +72,7 @@ public class CLI {
             if (options.execute) {
                 api.executePlan( options.inFile,
                             true,
-                            "JSON_output/Plans/",
+                            "JSON_output/Plans",
                             "JSON_output/SystemStates",
                             100,
                             true);
