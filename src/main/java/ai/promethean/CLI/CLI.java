@@ -29,7 +29,7 @@ public class CLI {
             case "testgen":
                 testgen(args);
                 break;
-            default: throw new CLIError("Invalid command: " + args[0]);
+            default: api.throwCLIError("Invalid command: " + args[0]);
         }
     }
 
@@ -81,7 +81,7 @@ public class CLI {
                 Plan plan = api.generatePlanFromJSON(options.inFile, false);
             }
         } else {
-            throw new CLIError("No input JSON provided");
+            api.throwCLIError("No input JSON provided");
         }
     }
 

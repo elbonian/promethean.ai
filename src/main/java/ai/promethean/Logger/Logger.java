@@ -1,8 +1,6 @@
 package ai.promethean.Logger;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Date;
 
 
@@ -67,5 +65,30 @@ public class Logger {
                 }
             }
         }
+    }
+
+    public static void logError(Exception e, String component) {
+        String errorLog = "ERROR:\n";
+
+        if (e.getMessage() != null) {
+            errorLog += e.getMessage() + "\n";
+        }
+
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+
+        e.printStackTrace(pw);
+
+        errorLog += sw.toString();
+
+        Logger.writeLog(errorLog, component);
+
+        try {
+            sw.close();
+        } catch (IOException ioe){
+            // This should never happen since StringWriter.close() doesn't do anything
+            ioe.printStackTrace();
+        }
+        pw.close();
     }
 }
