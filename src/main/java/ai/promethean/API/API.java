@@ -66,8 +66,7 @@ public class API {
      */
     public Plan generatePlanFromParsedObjects(Map<String, Object> parsedObjects, String outputFileDir, int stopTime, boolean activateCLF) {
         Plan plan= generatePlanFromParsedObjects(parsedObjects, stopTime, activateCLF);
-        Output output= new JSONOutput();
-        output.writeToFile(plan, outputFileDir, "Plan");
+        JSONOutput.writeToFile(plan, outputFileDir, "Plan");
         return plan;
     }
 
@@ -92,8 +91,7 @@ public class API {
      */
     public Plan generatePlanFromJSON(String inputFile, Boolean isFile, String outputFileDir, int stopTime, boolean activateCLF){
         Plan plan= generatePlanFromJSON(inputFile,isFile, stopTime, activateCLF);
-        Output output= new JSONOutput();
-        output.writeToFile(plan, outputFileDir, "Plan");
+        JSONOutput.writeToFile(plan, outputFileDir, "Plan");
         return plan;
     }
 
@@ -131,8 +129,7 @@ public class API {
         Map <String, Object> objects = parseInput(input, isFile);
         Plan plan = generatePlanFromParsedObjects(objects,outputPlanPath, stopTime, activateCLF);
         List<SystemState> executedStates = executeExistingPlan(plan,objects, stopTime, activateCLF);
-        Output output = new JSONOutput();
-        output.writeToFile(executedStates,outputStatesPath, "SystemState");
+        JSONOutput.writeToFile(executedStates,outputStatesPath, "SystemState");
         return executedStates;
     }
 

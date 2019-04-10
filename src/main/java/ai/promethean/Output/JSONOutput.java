@@ -15,7 +15,7 @@ public class JSONOutput implements Output {
      * @param fileDir: The desired location of the output file
      * @param fileIdentifier: A string to append to the file name to denote what type of JSON objects it stores
      */
-    public void writeToFile(Object o, String fileDir, String fileIdentifier){
+    public static void writeToFile(Object o, String fileDir, String fileIdentifier){
         ObjectMapper mapper= new ObjectMapper()
                 .enable(SerializationFeature.INDENT_OUTPUT);
         try {
