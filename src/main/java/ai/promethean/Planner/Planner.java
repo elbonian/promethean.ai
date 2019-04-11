@@ -34,6 +34,7 @@ public class Planner {
             if (goalState.meetsGoal(runtimeEndState)) {
                 return new Plan(runtimeEndState, true);
             } else {
+                Logger.writeLog("Time Limit Exceeded. Goal state was not found. Creating Plan for states explored until termination.", "Planner");
                 return new Plan(runtimeEndState, false);
             }
         }
