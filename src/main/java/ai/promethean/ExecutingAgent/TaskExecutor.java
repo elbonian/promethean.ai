@@ -73,11 +73,10 @@ public class TaskExecutor extends ClockObserver {
         currentState.setTime(time);
         ClockObserver.addState(currentState);
 
-        if (Logger.isLogFlag()) {
-            Logger.writeLog("Task Applied: \n" + block.getTask(), this.className);
-            Logger.writeLog("Current State: \n" + currentState, this.className);
-            Logger.writeLog("Task Execution End Time: \n" + time, this.className);
-        }
+        Logger.writeLog("Task Applied: \n" + block.getTask(), this.className);
+        Logger.writeLog("Current State: \n" + currentState, this.className);
+        Logger.writeLog("Task Execution End Time: \n" + time, this.className);
+
         return currentState.equals(block.getState());
     }
 }
