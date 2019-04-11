@@ -1,5 +1,7 @@
 package ai.promethean.DataModel;
 
+import ai.promethean.Logger.Logger;
+
 /**
  * String extension of the Condition class
  */
@@ -20,7 +22,9 @@ public class StringCondition extends Condition {
             setValue(_value);
         }
         else{
-            throw new IllegalArgumentException("Illegal operator argument"+_operator);
+            IllegalArgumentException e = new IllegalArgumentException("Illegal operator argument"+_operator);
+            Logger.logError(e, this.getClass().getSimpleName());
+            throw e;
         }
     }
 

@@ -1,5 +1,7 @@
 package ai.promethean.DataModel;
 
+import ai.promethean.Logger.Logger;
+
 /**
  * String extension of the Property class
  */
@@ -50,7 +52,9 @@ public class StringProperty extends Property {
     */
     public StringProperty applyImpact(Property impact){
         if(!impact.name.equals(this.name)){
-            throw new IllegalArgumentException("Property names do not match");
+            IllegalArgumentException e = new IllegalArgumentException("Property names do not match");
+            Logger.logError(e, this.getClass().getSimpleName());
+            throw e;
         }
         return new StringProperty(this.name, (String) impact.getValue());
     }

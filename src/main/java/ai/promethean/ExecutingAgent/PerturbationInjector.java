@@ -50,9 +50,8 @@ public class PerturbationInjector extends ClockObserver {
         SystemState currentState = perturbation.applyPerturbation(previousState);
         currentState.setTime(time);
 
-        if (Logger.isLogFlag()){
-            Logger.writeLog("Perturbation: \n" + perturbation, "PerturbationInjector");
-        }
+        Logger.writeLog("Perturbation: \n" + perturbation, "PerturbationInjector");
+
 
         ClockObserver.addState(currentState);
     }
