@@ -24,7 +24,7 @@ public class ClockManager {
         StaticOptimizations optimizations = (StaticOptimizations) planObjects.get("optimizations");
 
         Logger.writeLog("Initial State: \n" + plan.getInitialState(), this.className);
-        Logger.writeLog("Runtime Goal State:: \n" + plan.getGoalState(), this.className);
+        Logger.writeLog("Runtime Goal State:: \n" + plan.getEndState(), this.className);
         Logger.writeLog("Plan: \n" + plan.getPlanBlockList(), this.className);
 
         Stack<SystemState> stateList= new Stack<SystemState>();
