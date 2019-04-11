@@ -1,4 +1,6 @@
 package ai.promethean.ExecutingAgent;
+import ai.promethean.Logger.Logger;
+
 import java.util.*;
 
 public class Clock {
@@ -57,6 +59,14 @@ public class Clock {
 
     public boolean notifyObservers(){
         boolean result = true;
+
+        if (observers.isEmpty()) {
+            MissingResourceException e =
+                    new MissingResourceException("Notify called with no observers attached to Clock",
+                            ClockObserver.class.getSimpleName(), "ClockObserver");
+            Logger.logError(e, this.getClass().getSimpleName());
+            throw e;
+        }
 
         for (ClockObserver o: observers) {
             int time = currentTime;

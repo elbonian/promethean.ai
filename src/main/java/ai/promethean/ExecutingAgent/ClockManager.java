@@ -23,11 +23,9 @@ public class ClockManager {
         TaskDictionary taskDict = (TaskDictionary) planObjects.get("tasks");
         StaticOptimizations optimizations = (StaticOptimizations) planObjects.get("optimizations");
 
-        if (Logger.isLogFlag()){
-            Logger.writeLog("Initial State: \n" + plan.getInitialState(), this.className);
-            Logger.writeLog("Runtime Goal State:: \n" + plan.getEndState(), this.className);
-            Logger.writeLog("Plan: \n" + plan.getPlanBlockList(), this.className);
-        }
+        Logger.writeLog("Initial State: \n" + plan.getInitialState(), this.className);
+        Logger.writeLog("Runtime Goal State:: \n" + plan.getGoalState(), this.className);
+        Logger.writeLog("Plan: \n" + plan.getPlanBlockList(), this.className);
 
         Stack<SystemState> stateList= new Stack<SystemState>();
         while (!planCompleted){
@@ -44,16 +42,15 @@ public class ClockManager {
 
             planCompleted = ((TaskExecutor)tasks).isPlanCompleted();
             if(planCompleted){
-                if (Logger.isLogFlag()){
-                    Logger.writeLog("Plan Completed \n", "ClockManager");
-                }
+                Logger.writeLog("Plan Completed \n", "ClockManager");
+                Logger.writeLog("Ending State: \n" + ClockObserver.peekLastState(), "ClockManager");
+
             }
             // a perturbation has occurred and needs to be handled.
             else{
 
-                if (Logger.isLogFlag()) {
-                    Logger.writeLog("Replanning", "ClockManager");
-                }
+                Logger.writeLog("Replanning", "ClockManager");
+
                 //get the current state of the craft for replanning
                 SystemState currentState = ClockObserver.peekLastState();
                 plan = generatePlanFromSystemState(currentState, goalState, taskDict, optimizations, stopTime, activateCLF);
@@ -64,9 +61,11 @@ public class ClockManager {
                     planCompleted = !plan.getGoalHasBeenReached();
                 }
 
-                if (Logger.isLogFlag() && plan!=null) {
+
+                if ( plan!=null) {
                     Logger.writeLog("New Plan: \n" + plan.getPlanBlockList(), "ClockManager");
                 }
+
             }
            stateList=tasks.getStateStack();
         }

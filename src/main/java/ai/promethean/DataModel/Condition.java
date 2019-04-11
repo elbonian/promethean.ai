@@ -1,5 +1,7 @@
 package ai.promethean.DataModel;
 
+import ai.promethean.Logger.Logger;
+
 /**
  * The base Condition class to be extended for different types
  */
@@ -29,7 +31,9 @@ public abstract class Condition {
         }
         else{
             //if not valid operator throw exception
-            throw new IllegalArgumentException("Illegal operator argument"+_operator);
+            IllegalArgumentException e = new IllegalArgumentException("Illegal operator argument"+_operator);
+            Logger.logError(e, this.getClass().getSimpleName());
+            throw e;
         }
     }
 

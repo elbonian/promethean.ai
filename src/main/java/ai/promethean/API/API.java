@@ -11,8 +11,6 @@ import ai.promethean.DataModel.*;
 import ai.promethean.Planner.*;
 
 
-
-
 /*
     This API is meant to be as simple as possible and expandable as possible.
     If you want to add a new functionality simply add a function to the the API class.
@@ -23,17 +21,33 @@ import ai.promethean.Planner.*;
 */
 
 public class API {
+    private String className = this.getClass().getSimpleName();
+
     public API(){
 
     }
     public void throwPlannerError(String err_msg){
-        throw new PlannerError(err_msg);
+        PlannerError e = new PlannerError(err_msg);
+        Logger.logError(e, className);
+        throw e;
     }
 
     public void throwParserError(String err_msg){
-        throw new ParserError(err_msg);
+        ParserError e = new ParserError(err_msg);
+        Logger.logError(e, className);
+        throw e;
     }
-    public void throwOutputError(String err_msg){ throw new OutputError(err_msg); }
+    public void throwOutputError(String err_msg){
+        OutputError e = new OutputError(err_msg);
+        Logger.logError(e, className);
+        throw e;
+    }
+
+    public void throwCLIError(String err_msg){
+        CLIError e = new CLIError(err_msg);
+        Logger.logError(e, className);
+        throw e;
+    }
 
 
     public Map<String, Object> parseInput(String inputFile, boolean isFile){
