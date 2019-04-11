@@ -67,6 +67,11 @@ public class Logger {
             }
         }
     }
+
+    /**
+     * @param e Exception to be written to log
+     * @param component Component of the system the exception is from
+     */
     public static void logError(Exception e, String component) {
         String errorLog = "ERROR:\n";
 
