@@ -40,6 +40,7 @@ public class Planner {
                 return new Plan(runtimeEndState, false);
             }
         }
+        Logger.writeLog("Time Limit Exceeded or there is no possible plan. Goal state was not found. Creating Plan for states explored until termination.", "Planner");
         return null;
     }
 }

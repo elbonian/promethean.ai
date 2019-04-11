@@ -46,7 +46,6 @@ public class ClockManager {
             if(planCompleted){
                 if (Logger.isLogFlag()){
                     Logger.writeLog("Plan Completed \n", "ClockManager");
-                    Logger.writeLog("Ending State: \n" + ClockObserver.peekLastState(), "ClockManager");
                 }
             }
             // a perturbation has occurred and needs to be handled.
@@ -58,14 +57,20 @@ public class ClockManager {
                 //get the current state of the craft for replanning
                 SystemState currentState = ClockObserver.peekLastState();
                 plan = generatePlanFromSystemState(currentState, goalState, taskDict, optimizations, stopTime, activateCLF);
+                if(plan==null){
+                    planCompleted=true;
+                }
+                else {
+                    planCompleted = !plan.getGoalHasBeenReached();
+                }
 
-                if (Logger.isLogFlag()) {
+                if (Logger.isLogFlag() && plan!=null) {
                     Logger.writeLog("New Plan: \n" + plan.getPlanBlockList(), "ClockManager");
                 }
-                List<PlanBlock> list = plan.getPlanBlockList();
             }
            stateList=tasks.getStateStack();
         }
+        Logger.writeLog("Ending State: \n" + ClockObserver.peekLastState(), "ClockManager");
         return stateList;
     }
 
