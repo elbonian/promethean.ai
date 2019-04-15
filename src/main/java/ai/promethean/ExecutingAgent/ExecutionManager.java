@@ -42,14 +42,14 @@ public class ExecutionManager {
 
             planCompleted = ((TaskExecutor)tasks).isPlanCompleted();
             if(planCompleted){
-                Logger.writeLog("Plan Completed \n", "ExecutionManager");
-                Logger.writeLog("Ending State: \n" + ClockObserver.peekLastState(), "ExecutionManager");
+                Logger.writeLog("Plan Completed \n", this.className);
+                Logger.writeLog("Ending State: \n" + ClockObserver.peekLastState(), this.className);
 
             }
             // a perturbation has occurred and needs to be handled.
             else{
 
-                Logger.writeLog("Replanning", "ExecutionManager");
+                Logger.writeLog("Replanning", this.className);
 
                 //get the current state of the craft for replanning
                 SystemState currentState = ClockObserver.peekLastState();
@@ -63,13 +63,13 @@ public class ExecutionManager {
 
 
                 if ( plan!=null) {
-                    Logger.writeLog("New Plan: \n" + plan.getPlanBlockList(), "ExecutionManager");
+                    Logger.writeLog("New Plan: \n" + plan.getPlanBlockList(), this.className);
                 }
 
             }
            stateList=tasks.getStateStack();
         }
-        Logger.writeLog("Ending State: \n" + ClockObserver.peekLastState(), "ExecutionManager");
+        Logger.writeLog("Ending State: \n" + ClockObserver.peekLastState(), this.className);
         return stateList;
     }
 

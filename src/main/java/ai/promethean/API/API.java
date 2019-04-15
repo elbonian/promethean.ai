@@ -131,8 +131,8 @@ public class API {
 
 
     public List<SystemState> executeExistingPlan(Plan plan, Map<String, Object> parsedObjects, int stopTime, boolean activateCLF){
-        ExecutionManager clockManager = new ExecutionManager();
-        return clockManager.runPlanClock(plan, parsedObjects, stopTime, activateCLF);
+        ExecutionManager exeManager = new ExecutionManager();
+        return exeManager.runPlanClock(plan, parsedObjects, stopTime, activateCLF);
     }
 
     /**
