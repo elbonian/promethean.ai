@@ -21,7 +21,7 @@ public class TaskExecutorTest {
         goal.setPreviousState(start);
         goal.setPreviousTask(t);
 
-        Plan plan = new Plan(goal);
+        Plan plan = new Plan(goal,true);
 
         TaskExecutor te = new TaskExecutor(plan);
         assertFalse(te.isPlanCompleted());
@@ -44,7 +44,7 @@ public class TaskExecutorTest {
         goal.setPreviousState(start);
         goal.setPreviousTask(t);
 
-        Plan plan = new Plan(goal);
+        Plan plan = new Plan(goal,true);
 
         TaskExecutor te = new TaskExecutor(plan);
         te.addState(start);

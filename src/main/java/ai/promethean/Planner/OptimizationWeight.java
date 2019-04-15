@@ -6,11 +6,15 @@ public class OptimizationWeight {
 
     private OptimizationWeight() {}
 
+    /**
+     *
+     * @param optimization contains the information on how we will optimize
+     * @param propertyValue The particular value we will optimize on
+     * @param listLength listLength gives a reference for the optimization priority
+     * @return a property value that has been weighted given an optimization
+     */
     public static Double weightedPropertyValue(Optimization optimization, Double propertyValue, int listLength) {
-        if (optimization.getType() == "min") {
-            return Math.pow(propertyValue, 2.5 + (listLength - optimization.getPriority()));
-        }
-
-        return Math.pow(2.0 + propertyValue, -1 * (2.5 + (listLength - optimization.getPriority())));
+        //TODO: Proper Optimization weighting function
+        return propertyValue;
     }
 }

@@ -13,13 +13,13 @@ public class PlanIntegrationTest {
 
     @Test
     void generatePlanNoError() {
-        api.executePlan("JSON_input/InputFiles/Test.json", true);
+        api.executePlan("JSON_input/InputFiles/Test.json", true, 5, true);
     }
 
     @Test
     void generatePlanHasPlan() {
         Map<String, Object> objects= api.parseInput("JSON_input/InputFiles/Test.json", true);
-        Plan plan = api.generatePlanFromParsedObjects(objects);
+        Plan plan = api.generatePlanFromParsedObjects(objects, 5, true);
         assertNotNull(plan);
     }
 

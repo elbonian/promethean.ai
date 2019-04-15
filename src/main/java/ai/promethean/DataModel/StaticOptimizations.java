@@ -47,7 +47,7 @@ public class StaticOptimizations {
      */
     public Optimization getOptimization(String name) {
         for (Optimization optimization: Optimizations) {
-            if (optimization.getName() == name) {
+            if (optimization.getName().equals(name)) {
                 return optimization;
             }
         }

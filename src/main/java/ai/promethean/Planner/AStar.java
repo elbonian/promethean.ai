@@ -9,7 +9,6 @@ import ai.promethean.DataModel.TaskDictionary;
  * The type A star.
  */
 public class AStar implements Algorithm {
-    private Double ceiling;
 
     public AStar() {}
 
@@ -17,20 +16,29 @@ public class AStar implements Algorithm {
      * High-Level A-Star Algorithm
      * @return RuntimeGoalState, or null if no path is valid
      */
-    public SystemState run(SystemState initState, GoalState goalState, TaskDictionary tasks, StaticOptimizations optimizations) {
+    public SystemState run(SystemState initState, GoalState goalState, TaskDictionary tasks, StaticOptimizations optimizations, int minutesAllowed, boolean activateCLF) {
         GraphManager graph = new GraphManager(initState, goalState, tasks, optimizations);
+        // stop time is the current time plus the conversion from minutes allowed to milliseconds allowed
+        graph.setStopTime( System.currentTimeMillis() + minutesAllowed*60*1000 );
         if (goalState.meetsGoal(initState)) {
             return initState;
         }
 
         graph.addNeighborsToFrontier(initState);
-
-        while (!graph.frontierIsEmpty()/*|| ceiling check*/) {
+        boolean clfActive = activateCLF;
+        while (!graph.frontierIsEmpty()) {
             SystemState currentState = graph.poll();
-            if (goalState.meetsGoal(currentState)) {
+            if ( goalState.meetsGoal(currentState) || (!clfActive && System.currentTimeMillis() > graph.getStopTime()) ) {
                 return currentState;
             }
             graph.addNeighborsToFrontier(currentState);
+            if (clfActive && !graph.checkCLF(currentState)) {
+                clfActive = false;
+                graph.setStopTime( System.currentTimeMillis() + minutesAllowed*60*1000 );
+            }
+            if (clfActive) {
+                clfActive = graph.checkCLF(currentState);
+            }
         }
 
         return null;
