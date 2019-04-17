@@ -4,12 +4,15 @@
       {"name": "agent", "value": "rocket"},
       {"name": "location", "value": "Earth"},
       {"name": "speed", "value": 0},
-      {"name": "battery", "value": 100},
+      {"name": "battery", "value": 0},
       {"name": "rocketFuel", "value": 100},
       {"name": "boosterFuel", "value": 100},
       {"name": "solarPanelsExtended", "value": false},
       {"name": "landingGearExtended", "value": false},
-      {"name": "parachuteAttached", "value": true}
+      {"name": "parachuteAttached", "value": true},
+      {"name": "seismometerAttached", "value": true},
+      {"name": "coverAttached", "value": true},
+      {"name": "heatProbeAttached", "value": true}
     ]
   },
   "goal_state": {
@@ -19,7 +22,10 @@
       {"name": "speed", "value": 0, "operator": "=="},
       {"name": "solarPanelsExtended", "value": true, "operator": "=="},
       {"name": "landingGearExtended", "value": true, "operator": "=="},
-      {"name": "parachuteAttached", "value": false, "operator": "=="}
+      {"name": "parachuteAttached", "value": false, "operator": "=="},
+      {"name": "seismometerAttached", "value": false, "operator": "=="},
+      {"name": "coverAttached", "value": false, "operator": "=="},
+      {"name": "heatProbeAttached", "value": false, "operator": "=="}
     ]
   },
   "tasks": [
@@ -46,17 +52,6 @@
       ],
       "property_impacts": [
         {"name": "solarPanelsExtended", "value": true}
-      ]
-    },
-    {
-      "name": "retract_solar_panels",
-      "duration": 1,
-      "requirements": [
-        {"name": "agent", "value": "lander", "operator": "=="},
-        {"name": "solarPanelsExtended", "value": true, "operator": "=="}
-      ],
-      "property_impacts": [
-        {"name": "solarPanelsExtended", "value": false}
       ]
     },
     {
@@ -149,10 +144,76 @@
       "property_impacts": [
         {"name": "location", "value": "Mars ground"}
       ]
+    },
+    {
+      "name": "charge_battery",
+      "duration": 10,
+      "requirements": [
+        {"name": "agent", "value": "lander", "operator": "=="},
+        {"name": "battery", "value": 100, "operator": "<"},
+        {"name": "solarPanelsExtended", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "battery", "value": 10, "type": "delta"}
+      ]
+    },
+    {
+      "name": "place_seismometer",
+      "duration": 10,
+      "requirements": [
+        {"name": "agent", "value": "lander", "operator": "=="},
+        {"name": "battery", "value": 10, "operator": ">="},
+        {"name": "seismometerAttached", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "battery", "value": -10, "type": "delta"},
+        {"name": "seismometerAttached", "value": false}
+      ]
+    },
+    {
+      "name": "place_heat_probe",
+      "duration": 10,
+      "requirements": [
+        {"name": "agent", "value": "lander", "operator": "=="},
+        {"name": "battery", "value": 10, "operator": ">="},
+        {"name": "heatProbeAttached", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "battery", "value": -10, "type": "delta"},
+        {"name": "heatProbeAttached", "value": false}
+      ]
+    },
+    {
+      "name": "place_seismometer_cover",
+      "duration": 10,
+      "requirements": [
+        {"name": "agent", "value": "lander", "operator": "=="},
+        {"name": "battery", "value": 10, "operator": ">="},
+        {"name": "coverAttached", "value": true, "operator": "=="},
+        {"name": "seismometerAttached", "value": false, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "battery", "value": -10, "type": "delta"},
+        {"name": "coverAttached", "value": false}
+      ]
     }
   ],
   "optimizations": [
-
+    {
+      "name": "time",
+      "priority": 0,
+      "type": "min"
+    },
+    {
+      "name": "rocketFuel",
+      "priority": 1,
+      "type": "max"
+    },
+    {
+      "name": "boosterFuel",
+      "priority": 2,
+      "type": "max"
+    }
   ],
   "perturbations": [
 
