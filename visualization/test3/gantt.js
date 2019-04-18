@@ -14,6 +14,7 @@ d3.gantt = function() {
         left : 150
     };
     var selector;
+    var beginning_exec;
     var timeDomainStart = d3.time.day.offset(new Date(),-3);
     var timeDomainEnd = d3.time.hour.offset(new Date(),+3);
     var timeDomainMode = FIT_TIME_DOMAIN_MODE;// fixed or fit
@@ -108,6 +109,18 @@ d3.gantt = function() {
             .call(xAxis);
 
         svg.append("g").attr("class", "y axis").transition().call(yAxis);
+
+        var g = d3.select("g")
+            .append("line")
+            .attr("x1", 0)
+            .attr("y1", 0)
+            .attr("x2", 0)
+            .attr("y2", height - margin.top - margin.bottom)
+            .attr("class", "start-line")
+            .style("stroke-width", 2)
+            .style("stroke", "red")
+            .style("fill", "none")
+            .attr("transform", "translate(" + x(beginning_exec) + "," + 0 + ")");
 
         return gantt;
 
@@ -220,6 +233,13 @@ d3.gantt = function() {
         if (!arguments.length)
             return selector;
         selector = value;
+        return gantt;
+    };
+
+    gantt.beginning_exec = function(value) {
+        if (!arguments.length)
+            return beginning_exec;
+        beginning_exec = value;
         return gantt;
     };
 

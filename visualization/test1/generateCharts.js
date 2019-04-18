@@ -22,15 +22,15 @@ var valueScale = d3.scale.linear()
 // generate initial data
 var normal = d3.random.normal(1000, 150);
 var currMs = new Date().getTime() - 300000 - 4000;
-// var data = d3.range(300).map(function(d, i, arr) {
-//     var value = valueScale(Math.random()); // random data
-//     //var value = Math.round((d % 60) / 60 * 95); // ramp data
-//     var interval = Math.round(timeScale(normal()));
-//     currMs += interval;
-//     var time = new Date(currMs);
-//     var obj = { interval: interval, value: value, time: time, ts: currMs }
-//     return obj;
-// })
+var data = d3.range(300).map(function(d, i, arr) {
+    var value = valueScale(Math.random()); // random data
+    //var value = Math.round((d % 60) / 60 * 95); // ramp data
+    var interval = Math.round(timeScale(normal()));
+    currMs += interval;
+    var time = new Date(currMs);
+    var obj = { interval: interval, value: value, time: time, ts: currMs }
+    return obj;
+})
 
 d3.json("../../JSON_output/SystemStates/SystemState-SunMar31151138MDT2019.json", function(data) {
     processSystemState(data);

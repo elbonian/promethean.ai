@@ -30,16 +30,28 @@ html,body,#wrapper {
     opacity: 0;
 }
 
-.bar {
-    fill: #33b5e5;
-}
-
 .bar-state {
     fill: #99401D;
 }
 
 .bar-state:hover {
     fill: #B95F3B;
+}
+
+.bar-init-state {
+    fill: #722304;
+}
+
+.bar-init-state:hover {
+    fill: #99401D;
+}
+
+.bar-goal-state {
+    fill: #034F2A;
+}
+
+.bar-goal-state:hover {
+    fill: #146945;
 }
 
 .bar-running {
@@ -64,4 +76,9 @@ html,body,#wrapper {
 
 .bar-queued:hover {
     fill: #B9833B;
+}
+
+.info-title {
+    text-decoration: underline;
+    font-size: 150%;
 }
