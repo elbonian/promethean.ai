@@ -1,5 +1,8 @@
 package ai.promethean.DataModel;
 
+import ai.promethean.API.ParserError;
+import ai.promethean.Logger.Logger;
+
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -60,7 +63,12 @@ public class Task {
      * @param _duration The duration
      */
     public void setDuration(int _duration){
-        this.duration=_duration;
+        if (_duration <= 0){
+            ParserError e = new ParserError("Task duration must be greater than 0");
+            Logger.logError(e, this.getClass().getSimpleName());
+            throw e;
+        }
+        this.duration = _duration;
     }
 
     /**
