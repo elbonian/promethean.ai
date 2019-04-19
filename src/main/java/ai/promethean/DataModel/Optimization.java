@@ -6,37 +6,35 @@ package ai.promethean.DataModel;
 public class Optimization {
     private String name;
     private String type;
-    private int priority;
+    private double weight;
 
     /**
      * Instantiates a new Optimization.
      *
      * @param _name     The name
      * @param type      Whether the optimization is a minimization or maximization
-     * @param _priority The priority of the optimization, with 0 being the lowest
+     * @param _weight The Weight of the optimization, with 0 being the lowest
      */
-    public Optimization(String _name, String type, int _priority){
+    public Optimization(String _name, String type, double _weight){
         setName(_name);
         setType(type);
-        setPriority(_priority);
+        setWeight(_weight);
     }
 
     /**
-     * Sets priority
+     * Sets Weight
      *
-     * @param priority The priority
+     * @param weight The weight
      */
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
+    public void setWeight(double weight) { this.weight = weight; }
 
     /**
-     * Gets priority
+     * Gets Weight
      *
-     * @return The priority
+     * @return The Weight
      */
-    public int getPriority() {
-        return priority;
+    public double getWeight() {
+        return weight;
     }
 
     /**
@@ -89,8 +87,8 @@ public class Optimization {
     @Override
     public String toString() {
         if(type == "min")
-            return "Optimization Name: " +name + " Type: Minimize Priority: " + priority;
+            return "Optimization Name: " +name + " Type: Minimize Weight: " + weight;
         else
-            return "Optimization Name: " +name + " Type: Maximize Priority: " + priority;
+            return "Optimization Name: " +name + " Type: Maximize Weight: " + weight;
     }
 }

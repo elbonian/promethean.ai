@@ -23,7 +23,7 @@ public class JSONParser implements ParserInterface{
 
     private static final String FIELD_NAME = "name";
     private static final String FIELD_OPERATOR = "operator";
-    private static final String FIELD_PRIORITY= "priority";
+    private static final String FIELD_PRIORITY= "weight";
     private static final String FIELD_VALUE = "value";
     private static final String FIELD_DURATION = "duration";
     private static final String FIELD_REQUIREMENTS = "requirements";
@@ -94,7 +94,7 @@ public class JSONParser implements ParserInterface{
                         if (!(optimization.get(FIELD_NAME)==null || !optimization.get(FIELD_NAME).getAsJsonPrimitive().isString())) {
                             String name = optimization.get(FIELD_NAME).getAsString();
                             if (!(optimization.get(FIELD_PRIORITY)==null ||!optimization.get(FIELD_PRIORITY).getAsJsonPrimitive().isNumber())) {
-                                int priority = optimization.get(FIELD_PRIORITY).getAsInt();
+                                double priority = optimization.get(FIELD_PRIORITY).getAsDouble();
 
                                 //Captures any type containing min (Case Indifferent)
                                 if(optimization.get("type")==null){
@@ -112,7 +112,7 @@ public class JSONParser implements ParserInterface{
                                     api.throwParserError("JSON Object Optimization type is invalid (must be a minimum or maximum)");
                                 }
                             } else {
-                                api.throwParserError("JSON Object Optimization Priority must be a number and non-null");
+                                api.throwParserError("JSON Object Optimization Weight must be a number and non-null");
                             }
                         } else {
                             api.throwParserError("JSON Optimization name must be a string and non-null");

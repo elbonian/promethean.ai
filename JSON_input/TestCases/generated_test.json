@@ -1,0 +1,359 @@
+{
+    "initial_state": {"properties": [
+        {
+            "name": "property9",
+            "value": 100
+        },
+        {
+            "name": "property6",
+            "value": 100
+        },
+        {
+            "name": "property5",
+            "value": false
+        },
+        {
+            "name": "property8",
+            "value": 100
+        },
+        {
+            "name": "property7",
+            "value": 100
+        },
+        {
+            "name": "property2",
+            "value": true
+        },
+        {
+            "name": "property1",
+            "value": true
+        },
+        {
+            "name": "property4",
+            "value": true
+        },
+        {
+            "name": "property3",
+            "value": true
+        },
+        {
+            "name": "property0",
+            "value": true
+        },
+        {
+            "name": "Battery",
+            "value": 0
+        },
+        {
+            "name": "property10",
+            "value": 100
+        },
+        {
+            "name": "asdf",
+            "value": true
+        }
+    ]},
+    "goal_state": {"requirements": [
+        {
+            "name": "property0",
+            "value": false,
+            "operator": "=="
+        },
+        {
+            "name": "property1",
+            "value": false,
+            "operator": "=="
+        },
+        {
+            "name": "property2",
+            "value": false,
+            "operator": "=="
+        },
+        {
+            "name": "property3",
+            "value": false,
+            "operator": "=="
+        },
+        {
+            "name": "property4",
+            "value": false,
+            "operator": "=="
+        },
+        {
+            "name": "property5",
+            "value": true,
+            "operator": "=="
+        },
+        {
+            "name": "property6",
+            "value": 131.3888784033408,
+            "operator": "<"
+        },
+        {
+            "name": "property7",
+            "value": 69.08029798339778,
+            "operator": "<"
+        },
+        {
+            "name": "property8",
+            "value": 165.26858759019308,
+            "operator": "<"
+        },
+        {
+            "name": "property9",
+            "value": 55.59911662030089,
+            "operator": "<"
+        },
+        {
+            "name": "property10",
+            "value": 58.43253612374001,
+            "operator": "<"
+        },
+        {
+            "name": "Battery",
+            "value": 0,
+            "operator": ">"
+        },
+        {
+            "name": "asdf",
+            "value": false,
+            "operator": "=="
+        }
+    ]},
+    "perturbations": [],
+    "tasks": [
+        {
+            "duration": 11,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "Battery",
+                "type": "delta",
+                "value": 10
+            }],
+            "name": "charge_task"
+        },
+        {
+            "duration": 9,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "property0",
+                "type": "assignment",
+                "value": false
+            }],
+            "name": "property0_assignment_task"
+        },
+        {
+            "duration": 41,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "property1",
+                "type": "assignment",
+                "value": false
+            }],
+            "name": "property1_assignment_task"
+        },
+        {
+            "duration": 24,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "property2",
+                "type": "assignment",
+                "value": false
+            }],
+            "name": "property2_assignment_task"
+        },
+        {
+            "duration": 8,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "property3",
+                "type": "assignment",
+                "value": false
+            }],
+            "name": "property3_assignment_task"
+        },
+        {
+            "duration": 10,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "property4",
+                "type": "assignment",
+                "value": false
+            }],
+            "name": "property4_assignment_task"
+        },
+        {
+            "duration": 23,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "property5",
+                "type": "assignment",
+                "value": true
+            }],
+            "name": "property5_assignment_task"
+        },
+        {
+            "duration": 38,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "property6",
+                "type": "delta",
+                "value": 31.38887840334081
+            }],
+            "name": "property6_delta_task"
+        },
+        {
+            "duration": 29,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "property7",
+                "type": "delta",
+                "value": -30.919702016602216
+            }],
+            "name": "property7_delta_task"
+        },
+        {
+            "duration": 44,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "property8",
+                "type": "delta",
+                "value": 65.26858759019308
+            }],
+            "name": "property8_delta_task"
+        },
+        {
+            "duration": 18,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "property9",
+                "type": "delta",
+                "value": -44.40088337969911
+            }],
+            "name": "property9_delta_task"
+        },
+        {
+            "duration": 44,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "property10",
+                "type": "delta",
+                "value": -41.56746387625999
+            }],
+            "name": "property10_delta_task"
+        },
+        {
+            "duration": 32,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "asdf",
+                "type": "assignment",
+                "value": false
+            }],
+            "name": "asdf_assignment_task"
+        },
+        {
+            "duration": 35,
+            "requirements": [
+                {
+                    "name": "property4",
+                    "value": true,
+                    "operator": "=="
+                },
+                {
+                    "name": "Battery",
+                    "value": 29.8,
+                    "operator": ">="
+                }
+            ],
+            "property_impacts": [
+                {
+                    "name": "property4",
+                    "type": "assignment",
+                    "value": false
+                },
+                {
+                    "name": "Battery",
+                    "type": "delta",
+                    "value": 46.5
+                },
+                {
+                    "name": "property6",
+                    "type": "delta",
+                    "value": 34.2
+                }
+            ],
+            "name": "null_task"
+        },
+        {
+            "duration": 3,
+            "requirements": [
+                {
+                    "name": "property0",
+                    "value": true,
+                    "operator": "=="
+                },
+                {
+                    "name": "property1",
+                    "value": true,
+                    "operator": "=="
+                },
+                {
+                    "name": "Battery",
+                    "value": 27.6,
+                    "operator": ">="
+                }
+            ],
+            "property_impacts": [
+                {
+                    "name": "property1",
+                    "type": "assignment",
+                    "value": false
+                },
+                {
+                    "name": "property0",
+                    "type": "assignment",
+                    "value": false
+                }
+            ],
+            "name": "null_task"
+        }
+    ],
+    "optimizations": [
+        {
+            "name": "Duration",
+            "weight": 0.9,
+            "type": "min"
+        },
+        {
+            "name": "property9",
+            "weight": 0.5,
+            "type": "min"
+        },
+        {
+            "name": "property6",
+            "weight": 0.9,
+            "type": "min"
+        },
+        {
+            "name": "property8",
+            "weight": 0.3,
+            "type": "max"
+        },
+        {
+            "name": "property7",
+            "weight": 0.5,
+            "type": "max"
+        },
+        {
+            "name": "Battery",
+            "weight": 0.7,
+            "type": "max"
+        },
+        {
+            "name": "property10",
+            "weight": 0.5,
+            "type": "min"
+        }
+    ]
+}

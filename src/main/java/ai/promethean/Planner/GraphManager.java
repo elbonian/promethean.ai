@@ -18,6 +18,7 @@ public class GraphManager {
     private StaticOptimizations optimizations;
     private PriorityQueue<StateTemplate> frontier = new PriorityQueue<StateTemplate>(1, new FrontierComparator());
     private long stopTime;
+    private double originalHeuristicDist;
 
     /**
      * Instantiates a new Graph manager.
@@ -32,6 +33,7 @@ public class GraphManager {
         this.goalState = goalState;
         this.taskDict = taskDict;
         this.optimizations = optimizations;
+        this.originalHeuristicDist = Heuristic.h_value(initState, goalState, new Task(0, "Blank Task"));
     }
 
     public boolean frontierIsEmpty() {
@@ -107,7 +109,7 @@ public class GraphManager {
         List<StateTemplate> templates = new ArrayList<>();
 
         for (Task task : tasks) {
-            Double g_value = TaskWeight.calculateTaskWeight(task, optimizations) + state.getgValue();
+            Double g_value = TaskWeight.calculateTaskWeight(task, optimizations, originalHeuristicDist) + state.getgValue();
             double h_value = Heuristic.h_value(state,goalState,task);
             double f_value = g_value + h_value;
             templates.add(new StateTemplate(state, task, f_value, g_value, h_value));
@@ -128,19 +130,16 @@ public class GraphManager {
     /**
      *
      * @param currentState the state in question
-     * @return true if there is a state template within the frontier with a lower heuristic value than the given state
+     * @return true if the previous state has a lower heuristic value than the given state
      */
     public boolean checkCLF(SystemState currentState) {
-        Iterator<StateTemplate> template = frontier.iterator();
-        if(template.next().getH() < currentState.gethValue()) {
+        if (currentState.getPreviousState() == null) {
             return true;
+        } else if (currentState.gethValue() < currentState.getPreviousState().gethValue()) {
+            return true;
+        } else {
+            return false;
         }
-        while(template.hasNext()) {
-            if(template.next().getH() < currentState.gethValue()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
