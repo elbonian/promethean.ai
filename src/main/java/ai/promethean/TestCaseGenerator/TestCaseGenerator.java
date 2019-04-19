@@ -174,8 +174,14 @@ public class TestCaseGenerator {
             Task new_task = new Task(randomIntInRange(1, 50));
             // I can't find a way to select random elements from the props ArrayList without dups w/o deleting them from list when done?
             List<Property> temp_props = stateProps.getProperties();
-            // How many properties to include in randomly generated tasks? 1 - 5
-            int num_props = randomIntInRange(1, temp_props.size() % 5);
+            // How many properties to include in randomly generated tasks?
+            int max_generated_properties;
+            if(temp_props.size() > 5) {
+                max_generated_properties = 5;
+            } else {
+                max_generated_properties = temp_props.size();
+            }
+            int num_props = randomIntInRange(0, max_generated_properties);
             // Randomly grab properties from the input state properties
             for(int j = 0; j < num_props; j++) {
                 int randomIndex = randomIntInRange(temp_props.size());
