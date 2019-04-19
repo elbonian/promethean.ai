@@ -29,6 +29,8 @@ function readJSON(path) {
 }
 
 function createChartFromStateLog(json_string) {
+    window.chart_width = 800;
+    window.chart_height = 450;
     var json = JSON.parse(json_string);
     window.init_state = json['initialState'];
     window.goal_state = json['goalState'];
@@ -88,7 +90,7 @@ function createChartFromStateLog(json_string) {
     var format = "%H:%M";
 
     // Invoke the gantt chart
-    window.gantt = d3.gantt().selector('#visualization').taskTypes(taskNames).taskStatus(taskStatus).tickFormat(format).height(450).width(800).beginning_exec(start);
+    window.gantt = d3.gantt().selector('#visualization').taskTypes(taskNames).taskStatus(taskStatus).tickFormat(format).height(chart_height).width(chart_width).beginning_exec(start);
 
     // Set time domain for chart
     gantt.timeDomainMode("fixed");
@@ -133,6 +135,10 @@ function showStartLine() {
 }
 
 function staticChartFromPlan(state_dict, task_dict) {
+    var clock = d3.select("#clock");
+    if(!clock.empty()) {
+        clock.remove();
+    }
     animation = false;
     console.log("Creating static chart");
     window.tasks = [
@@ -239,6 +245,18 @@ async function animateChart(state_dict, task_dict) {
     ];
     gantt(tasks);
 
+    var viz = d3.select("#visualization")
+        .append("svg")
+        .attr("id", "clock")
+        .attr("transform", "translate(0,-" + chart_height/2 + ")")
+        .attr("style", "background: green")
+        .style("text-anchor", "middle");
+
+    viz.append("text")
+        .attr("class", "clock-text")
+        .text("Time: 0")
+        .attr('transform', 'translate(150, 50)');
+
     // Always push the task at time 0
     var task_in_progress = task_dict[0].name;
     var task_object = {
@@ -256,6 +274,10 @@ async function animateChart(state_dict, task_dict) {
         if(!animation) {
             break;
         }
+
+        var clock = d3.select(".clock-text")
+            .text("Time: " + time);
+
         var this_task = task_dict[time];
         if(this_task != undefined) {
             // Change the task_in_progress to completed
@@ -294,7 +316,6 @@ async function animateChart(state_dict, task_dict) {
     bar_in_progress = d3.select(".bar-running")
         .attr("class", "bar-completed");
     interaction();
-    return
 }
 
 function sleep(duration) {
@@ -329,7 +350,7 @@ function createTaskTime(duration, update) {
 }
 
 function interaction() {
-    var svg = d3.select('svg')
+    var svg = d3.select('.chart')
         .attr("style", "outline: thin solid red");
 
     // ***** TOOLTIPS *****

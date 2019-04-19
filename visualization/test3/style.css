@@ -82,3 +82,7 @@ html,body,#wrapper {
     text-decoration: underline;
     font-size: 150%;
 }
+
+.clock-text {
+    font-size: 200%;
+}
