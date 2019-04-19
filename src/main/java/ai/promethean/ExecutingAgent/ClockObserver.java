@@ -1,7 +1,9 @@
 package ai.promethean.ExecutingAgent;
 
 import ai.promethean.DataModel.SystemState;
+import ai.promethean.Logger.Logger;
 
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 public abstract class ClockObserver {
@@ -29,7 +31,12 @@ public abstract class ClockObserver {
      * @return the last SystemState
      */
     public static SystemState peekLastState() {
-        return stateStack.peek();
+        try{
+            return stateStack.peek();
+        } catch (EmptyStackException e) {
+            Logger.logError(e, ClockObserver.class.getSimpleName());
+            throw e;
+        }
     }
 
     public static Stack<SystemState> getStateStack() {

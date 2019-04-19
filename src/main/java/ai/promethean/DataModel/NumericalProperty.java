@@ -1,10 +1,13 @@
 package ai.promethean.DataModel;
 
+import ai.promethean.Logger.Logger;
+
 /**
  * Numerical extension of the Property class
  */
 public class NumericalProperty extends Property {
     protected Double value;
+    private String className = this.getClass().getSimpleName();
 
 
     /**
@@ -51,7 +54,9 @@ public class NumericalProperty extends Property {
     public NumericalProperty applyImpact(Property impact){
 
         if(!impact.name.equals(this.name)){
-            throw new IllegalArgumentException("Property names do not match");
+            IllegalArgumentException e = new IllegalArgumentException("Property names do not match");
+            Logger.logError(e, className);
+            throw e;
         }
 
         else{
@@ -60,7 +65,10 @@ public class NumericalProperty extends Property {
                 case("delta"):
                     Double newVal= (Double)impact.getValue()+this.value;
                     return new NumericalProperty(this.name, newVal);
-                default: throw new IllegalArgumentException("Property type is not valid");
+                default:
+                    IllegalArgumentException e = new IllegalArgumentException("Property type is not valid");
+                    Logger.logError(e, className);
+                    throw e;
             }
 
         }

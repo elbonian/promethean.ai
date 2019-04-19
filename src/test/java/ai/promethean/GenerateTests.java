@@ -37,7 +37,7 @@ public class GenerateTests {
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, true);
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, false);
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 100, true);
-        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 100, false, "100_tasks_nocrit");
+        TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 100, false, "100_tasks_nocrit");
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 500, true, "500_tasks");
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 500, false, "500_tasks_nocrit");
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 1000, true, "1000_tasks");
@@ -46,11 +46,6 @@ public class GenerateTests {
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 5000, false, "5000_tasks_nocrit");
 
         // **** Test case generation... Comment out to stop generating the files
-
-        API API = new API();
-
-        Map<String, Object> ob = API.parseInput("JSON_input/InputFiles/PerturbationTest.json", true);
-        TestCaseGenerator test_case = new TestCaseGenerator((SystemState) ob.get("initialState"), (GoalState) ob.get("goalState"), 100, false);
 
         ArrayList<Task> generated_tasks = test_case.generateTestCase();
         ArrayList<Optimization> optimizations = test_case.generateOptimizations(3);

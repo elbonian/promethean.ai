@@ -13,6 +13,7 @@ public class StateTemplate {
     private Task task;
     private Double g;
     private Double f;
+    private double h;
 
     /**
      * Instantiates a new State template.
@@ -22,11 +23,13 @@ public class StateTemplate {
      * @param g_value the g value of the potential next state
      * @param f_value the f value of the potential next state
      */
-    public StateTemplate(SystemState prev, Task t, Double g_value, Double f_value) {
+
+    public StateTemplate(SystemState prev, Task t, Double g_value, Double f_value, double h_value) {
         this.previousState = prev;
         this.task = t;
         this.g = g_value;
         this.f = f_value;
+        this.h = h_value;
     }
 
     /**
@@ -56,5 +59,10 @@ public class StateTemplate {
      * @return the f
      */
     public Double getF() {return this.f;}
+    /**
+     * Gets gh.
+     *
+     * @return the h     */
+    public double getH() {return this.h;}
 
 }
