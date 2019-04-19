@@ -12,13 +12,13 @@
                 "type": {
                     "type": "string"
                 },
-                "priority": {
-                    "type": "integer"
+                "weight": {
+                    "type": "number"
                 }
             },
             "required": [
                 "type",
-                "priority",
+                "weight",
                 "name"
             ],
             "title": "Optimization"
