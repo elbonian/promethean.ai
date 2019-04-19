@@ -301,7 +301,7 @@ public class TestCaseGenerator {
             tasks.add(charge);
             critical_path.add(charge);
         }
-        if (inputState.getProperty("Battery") == null) {
+        if (inputState.getProperty("Battery") == null || inputState.getProperty("battery") == null) {
             inputState.addProperty("Battery", randomDoubleInRange(50.0,100.0));
         }
         ArrayList<Task> full_plan = createRemainingTasks(critical_path);

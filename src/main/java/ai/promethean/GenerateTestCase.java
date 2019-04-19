@@ -39,14 +39,14 @@ public class GenerateTestCase {
             Double d1 = r.nextDouble() * upperLimit;
             starting.addProperty(propertyName, upperLimit);
             Double d2 = d1 + r.nextDouble() * upperLimit;
-            ending.addRequirement(propertyName, d2, "<");
+            ending.addRequirement(propertyName, d2, "<=");
             offset++;
         }
         starting.addProperty("Battery", 0.0);
-        ending.addRequirement("Battery", 0.0, ">");
+        ending.addRequirement("Battery", 0.0, ">=");
         starting.addProperty("asdf", true);
         ending.addRequirement("asdf", false, "==");
-        TestCaseGenerator generator = new TestCaseGenerator(starting, ending, true);
+        TestCaseGenerator generator = new TestCaseGenerator(starting, ending, 100, true);
         ArrayList<Optimization> optimizations = generator.generateOptimizations();
         ArrayList<Task> tasks = generator.generateTestCase();
         List<PropertyDelta> deltas = generator.getPropertyDeltas();
