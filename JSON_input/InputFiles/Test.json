@@ -45,7 +45,7 @@
   "optimizations": [
     {
       "name": "Fuel",
-      "priority": 1,
+      "weight": 1.0,
       "type": "maximization"
     }
   ]
