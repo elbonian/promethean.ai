@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-public class ClockManager {
+public class ExecutionManager {
     private String className =  this.getClass().getSimpleName();
     /**
      * Take a plan and parsed objects from parser and run the simulation, replanning if necessary
@@ -42,14 +42,14 @@ public class ClockManager {
 
             planCompleted = ((TaskExecutor)tasks).isPlanCompleted();
             if(planCompleted){
-                Logger.writeLog("Plan Completed \n", "ClockManager");
-                Logger.writeLog("Ending State: \n" + ClockObserver.peekLastState(), "ClockManager");
+                Logger.writeLog("Plan Completed \n", this.className);
+                Logger.writeLog("Ending State: \n" + ClockObserver.peekLastState(), this.className);
 
             }
             // a perturbation has occurred and needs to be handled.
             else{
 
-                Logger.writeLog("Replanning", "ClockManager");
+                Logger.writeLog("Replanning", this.className);
 
                 //get the current state of the craft for replanning
                 SystemState currentState = ClockObserver.peekLastState();
@@ -63,13 +63,13 @@ public class ClockManager {
 
 
                 if ( plan!=null) {
-                    Logger.writeLog("New Plan: \n" + plan.getPlanBlockList(), "ClockManager");
+                    Logger.writeLog("New Plan: \n" + plan.getPlanBlockList(), this.className);
                 }
 
             }
            stateList=tasks.getStateStack();
         }
-        Logger.writeLog("Ending State: \n" + ClockObserver.peekLastState(), "ClockManager");
+        Logger.writeLog("Ending State: \n" + ClockObserver.peekLastState(), this.className);
         return stateList;
     }
 
