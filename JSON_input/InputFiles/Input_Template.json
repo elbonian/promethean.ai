@@ -42,7 +42,7 @@
   "optimizations": [
     {
       "name": "",
-      "priority": 0,
+      "weight": 0.0,
       "type": ""
     }
   ],
