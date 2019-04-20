@@ -23,7 +23,7 @@ public class JSONParser implements ParserInterface{
 
     private static final String FIELD_NAME = "name";
     private static final String FIELD_OPERATOR = "operator";
-    private static final String FIELD_PRIORITY= "weight";
+    private static final String FIELD_WEIGHT = "weight";
     private static final String FIELD_VALUE = "value";
     private static final String FIELD_DURATION = "duration";
     private static final String FIELD_REQUIREMENTS = "requirements";
@@ -93,8 +93,8 @@ public class JSONParser implements ParserInterface{
                         JsonObject optimization = op.getAsJsonObject();
                         if (!(optimization.get(FIELD_NAME)==null || !optimization.get(FIELD_NAME).getAsJsonPrimitive().isString())) {
                             String name = optimization.get(FIELD_NAME).getAsString();
-                            if (!(optimization.get(FIELD_PRIORITY)==null ||!optimization.get(FIELD_PRIORITY).getAsJsonPrimitive().isNumber())) {
-                                double priority = optimization.get(FIELD_PRIORITY).getAsDouble();
+                            if (!(optimization.get(FIELD_WEIGHT)==null ||!optimization.get(FIELD_WEIGHT).getAsJsonPrimitive().isNumber())) {
+                                double priority = optimization.get(FIELD_WEIGHT).getAsDouble();
 
                                 //Captures any type containing min (Case Indifferent)
                                 if(optimization.get("type")==null){

@@ -21,6 +21,9 @@ public class TaskWeight {
         if (timeOp != null) {
             taskWeight += task.getDuration() * timeOp.getWeight();
             numNumericalProperties += 1;
+        } else if (optimizations.size() == 0) {
+            taskWeight += task.getDuration();
+            numNumericalProperties += 1;
         }
 
         for (Property property : task.getProperties()) {

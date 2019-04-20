@@ -37,14 +37,6 @@
             "value": false
         },
         {
-            "name": "numProp4",
-            "value": 0.3
-        },
-        {
-            "name": "numProp3",
-            "value": 241
-        },
-        {
             "name": "bool1",
             "value": false
         },
@@ -112,16 +104,6 @@
             "name": "numProp2",
             "value": 125,
             "operator": "<="
-        },
-        {
-            "name": "numProp3",
-            "value": 123,
-            "operator": "<="
-        },
-        {
-            "name": "numProp4",
-            "value": 0.45,
-            "operator": ">="
         }
     ]},
     "perturbations": [],
