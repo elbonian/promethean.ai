@@ -29,8 +29,10 @@ function readJSON(path) {
 }
 
 function createChartFromStateLog(json_string) {
-    window.chart_width = 800;
-    window.chart_height = 450;
+    var viz_div = d3.select("#visualization");
+    window.viz_div_width = viz_div.node().getBoundingClientRect().width;
+    window.gantt_chart_width = viz_div_width * (5/8);
+    window.gantt_chart_height = 450;
     var json = JSON.parse(json_string);
     window.init_state = json['initialState'];
     window.goal_state = json['goalState'];
@@ -38,17 +40,26 @@ function createChartFromStateLog(json_string) {
     // Used to stop the async function of animating the chart
     window.animation = false;
 
+    // Keeping track of property values at each time, for use in value charts
+    window.properties = {};
+    init_state['properties'].forEach(function(property) {
+        properties[property['name']] = [];
+    });
+    // Add property values at initial time
+    init_state.properties.forEach(function(property) {
+        var time_value_tuple = {"time": init_state.time, "value": property.value};
+        properties[property.name].push(time_value_tuple);
+    });
+
     window.task_dict = {};
     window.state_dict = {};
     var dict_key = 0;
+    // Creating dictionaries to be able to reference tasks/states at certain times
     for(let i = 0; i < plan.length; i++) {
         task_dict[dict_key] = plan[i].task;
         state_dict[plan[i].state.time] = plan[i].state;
         dict_key += plan[i].task.duration;
     }
-
-    console.log(state_dict);
-    console.log(task_dict);
 
     // Declaring as window.<variable> makes it global? Kind of?
     window.start = Date.now();
@@ -90,7 +101,7 @@ function createChartFromStateLog(json_string) {
     var format = "%H:%M";
 
     // Invoke the gantt chart
-    window.gantt = d3.gantt().selector('#visualization').taskTypes(taskNames).taskStatus(taskStatus).tickFormat(format).height(chart_height).width(chart_width).beginning_exec(start);
+    window.gantt = d3.gantt().selector('#visualization').taskTypes(taskNames).taskStatus(taskStatus).tickFormat(format).height(gantt_chart_height).width(gantt_chart_width).beginning_exec(start);
 
     // Set time domain for chart
     gantt.timeDomainMode("fixed");
@@ -104,11 +115,11 @@ function createChartFromStateLog(json_string) {
 
     var animation_checkbox = d3.select("#animation-checkbox");
     var start_line_checkbox = d3.select("#start-line-checkbox");
+    var reload_checkbox = d3.select("#reload-when-done").hidden = true;
     createChart();
     showStartLine();
     animation_checkbox.on("change", createChart);
     start_line_checkbox.on("change", showStartLine);
-    // createChart();
 }
 
 function createChart() {
@@ -118,7 +129,7 @@ function createChart() {
         animateChart(state_dict, task_dict);
         return true;
     } else {
-        staticChartFromPlan(state_dict, task_dict);
+        staticChart(state_dict, task_dict);
         return true;
     }
 }
@@ -134,13 +145,12 @@ function showStartLine() {
     }
 }
 
-function staticChartFromPlan(state_dict, task_dict) {
+function staticChart(state_dict, task_dict) {
     var clock = d3.select("#clock");
     if(!clock.empty()) {
         clock.remove();
     }
     animation = false;
-    console.log("Creating static chart");
     window.tasks = [
         {
             "startDate": start + 60000 * -10,
@@ -166,15 +176,17 @@ function staticChartFromPlan(state_dict, task_dict) {
     // Create states
     const states_array = Object.entries(state_dict);
     const tasks_array = Object.entries(task_dict);
-    console.log(states_array.length);
-    console.log(states_array);
-    console.log(tasks_array);
     for(var i = 0; i < states_array.length; i++) {
         // task contains the task executed, and the state after execution
         var state = states_array[i][1];
         var task = tasks_array[i];
         var state_end_time;
         var info_time;
+        // Add properties for state time to the properties dict
+        state['properties'].forEach(function (property) {
+            var time_value_tuple = {"time": state.time, "value": property.value};
+            properties[property.name].push(time_value_tuple);
+        });
         // Create end time for state
         if(i == states_array.length - 1) {
             state_end_time = createTaskTime(10, false);
@@ -214,18 +226,24 @@ function staticChartFromPlan(state_dict, task_dict) {
 
 async function animateChart(state_dict, task_dict) {
     animation = true;
+    // Add checkbox to reload on completion
+
+    // Remove all information panels
+    d3.select("#barInfo").remove();
+    d3.select("#property-graph").remove();
     const states_array = Object.entries(state_dict);
-    // var state = states_array[i][1];
-    // if(i == states_array.length - 1) {
-    //     state_end_time = createTaskTime(10, false);
-    //     info_time = state['time'] + 10;
-    // } else {
-    //     state_end_time = createTaskTime(states_array[i+1][1]['time'], false);
-    //     info_time = states_array[i+1][1]['time'];
-    // }
+    for(var i = 0; i < states_array.length; i++) {
+        var state = states_array[i];
+        var ending_time;
+        if(i == states_array.length - 1) {
+            ending_time = +state[0] + 10;
+        } else {
+            ending_time = +states_array[i+1][0];
+        }
+        console.log("adding ending time " + ending_time + " to " + state[0]);
+        state_dict[state[0]]['ending'] = ending_time;
+    }
     console.log("Animating the chart population");
-    console.log(state_dict);
-    console.log(task_dict);
     var end_duration = goal_state['time'];
     var time = 1;
     // Clearing the static chart
@@ -248,8 +266,7 @@ async function animateChart(state_dict, task_dict) {
     var viz = d3.select("#visualization")
         .append("svg")
         .attr("id", "clock")
-        .attr("transform", "translate(0,-" + chart_height/2 + ")")
-        .attr("style", "background: green")
+        .attr("transform", "translate(0,-" + gantt_chart_height/2 + ")")
         .style("text-anchor", "middle");
 
     viz.append("text")
@@ -279,6 +296,7 @@ async function animateChart(state_dict, task_dict) {
             .text("Time: " + time);
 
         var this_task = task_dict[time];
+        var new_state = state_dict[time];
         if(this_task != undefined) {
             // Change the task_in_progress to completed
             var bar_in_progress = d3.select(".bar-running")
@@ -294,27 +312,41 @@ async function animateChart(state_dict, task_dict) {
                 "info": {"tooltip": {"name": this_task['name'], 'duration': this_task['duration']},
                     "more": this_task}
             };
-            // Create state for after previous task was completed
-            // state_object = {
-            //     "startDate": createTaskTime(state_dict[time].time, false),
-            //     "endDate": state_end_time,
-            //     "taskName": "System State",
-            //     "status": "STATE",
-            //     "info": {
-            //         "tooltip": {'name': 'System State', 'beginning': state_dict[0]['time'], 'end': info_time},
-            //         "more": state}
-            // };
             addTask(task_object);
         }
+        if(new_state != undefined) {
+            // Create state for after previous task was completed
+            var state_status;
+            var tooltip_text;
+            console.log(new_state);
+            console.log(states_array);
+            if(new_state['time'] == +states_array[states_array.length - 1][0]) {
+                state_status = "GOALSTATE";
+                tooltip_text = "Goal State";
+            } else {
+                state_status = "STATE";
+                tooltip_text = "System State";
+            }
+            var state_object = {
+                "startDate": createTaskTime(state_dict[time].time, false),
+                "endDate": createTaskTime(new_state['ending'], false),
+                "taskName": "System State",
+                "status": state_status,
+                "info": {
+                    "tooltip": {'name': tooltip_text, 'beginning': new_state['time'], 'end': new_state['ending']},
+                    "more": new_state}
+            };
+            addTask(state_object);
+        }
+
         await sleep(1000);
-        console.log("Blah" + time);
-        console.log(this_task);
         time++;
 
 
     }
     bar_in_progress = d3.select(".bar-running")
         .attr("class", "bar-completed");
+    location.reload();
     interaction();
 }
 
@@ -350,8 +382,7 @@ function createTaskTime(duration, update) {
 }
 
 function interaction() {
-    var svg = d3.select('.chart')
-        .attr("style", "outline: thin solid red");
+    var svg = d3.select('.chart');
 
     // ***** TOOLTIPS *****
     var task_tooltip = d3.select("body")
@@ -402,23 +433,28 @@ function interaction() {
             state_tooltip.style('opacity',0);
         });
 
-    // ***** BAR INFO PANEL *****
-    var info_div = d3.select('#bar-info')
+    // ***** INFO PANEL *****
+    var viz_width = d3.select("#visualization").node().getBoundingClientRect().width;
+    var full_chart_width = d3.select(".chart").node().getBoundingClientRect().width;
+    var full_chart_height = d3.select(".chart").node().getBoundingClientRect().height;
+    var info_div = d3.select('#visualization')
         .append("svg")
         .attr("id", "barInfo")
-        .attr("width", svg.node().getBoundingClientRect().width + "px")
-        .attr("height", "350px")
+        .attr("width", viz_width - full_chart_width - 50)
+        .attr("height", full_chart_height)
         .attr("class", "infoHidden");
 
     // Task info panels
     svg.selectAll(".bar-queued, .bar-running, .bar-completed")
         .on('click', function(d) {
+            d3.select("#clock").remove();
             var taskName = d.info.tooltip.name.replace(" ", "-");
             var barInfoClass = d3.select("#barInfo").attr("class");
             // Open info panel
             if(barInfoClass != "taskInfo " + taskName) {
                 console.log("Opening new taskInfo panel");
                 d3.select("#barInfo")
+                    .style("opacity", 1)
                     .attr("class", "taskInfo " + taskName);
                 taskInfoPanel(d,);
             // Close the info panel
@@ -433,12 +469,14 @@ function interaction() {
     // State info panels
     svg.selectAll(".bar-state, .bar-init-state, .bar-goal-state")
         .on('click', function(d) {
+            d3.select("#clock").remove();
             var stateUID = d.info.more.uid;
             var barInfoClass = d3.select("#barInfo").attr("class");
             // Open info panel
             if(barInfoClass != "stateInfo " + stateUID) {
                 console.log("Opening new stateInfo panel");
                 d3.select("#barInfo")
+                    .style("opacity", 1)
                     .attr("class", "stateInfo " + stateUID);
                 stateInfoPanel(d);
             } else {
@@ -448,13 +486,13 @@ function interaction() {
                     .attr('class', 'infoHidden');
             }
         });
+
 }
 
 function stateInfoPanel(data) {
     var svg = d3.select("#barInfo");
     svg.selectAll("text").remove();
-    svg.attr("style", "background: grey")
-        .append("text")
+    svg.append("text")
         .attr("class", "info-title")
         .text("System State: Time " + data.info.more.time)
         .attr('transform', 'translate(25,50)');
@@ -464,44 +502,185 @@ function stateInfoPanel(data) {
         .text("Property Information")
         .attr('transform', 'translate(50, 90)');
     var properties = data.info.more.properties;
-    console.log(data);
-    if(data.info.more.previousTask != null) {
-        svg.append("text")
-            .attr("class", "previous-task-header")
-            .text("Previous Task")
-            .attr('transform', 'translate(450, 90)');
-        svg.append("text")
-            .attr("class", "previous-task")
-            .text(data.info.more.previousTask.name)
-            .attr('transform', 'translate(470, 120)');
-    }
     for(var i =0; i < properties.length; i++) {
         svg.append("text")
             .attr("class", "property")
             .text(properties[i].name + ":      " + properties[i].value)
-            .attr('transform', 'translate(70, ' + (120 + i*30) + ')');
+            .attr('transform', 'translate(70, ' + (120 + i*30) + ')')
+            .on("click", function() {
+                var property = d3.select(this);
+                var property_name = property.text().split(":")[0];
+                resourceChart(property_name, data.info.more.time);
+            })
+    }
+    if(data.info.more.previousTask != null) {
+        svg.append("text")
+            .attr("class", "previous-task-header")
+            .text("Previous Task")
+            .attr('transform', 'translate(270, 90)');
+        svg.append("text")
+            .attr("class", "previous-task")
+            .text(data.info.more.previousTask.name)
+            .attr('transform', 'translate(290, 120)');
     }
 }
 
 function taskInfoPanel(data) {
     var svg = d3.select("#barInfo");
     svg.selectAll("text").remove();
-    svg.attr("style", "background: grey")
-        .append("text")
+    svg.append("text")
         .attr("class", "info-title")
         .text("Task: " + data.info.more.name)
         .attr('transform', 'translate(25,50)');
-    console.log(data.info.more);
     svg.append("text")
         .attr("class", "impacts-header")
         .text("Property Impacts")
         .attr('transform', 'translate(50, 90)');
     var property_impacts = data.info.more.properties;
     for(var i = 0; i < property_impacts.length; i++) {
-        svg.append("text")
+        var text = svg.append("text")
             .attr("class", "property-impact")
             .text(property_impacts[i].name + ":      " + property_impacts[i].value)
-            .attr('transform', 'translate(70, ' + (120 + i*30) + ')');
+            .attr('transform', 'translate(70, ' + (120 + i*30) + ')')
+            .on("click", function() {
+                var property = d3.select(this);
+                var property_name = property.text().split(":")[0];
+                resourceChart(property_name, data.info.more.time);
+            })
+
     }
+
+}
+
+function resourceChart(property_name, time) {
+    // Add graph svg if there isn't one
+    if(d3.select("#property-graph").empty()) {
+        d3.select("#property-graph-div")
+            .append("svg")
+            .attr("width", viz_div_width - 35)
+            .attr("height", gantt_chart_height)
+            .attr("id", "property-graph")
+            .attr("class", "graph-" + property_name);
+    } else {
+        var prop_graph_class = d3.select("#property-graph").attr("class");
+        // If the current graph is for same prop as clicked, remove graph
+        if(prop_graph_class === "graph-"+property_name) {
+            console.log("removing");
+            d3.select("#property-graph").remove();
+            return;
+        }
+        d3.select("#property-graph").remove();
+        // Add new graph
+        console.log("Opening new property graph: " + property_name);
+        d3.select("#property-graph-div")
+            .append("svg")
+            .style("opacity", 1)
+            .attr("width", viz_div_width - 35)
+            .attr("height", gantt_chart_height)
+            .attr("id", "property-graph")
+            .attr("class", "graph-" + property_name);
+    }
+    // Clear current line and axes
+    d3.select(".line").remove();
+    d3.select(".x-axis").remove();
+    d3.select(".y-axis").remove();
+    d3.select("#x-axis-label").remove();
+    d3.select("#y-axis-label").remove();
+    var margin = {left: 50, right: 25, top: 25, bottom: 50};
+    var resource_chart_height = d3.select("#property-graph").node().getBoundingClientRect().height - margin.top - margin.bottom;
+    var resource_chart_width = d3.select("#property-graph").node().getBoundingClientRect().width - margin.left - margin.right;
+    var property_data = properties[property_name];
+
+    // Check the max value of the data, or if it's boolean
+    var maxY = -1;
+    var interpolate_type;
+    var y;
+    if((typeof property_data[0].value) === "boolean") {
+        interpolate_type = "step-after";
+        y = d3.scale.ordinal().domain(["False", "True"]).range([resource_chart_height, 0]);
+    } else {
+        for(var i = 0; i < property_data.length; i++) {
+            if(property_data[i].value > maxY) {
+                maxY = property_data[i].value;
+            }
+        }
+        interpolate_type = "linear";
+        y = d3.scale.linear().domain([0, maxY]).range([resource_chart_height, 0]);
+    }
+
+
+    var graph = d3.select("#property-graph")
+        .append("g")
+        .attr("class", "graph")
+        .attr("transform", "translate(" + 50 + "," + 25 + ")");
+    var x = d3.scale.linear().domain([0, property_data[property_data.length - 1].time]).range([0, resource_chart_width]);
+    var xAxis = d3.svg.axis().orient("bottom").scale(x);
+    var yAxis = d3.svg.axis().orient("left").scale(y);
+
+    var line = d3.svg.line()
+        .x(function(d) { return x(d.time); })
+        .y(function(d) { return y(d.value); })
+        .interpolate(interpolate_type);
+
+    // Add data line
+    graph.append("path")
+        .attr("class", "line")
+        .attr("d", function(d) { return line(property_data); });
+
+    // Add point circles
+    property_data.forEach(function(d) {
+        var circle = d3.select("g.graph")
+            .append("circle")
+            .attr("cx", x(d.time))
+            .attr("cy", y(d.value))
+            .attr("r", 7)
+            .attr('stroke','black')
+            .attr('stroke-width',1)
+            .on('mouseover', function () {
+                d3.select(this)
+                    .transition()
+                    .duration(250)
+                    .attr('r',14)
+                    .attr('stroke-width',3)
+            })
+            .on('mouseout', function () {
+                d3.select(this)
+                    .transition()
+                    .duration(250)
+                    .attr('r',7)
+                    .attr('stroke-width',1)
+            })
+            .append('title') // Tooltip
+            .text("Time: " + d.time + "\nValue: " + d.value)
+    });
+
+    // Add x axis
+    graph.append("g")
+        .attr("class", "x-axis")
+        .attr("transform", "translate(0," + resource_chart_height + ")")
+        .call(xAxis);
+
+    // X axis label
+    graph.append("text")
+        .attr("id", "x-axis-label")
+        .attr("transform", "translate(" + (resource_chart_width/2) + "," + (resource_chart_height + margin.top + 20) + ")")
+        .style("text-anchor", "middle")
+        .text("Time");
+
+    // Add y axis
+    graph.append("g")
+        .attr("class", "y-axis")
+        .call(yAxis);
+
+    // y axis label
+    graph.append("text")
+        .attr("id", "y-axis-label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x", 0 - (resource_chart_height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text(property_name);
+
 
 }
