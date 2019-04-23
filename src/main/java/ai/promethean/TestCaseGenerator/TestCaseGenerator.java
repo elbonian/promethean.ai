@@ -1,6 +1,5 @@
 package ai.promethean.TestCaseGenerator;
 import ai.promethean.DataModel.*;
-import com.google.gson.JsonObject;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;

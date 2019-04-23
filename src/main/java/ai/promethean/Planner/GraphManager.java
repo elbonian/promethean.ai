@@ -33,7 +33,7 @@ public class GraphManager {
         this.goalState = goalState;
         this.taskDict = taskDict;
         this.optimizations = optimizations;
-        this.originalHeuristicDist = Heuristic.h_value(initState, goalState, new Task(0, "Blank Task"));
+        this.originalHeuristicDist = Heuristic.h_value(initState, goalState, new Task(1, "Blank Task"));
     }
 
     public boolean frontierIsEmpty() {
