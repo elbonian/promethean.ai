@@ -42,8 +42,6 @@ public class GenerateTestCase {
             ending.addRequirement(propertyName, d2, "<=");
             offset++;
         }
-        starting.addProperty("Battery", 0.0);
-        ending.addRequirement("Battery", 0.0, ">=");
         starting.addProperty("asdf", true);
         ending.addRequirement("asdf", false, "==");
         TestCaseGenerator generator = new TestCaseGenerator(starting, ending, 100, true);
