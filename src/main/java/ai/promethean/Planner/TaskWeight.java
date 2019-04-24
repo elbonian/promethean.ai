@@ -9,34 +9,48 @@ public class TaskWeight {
 
     private TaskWeight() {}
 
+    /**
+     *
+     * @param task the current task
+     * @param optimizations any optimizations given to the planner
+     * @return a Task edge weight based on the property impacts of the task and optimizations of those properties
+     */
     public static Double calculateTaskWeight(Task task, StaticOptimizations optimizations) {
-        Double squaredSum = 0.0;
+        Double taskWeight = 0.0;
         int optimizationsLength = optimizations.size();
 
         if (optimizations.getOptimization("Duration") != null) {
-            squaredSum += OptimizationWeight.weightedPropertyValue(
+            taskWeight += OptimizationWeight.weightedPropertyValue(
                         optimizations.getOptimization("Duration"),
                         task.getDuration() + 0.0,
                         optimizationsLength);
         } else {
-            squaredSum += task.getDuration();
+            taskWeight += task.getDuration();
         }
+        Double numericalSum = 0.0;
+        Integer numNumericalProperties = 0;
+        Integer numNonNumericalProperties = 0;
 
         for (Property property : task.getProperties()) {
             if (property instanceof NumericalProperty) {
                 if (optimizations.getOptimization(property.getName()) != null) {
-                    squaredSum += OptimizationWeight.weightedPropertyValue(
+                    taskWeight += Math.abs(OptimizationWeight.weightedPropertyValue(
                                 optimizations.getOptimization(property.getName()),
-                                ((NumericalProperty) property).getValue(),
-                                optimizationsLength);
+                                Math.abs(((NumericalProperty) property).getValue()),
+                                optimizationsLength));
                 } else {
-                    squaredSum += ((NumericalProperty) property).getValue();
+                    taskWeight += Math.abs(((NumericalProperty) property).getValue());
                 }
+                numericalSum += Math.abs(((NumericalProperty) property).getValue());
+                numNumericalProperties += 1;
             } else {
-                squaredSum += 1.0;
+                numNonNumericalProperties += 1;
+                taskWeight +=1;
             }
         }
+        Double numericalAverage = numericalSum/numNumericalProperties;
+        taskWeight += numericalAverage * numNonNumericalProperties;
 
-        return Math.sqrt(squaredSum);
+        return taskWeight;
     }
 }

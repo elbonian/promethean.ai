@@ -4,6 +4,7 @@ import ai.promethean.DataModel.SystemState;
 import ai.promethean.DataModel.Task;
 import ai.promethean.Planner.Plan;
 import ai.promethean.Planner.PlanBlock;
+import ai.promethean.Logger.*;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class TaskExecutor extends ClockObserver {
     private Plan plan;
     private int initTime;
     private boolean planCompleted;
+    private String className =  this.getClass().getSimpleName();
 
     public TaskExecutor(Plan _plan) {
         plan = _plan;
@@ -71,9 +73,9 @@ public class TaskExecutor extends ClockObserver {
         currentState.setTime(time);
         ClockObserver.addState(currentState);
 
-        System.out.println(block.getTask());
-        System.out.println("Current State: "+ currentState);
-        System.out.println("Task Execution End Time: " + time);
+        Logger.writeLog("Task Applied: \n" + block.getTask(), this.className);
+        Logger.writeLog("Current State: \n" + currentState, this.className);
+        Logger.writeLog("Task Execution End Time: \n" + time, this.className);
 
         return currentState.equals(block.getState());
     }

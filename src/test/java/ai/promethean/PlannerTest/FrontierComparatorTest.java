@@ -14,10 +14,10 @@ public class FrontierComparatorTest {
     private SystemState systemState = new SystemState(1);
     private Task task = new Task(1, "TestTask");
 
-    private StateTemplate stateTemplate1 = new StateTemplate(systemState, task, 1.0, 10.0 );
-    private StateTemplate stateTemplate2 = new StateTemplate(systemState, task, 1.0, 13.0 );
-    private StateTemplate stateTemplate3 = new StateTemplate(systemState, task, 1.0, 8.0 );
-    private StateTemplate stateTemplate4 = new StateTemplate(systemState, task, 1.0, 24.0 );
+    private StateTemplate stateTemplate1 = new StateTemplate(systemState, task, 1.0, 10.0, 9.0 );
+    private StateTemplate stateTemplate2 = new StateTemplate(systemState, task, 1.0, 13.0, 12.0 );
+    private StateTemplate stateTemplate3 = new StateTemplate(systemState, task, 1.0, 8.0, 7.0 );
+    private StateTemplate stateTemplate4 = new StateTemplate(systemState, task, 1.0, 24.0, 23.0 );
 
     public FrontierComparatorTest() {
         frontier.add(stateTemplate1);

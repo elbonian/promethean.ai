@@ -25,7 +25,7 @@
       ],
       "property_impacts": [
         {"name": "doorOpen", "type": "assignment","value": true},
-        {"name": "Fuel","type": "delta", "value":-30.0}
+        {"name": "Fuel","type": "delta", "value":-10.0}
       ]
     },
     {
@@ -47,6 +47,23 @@
       "name": "Fuel",
       "priority": 1,
       "type": "maximization"
+    }
+  ],
+  "perturbations": [
+    {
+      "name": "WillNeverHappen",
+      "time": 3000,
+      "property_impacts": [{"name": "speed","type": "delta","value": 1}]
+    },
+    {
+      "name": "Acceleration",
+      "time": 10,
+      "property_impacts": [{"name": "speed","type": "delta","value": 1}]
+    },
+    {
+      "name": "Fuel Tank Destroyed",
+      "time": 15,
+      "property_impacts": [{"name":  "Fuel","type": "assignment","value": -1000}]
     }
   ]
 }

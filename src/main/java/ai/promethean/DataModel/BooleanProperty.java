@@ -1,6 +1,8 @@
 package ai.promethean.DataModel;
 
 
+import ai.promethean.Logger.Logger;
+
 /**
  * Boolean extension of the Property class
  */
@@ -52,7 +54,9 @@ public class BooleanProperty extends Property {
    */
     public BooleanProperty applyImpact(Property impact){
         if(!impact.name.equals(this.name)){
-            throw new IllegalArgumentException("Property names do not match");
+            IllegalArgumentException e = new IllegalArgumentException("Property names do not match");
+            Logger.logError(e, this.getClass().getSimpleName());
+            throw e;
         }
         return new BooleanProperty(this.name, (boolean) impact.getValue());
     }

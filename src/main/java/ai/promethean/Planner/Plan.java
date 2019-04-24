@@ -11,16 +11,18 @@ import java.util.List;
  */
 public class Plan {
     private SystemState initialState;
-    private SystemState goalState;
+    private SystemState endState;
     private List<PlanBlock> planBlockList = new ArrayList<>();
+    private boolean goalHasBeenReached;
 
     /**
      * Instantiates a new Plan
      *
      * @param runtimeGoalState a runtime goal state
      */
-    public Plan(SystemState runtimeGoalState) {
-        this.goalState = runtimeGoalState;
+    public Plan(SystemState runtimeGoalState, boolean goalIsReached) {
+        this.endState = runtimeGoalState;
+        this.goalHasBeenReached = goalIsReached;
         SystemState state = runtimeGoalState;
 
         while (state.getPreviousTask() != null) {
@@ -44,7 +46,7 @@ public class Plan {
      *
      * @return the goal state
      */
-    public SystemState getGoalState() { return goalState; }
+    public SystemState getEndState() { return endState; }
 
     /**
      * Gets plan block list.
@@ -53,10 +55,17 @@ public class Plan {
      */
     public List<PlanBlock> getPlanBlockList() { return planBlockList; }
 
+    /**
+     * Gets Goal Reached boolean
+     *
+     * @return whether the goal has been reached or not
+     */
+    public boolean getGoalHasBeenReached() { return goalHasBeenReached; }
+
     @Override
     public String toString() {
         return "Initial State: "+ this.initialState
-                +"\n Goal State: "+ this.goalState
+                +"\n Goal State: "+ this.endState
                 +"\n Plan: \n"
                 +this.planBlockList;
     }

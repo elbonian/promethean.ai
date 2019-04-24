@@ -1,4 +1,6 @@
 package ai.promethean.DataModel;
+import ai.promethean.Logger.Logger;
+
 import java.util.*;
 
 /**
@@ -6,6 +8,7 @@ import java.util.*;
  */
 public class PropertyMap {
     private Map<String, Property> property_map = new HashMap<>();
+    private String className = this.getClass().getSimpleName();
 
     /**
      * Instantiates a new Property map.
@@ -26,7 +29,9 @@ public class PropertyMap {
 
     public void addProperty(String name, Boolean value, String type) {
         if(property_map.containsKey(name)) {
-            throw new IllegalArgumentException("Properties should never be mutated.");
+            IllegalArgumentException e = new IllegalArgumentException("Properties should never be mutated.");
+            Logger.logError(e, className);
+            throw e;
         } else {
             property_map.put(name, new BooleanProperty(name, value, type));
         }
@@ -41,7 +46,9 @@ public class PropertyMap {
 
     public void addProperty(String name, Double value, String type) {
         if(property_map.containsKey(name)) {
-            throw new IllegalArgumentException("Properties should never be mutated.");
+            IllegalArgumentException e = new IllegalArgumentException("Properties should never be mutated.");
+            Logger.logError(e, className);
+            throw e;
         } else {
             property_map.put(name, new NumericalProperty(name, value, type));
         }
@@ -55,7 +62,9 @@ public class PropertyMap {
      */
     public void addProperty(String name, String value, String type) {
         if(property_map.containsKey(name)) {
-            throw new IllegalArgumentException("Properties should never be mutated.");
+            IllegalArgumentException e = new IllegalArgumentException("Properties should never be mutated.");
+            Logger.logError(e, className);
+            throw e;
         } else {
             property_map.put(name, new StringProperty(name, value, type));
         }
@@ -68,7 +77,9 @@ public class PropertyMap {
      */
     public void addProperty(Property p) {
         if(property_map.containsKey(p.getName())) {
-            throw new IllegalArgumentException("Properties should never be mutated.");
+            IllegalArgumentException e = new IllegalArgumentException("Properties should never be mutated.");
+            Logger.logError(e, className);
+            throw e;
         } else {
             property_map.put(p.getName(), p);
         }

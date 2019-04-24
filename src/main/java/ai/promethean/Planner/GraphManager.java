@@ -3,6 +3,7 @@ package ai.promethean.Planner;
 import ai.promethean.DataModel.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -16,6 +17,7 @@ public class GraphManager {
     private TaskDictionary taskDict;
     private StaticOptimizations optimizations;
     private PriorityQueue<StateTemplate> frontier = new PriorityQueue<StateTemplate>(1, new FrontierComparator());
+    private long stopTime;
 
     /**
      * Instantiates a new Graph manager.
@@ -72,10 +74,10 @@ public class GraphManager {
      * @param g_value       the g value of the new state
      * @return the system state
      */
-    public SystemState createState(SystemState previousState, Task task, Double g_value) {
+    public SystemState createState(SystemState previousState, Task task, Double g_value, double h_value) {
         PropertyMap prev_properties = previousState.getPropertyMap();
 
-        SystemState nextState = new SystemState(previousState.getTime() + task.getDuration());
+        SystemState nextState = new SystemState(previousState.getTime() + task.getDuration(), h_value);
         nextState.setgValue(g_value);
         nextState.setPreviousState(previousState);
         nextState.setPreviousTask(task);
@@ -105,9 +107,10 @@ public class GraphManager {
         List<StateTemplate> templates = new ArrayList<>();
 
         for (Task task : tasks) {
-            Double g_value = Heuristic.g_value(state, task, optimizations);
-            Double f_value = Heuristic.f_value(state, goalState, g_value);
-            templates.add(new StateTemplate(state, task, f_value, g_value));
+            Double g_value = TaskWeight.calculateTaskWeight(task, optimizations) + state.getgValue();
+            double h_value = Heuristic.h_value(state,goalState,task);
+            double f_value = g_value + h_value;
+            templates.add(new StateTemplate(state, task, f_value, g_value, h_value));
         }
 
         return templates;
@@ -123,12 +126,34 @@ public class GraphManager {
     }
 
     /**
+     *
+     * @param currentState the state in question
+     * @return true if there is a state template within the frontier with a lower heuristic value than the given state
+     */
+    public boolean checkCLF(SystemState currentState) {
+        Iterator<StateTemplate> template = frontier.iterator();
+        if(template.next().getH() < currentState.gethValue()) {
+            return true;
+        }
+        while(template.hasNext()) {
+            if(template.next().getH() < currentState.gethValue()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Retrieve the best stateTemplate from the frontier and return a State
      *
      * @return the best next state
      */
     public SystemState poll() {
         StateTemplate template = frontier.poll();
-        return createState(template.getPreviousState(), template.getTask(), template.getG());
+        return createState(template.getPreviousState(), template.getTask(), template.getG(), template.getH());
     }
+
+    public void setStopTime(long time) { stopTime = time; }
+
+    public long getStopTime() { return stopTime; }
 }

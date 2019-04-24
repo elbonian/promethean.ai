@@ -75,7 +75,7 @@ public class GraphManagerTest {
     @Test
     void checkCreateState() {
         GraphManager gm = new GraphManager(startingState, goal, new TaskDictionary(), so);
-        SystemState generatedState = gm.createState(startingState, simpleTask, 10.0);
+        SystemState generatedState = gm.createState(startingState, simpleTask, 10.0, 1.0);
         assertFalse((Boolean) generatedState.getProperty("doorClosed").getValue());
 
         List<Property> generatedProperties = generatedState.getProperties();
