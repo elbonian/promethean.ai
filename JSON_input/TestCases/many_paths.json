@@ -121,7 +121,7 @@
   "optimizations": [
     {
       "name": "battery",
-      "priority": 0,
+      "weight": 0,
       "type": "max"
     }
   ],
