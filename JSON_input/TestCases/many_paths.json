@@ -6,14 +6,7 @@
       {"name": "isHappy", "value": false},
       {"name": "altitude", "value": 70.0},
       {"name": "doorOpen", "value": false},
-      {"name": "dataCollected", "value": 0.0},
-      {"name": "altitude2", "value": 1000},
-      {"name": "bool1", "value": false},
-      {"name": "bool2", "value": true},
-      {"name": "numProp1", "value": 11.1},
-      {"name": "numProp2", "value": 234},
-      {"name": "numProp3", "value": 241},
-      {"name": "numProp4", "value": 0.3}
+      {"name": "dataCollected", "value": 0.0}
 
     ]
   },
@@ -24,14 +17,7 @@
       {"name": "isHappy", "value": true, "operator": "=="},
       {"name": "altitude", "value": 120.0, "operator": "=="},
       {"name": "dataCollected", "value": 75.0, "operator": ">="},
-      {"name": "doorOpen", "value": false, "operator": "=="},
-      {"name": "altitude2", "value": 873, "operator": ">="},
-      {"name": "bool1", "value": true, "operator": "=="},
-      {"name": "bool2", "value": false, "operator": "=="},
-      {"name": "numProp1", "value": 5.74, "operator": ">="},
-      {"name": "numProp2", "value": 125, "operator": "<="},
-      {"name": "numProp3", "value": 123, "operator": "<="},
-      {"name": "numProp4", "value": 0.45, "operator": ">="}
+      {"name": "doorOpen", "value": false, "operator": "=="}
     ]
   },
   "tasks": [
@@ -123,7 +109,7 @@
       "duration": 15,
       "requirements": [
         {"name": "doorOpen", "value": true, "operator": "=="},
-        {"name": "altitiude", "value": 100.0, "operator": ">="},
+        {"name": "altitude", "value": 100.0, "operator": ">="},
         {"name": "battery", "value": 50.0, "operator": ">="}
       ],
       "property_impacts": [
