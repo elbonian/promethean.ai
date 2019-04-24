@@ -41,11 +41,19 @@
             "value": false
         },
         {
+            "name": "numProp1",
+            "value": 11.1
+        },
+        {
             "name": "numProp2",
             "value": 234
         },
         {
-            "name": "numProp1",
+            "name": "numProp3",
+            "value": 1230
+        },
+        {
+            "name": "numProp4",
             "value": 11.1
         }
     ]},
@@ -104,6 +112,16 @@
             "name": "numProp2",
             "value": 125,
             "operator": "<="
+        },
+        {
+            "name": "numProp3",
+            "value": 50,
+            "operator": "<="
+        },
+        {
+            "name": "numProp4",
+            "value": 121,
+            "operator": ">="
         }
     ]},
     "perturbations": [],
@@ -234,9 +252,49 @@
             "property_impacts": [{
                 "name": "numProp4",
                 "type": "delta",
-                "value": 0.15000000000000002
+                "value": 150
             }],
             "name": "numProp4_delta_task"
+        },
+        {
+            "duration": 12,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "numProp4",
+                "type": "delta",
+                "value": -150
+            }],
+            "name": "numProp4_delta_task_minus"
+        },
+        {
+            "duration": 46,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "battery",
+                "type": "delta",
+                "value": -10
+            }],
+            "name": "battery_delta_task000"
+        },
+        {
+            "duration": 24,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "solarPanelsOpen",
+                "type": "assignment",
+                "value": false
+            }],
+            "name": "solarPanelsOpen_assignment_task000"
+        },
+        {
+            "duration": 24,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "isHappy",
+                "type": "assignment",
+                "value": false
+            }],
+            "name": "isHappy_assignment_task000"
         }
     ],
     "optimizations": [

@@ -12,7 +12,8 @@
   "goal_state": {
     "requirements": [
       {"name": "wheelsDown", "value": true, "operator": "=="},
-      {"name": "doorOpen", "value": true, "operator": "=="}
+      {"name": "doorOpen", "value": true, "operator": "=="},
+      {"name": "Altitude", "value": 0.000001, "operator": ">="}
     ]
   },
   "tasks": [
@@ -37,6 +38,30 @@
       ],
       "property_impacts": [
         {"name": "wheelsDown", "type": "assignment","value": true},
+        {"name": "Fuel","type": "delta", "value":-10.0}
+
+      ]
+    },
+    {
+      "name" : "Altitude",
+      "duration": 10,
+      "requirements":[
+        {"name": "Fuel","value":60.0, "operator": ">"}
+      ],
+      "property_impacts": [
+        {"name": "Altitude", "type": "delta","value": 0.000001},
+        {"name": "Fuel","type": "delta", "value":-10.0}
+
+      ]
+    },
+    {
+      "name" : "AltitudeMinus",
+      "duration": 10,
+      "requirements":[
+        {"name": "Fuel","value":60.0, "operator": ">"}
+      ],
+      "property_impacts": [
+        {"name": "Altitude", "type": "delta","value": -0.000001},
         {"name": "Fuel","type": "delta", "value":-10.0}
 
       ]
