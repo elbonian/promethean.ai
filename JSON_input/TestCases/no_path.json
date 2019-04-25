@@ -55,12 +55,12 @@
   "optimizations": [
     {
       "name": "time",
-      "priority": 0,
+      "weight": 1,
       "type": "min"
     },
     {
       "name": "battery",
-      "priority": 1,
+      "weight": 0.5,
       "type": "max"
     }
   ],

@@ -48,7 +48,7 @@ public class GenerateTests {
         // **** Test case generation... Comment out to stop generating the files
 
         ArrayList<Task> generated_tasks = test_case.generateTestCase();
-        ArrayList<Optimization> optimizations = test_case.generateOptimizations(3);
+        ArrayList<Optimization> optimizations = test_case.generateOptimizations();
 
         try {
             test_case.testCaseToJSON(generated_tasks, optimizations, 3);

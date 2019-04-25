@@ -1,12 +1,10 @@
 package ai.promethean.Planner;
 
 import ai.promethean.DataModel.*;
+import com.google.common.collect.MinMaxPriorityQueue;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.PriorityQueue;
-
 /**
  * The type Graph manager.
  */
@@ -16,7 +14,7 @@ public class GraphManager {
     private GoalState goalState;
     private TaskDictionary taskDict;
     private StaticOptimizations optimizations;
-    private PriorityQueue<StateTemplate> frontier = new PriorityQueue<StateTemplate>(1, new FrontierComparator());
+    private MinMaxPriorityQueue<StateTemplate> frontier = MinMaxPriorityQueue.orderedBy(new FrontierComparator()).create();
     private long stopTime;
 
     /**
@@ -32,6 +30,7 @@ public class GraphManager {
         this.goalState = goalState;
         this.taskDict = taskDict;
         this.optimizations = optimizations;
+        TaskWeight.initialHeuristic = Heuristic.h_value(initState, goalState, new Task(1, "Blank Task"));
     }
 
     public boolean frontierIsEmpty() {
@@ -92,7 +91,6 @@ public class GraphManager {
                 nextState.addProperty(previousProperty);
             }
         }
-
         return nextState;
     }
 
@@ -109,7 +107,7 @@ public class GraphManager {
         for (Task task : tasks) {
             Double g_value = TaskWeight.calculateTaskWeight(task, optimizations) + state.getgValue();
             double h_value = Heuristic.h_value(state,goalState,task);
-            double f_value = g_value + h_value;
+            double f_value = g_value + Math.pow(h_value,3.0);
             templates.add(new StateTemplate(state, task, f_value, g_value, h_value));
         }
 
@@ -128,19 +126,16 @@ public class GraphManager {
     /**
      *
      * @param currentState the state in question
-     * @return true if there is a state template within the frontier with a lower heuristic value than the given state
+     * @return true if the previous state has a lower heuristic value than the given state
      */
     public boolean checkCLF(SystemState currentState) {
-        Iterator<StateTemplate> template = frontier.iterator();
-        if(template.next().getH() < currentState.gethValue()) {
+        if (currentState.getPreviousState() == null) {
             return true;
+        } else if (currentState.gethValue() < currentState.getPreviousState().gethValue()) {
+            return true;
+        } else {
+            return false;
         }
-        while(template.hasNext()) {
-            if(template.next().getH() < currentState.gethValue()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
@@ -149,6 +144,9 @@ public class GraphManager {
      * @return the best next state
      */
     public SystemState poll() {
+        while (frontier.size() > 2000000) {
+            frontier.removeLast();
+        }
         StateTemplate template = frontier.poll();
         return createState(template.getPreviousState(), template.getTask(), template.getG(), template.getH());
     }

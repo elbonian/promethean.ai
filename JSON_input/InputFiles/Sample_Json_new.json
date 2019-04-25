@@ -58,17 +58,17 @@
   "optimizations": [
     {
       "name": "wheelHealth",
-      "priority": 6,
+      "weight": 0.15,
       "type": "maximization"
     },
     {
       "name": "time",
-      "priority": 2,
+      "weight": 0.35,
       "type": "minimization"
     },
     {
       "name": "energy",
-      "priority": 1,
+      "weight": 0.5,
       "type": "min"
     }
   ],
@@ -82,7 +82,7 @@
       ]
     },
     {
-      "name" : "Increase Spped",
+      "name" : "Increase Speed",
       "time": 1300,
       "property_impacts": [
         {"name": "speed", "type": "assignment", "value":5.0},

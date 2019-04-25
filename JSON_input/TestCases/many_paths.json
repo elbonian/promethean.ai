@@ -7,6 +7,7 @@
       {"name": "altitude", "value": 70.0},
       {"name": "doorOpen", "value": false},
       {"name": "dataCollected", "value": 0.0}
+
     ]
   },
   "goal_state": {
@@ -108,7 +109,7 @@
       "duration": 15,
       "requirements": [
         {"name": "doorOpen", "value": true, "operator": "=="},
-        {"name": "altitiude", "value": 100.0, "operator": ">="},
+        {"name": "altitude", "value": 100.0, "operator": ">="},
         {"name": "battery", "value": 50.0, "operator": ">="}
       ],
       "property_impacts": [
@@ -121,7 +122,7 @@
   "optimizations": [
     {
       "name": "battery",
-      "priority": 0,
+      "weight": 0,
       "type": "max"
     }
   ],

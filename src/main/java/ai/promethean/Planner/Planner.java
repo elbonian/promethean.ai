@@ -29,7 +29,7 @@ public class Planner {
                      GoalState goalState,
                      TaskDictionary tasks,
                      StaticOptimizations optimizations,
-                     int stopTime,
+                     double stopTime,
                      boolean activateCLF) {
         SystemState runtimeEndState = this.algorithm.run(initialState, goalState, tasks, optimizations, stopTime, activateCLF);
         if (runtimeEndState != null) {
