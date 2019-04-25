@@ -5,6 +5,7 @@ import ai.promethean.DataModel.*;
 public class TaskWeight {
 
     private TaskWeight() {}
+    public static double initialHeuristic;
 
     /**
      *
@@ -12,7 +13,7 @@ public class TaskWeight {
      * @param optimizations any optimizations given to the planner
      * @return a Task edge weight based on the property impacts of the task and optimizations of those properties
      */
-    public static Double calculateTaskWeight(Task task, StaticOptimizations optimizations, double baseHeuristicDist) {
+    public static Double calculateTaskWeight(Task task, StaticOptimizations optimizations) {
         double taskWeight = 0.0;
         int numNumericalProperties = 0;
         int numNonNumericalProperties = 0;
@@ -48,7 +49,7 @@ public class TaskWeight {
         taskWeight += totalAverage * numNonNumericalProperties;
 
         // This ensures our Heuristic remains admissible
-        taskWeight += baseHeuristicDist;
+        taskWeight += TaskWeight.initialHeuristic;
 
         return taskWeight;
     }
