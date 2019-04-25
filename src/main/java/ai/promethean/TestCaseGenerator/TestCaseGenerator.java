@@ -127,14 +127,18 @@ public class TestCaseGenerator {
     private ArrayList<Task> createCriticalPathTasks(ArrayList<PropertyDelta> deltas) {
         ArrayList<Task> tasks = new ArrayList<>();
         // Always create a task that charges the battery
-        if(stateProps.containsProperty("Battery")) {
+        if(stateProps.containsProperty("Battery") || stateProps.containsProperty("battery")) {
             Task charge = new Task(ThreadLocalRandom.current().nextInt(1, 21), "charge");
-            charge.addProperty("Battery", 10.0, "delta");
+            if (stateProps.containsProperty("battery")) {
+                charge.addProperty("battery", 10.0, "delta");
+            } else {
+                charge.addProperty("Battery", 10.0, "delta");
+            }
             tasks.add(charge);
         }
         for(PropertyDelta delta: deltas) {
             // Skip making a Task for the battery since we already did
-            if(delta.getName().equals("Battery")) {
+            if(delta.getName().equals("Battery") || delta.getName().equals("battery")) {
                 continue;
             }
             Object delta_value = delta.getValue();
@@ -209,7 +213,11 @@ public class TestCaseGenerator {
                 // Is this needed? My head hurts.
                 temp_props.remove(randomIndex);
             }
-            new_task.addRequirement("Battery", randomDoubleInRange(15.0, 40.0), ">=");
+            if (stateProps.containsProperty("Battery")) {
+                new_task.addRequirement("Battery", randomDoubleInRange(15.0, 40.0), ">=");
+            } else if (stateProps.containsProperty("battery")) {
+                new_task.addRequirement("battery", randomDoubleInRange(15.0, 40.0), ">=");
+            }
             tasksList.add(new_task);
         }
         return tasksList;
@@ -297,7 +305,11 @@ public class TestCaseGenerator {
         }
         else {
             Task charge = new Task(ThreadLocalRandom.current().nextInt(1, 21), "charge");
-            charge.addProperty("Battery", 10.0, "delta");
+            if (stateProps.containsProperty("battery")) {
+                charge.addProperty("battery", 10.0, "delta");
+            } else {
+                charge.addProperty("Battery", 10.0, "delta");
+            }
             tasks.add(charge);
             critical_path.add(charge);
         }
