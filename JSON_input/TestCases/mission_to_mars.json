@@ -134,7 +134,7 @@
     },
     {
       "name": "land",
-      "duration": 0,
+      "duration": 1,
       "requirements": [
         {"name": "agent", "value": "lander", "operator": "=="},
         {"name": "speed", "value": 0, "operator": "=="},
