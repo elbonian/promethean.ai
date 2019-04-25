@@ -9,6 +9,5 @@ build/
 .gradle
 .scannerwork
 
-JSON_output/
 Logs/
 

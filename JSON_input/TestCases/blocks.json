@@ -1,0 +1,264 @@
+{
+  "initial_state": {
+    "properties": [
+      {"name": "aPosition", "value": "table"},
+      {"name": "bPosition", "value": "table"},
+      {"name": "cPosition", "value": "a"},
+      {"name": "aClear", "value": false},
+      {"name": "bClear", "value": true},
+      {"name": "cClear", "value": true}
+    ]
+  },
+  "goal_state": {
+    "requirements": [
+      {"name": "aPosition", "value": "b", "operator": "=="},
+      {"name": "bPosition", "value": "c", "operator": "=="},
+      {"name": "cPosition", "value": "table", "operator": "=="},
+      {"name": "aClear", "value": true, "operator": "=="},
+      {"name": "bClear", "value": false, "operator": "=="},
+      {"name": "cClear", "value": false, "operator": "=="}
+    ]
+  },
+  "tasks": [
+    {
+      "name": "move_A_from_B_to_Table",
+      "duration": 1,
+      "requirements" : [
+        {"name": "aClear", "value": true, "operator": "=="},
+        {"name": "aPosition", "value": "b", "operator": "=="}
+      ],
+      "property_impacts" : [
+        {"name": "aPosition", "value": "table"},
+        {"name": "bClear", "value": true}
+      ]
+    },
+    {
+      "name": "move_A_from_B_to_C",
+      "duration": 1,
+      "requirements": [
+        {"name": "aClear", "value": true, "operator": "=="},
+        {"name": "aPosition", "value": "b", "operator":  "=="},
+        {"name": "cClear", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "aPosition", "value": "c"},
+        {"name": "cClear", "value": false},
+        {"name": "bClear", "value": true}
+      ]
+    },
+    {
+      "name": "move_A_from_C_to_Table",
+      "duration": 1,
+      "requirements": [
+        {"name": "aClear", "value": true, "operator": "=="},
+        {"name": "aPosition", "value": "c", "operator":  "=="}
+      ],
+      "property_impacts": [
+        {"name": "aPosition", "value": "table"},
+        {"name": "cClear", "value": true}
+      ]
+    },
+    {
+      "name": "move_A_from_C_to_B",
+      "duration": 1,
+      "requirements": [
+        {"name": "aClear", "value": true, "operator": "=="},
+        {"name": "aPosition", "value": "c", "operator":  "=="},
+        {"name": "bClear", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "aPosition", "value": "b"},
+        {"name": "bClear", "value": false},
+        {"name": "cClear", "value": true}
+      ]
+    },
+    {
+      "name": "move_A_from_Table_to_B",
+      "duration": 1,
+      "requirements": [
+        {"name": "aClear", "value": true, "operator": "=="},
+        {"name": "aPosition", "value": "table", "operator":  "=="},
+        {"name": "bClear", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "aPosition", "value": "b"},
+        {"name": "bClear", "value": false}
+      ]
+    },
+    {
+      "name": "move_A_from_Table_to_C",
+      "duration": 1,
+      "requirements": [
+        {"name": "aClear", "value": true, "operator": "=="},
+        {"name": "aPosition", "value": "table", "operator":  "=="},
+        {"name": "cClear", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "aPosition", "value": "c"},
+        {"name": "cClear", "value": false}
+      ]
+    },
+    {
+      "name": "move_B_from_A_to_Table",
+      "duration": 1,
+      "requirements" : [
+        {"name": "bClear", "value": true, "operator": "=="},
+        {"name": "bPosition", "value": "a", "operator": "=="}
+      ],
+      "property_impacts" : [
+        {"name": "bPosition", "value": "table"},
+        {"name": "aClear", "value": true}
+      ]
+    },
+    {
+      "name": "move_B_from_A_to_C",
+      "duration": 1,
+      "requirements": [
+        {"name": "bClear", "value": true, "operator": "=="},
+        {"name": "bPosition", "value": "a", "operator":  "=="},
+        {"name": "cClear", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "bPosition", "value": "c"},
+        {"name": "cClear", "value": false},
+        {"name": "aClear", "value": true}
+      ]
+    },
+    {
+      "name": "move_B_from_C_to_Table",
+      "duration": 1,
+      "requirements": [
+        {"name": "bClear", "value": true, "operator": "=="},
+        {"name": "bPosition", "value": "c", "operator":  "=="}
+      ],
+      "property_impacts": [
+        {"name": "bPosition", "value": "table"},
+        {"name": "cClear", "value": true}
+      ]
+    },
+    {
+      "name": "move_B_from_C_to_A",
+      "duration": 1,
+      "requirements": [
+        {"name": "bClear", "value": true, "operator": "=="},
+        {"name": "bPosition", "value": "c", "operator":  "=="},
+        {"name": "aClear", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "bPosition", "value": "b"},
+        {"name": "aClear", "value": false},
+        {"name": "cClear", "value": true}
+      ]
+    },
+    {
+      "name": "move_B_from_Table_to_A",
+      "duration": 1,
+      "requirements": [
+        {"name": "bClear", "value": true, "operator": "=="},
+        {"name": "bPosition", "value": "table", "operator":  "=="},
+        {"name": "aClear", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "bPosition", "value": "b"},
+        {"name": "aClear", "value": false}
+      ]
+    },
+    {
+      "name": "move_B_from_Table_to_C",
+      "duration": 1,
+      "requirements": [
+        {"name": "bClear", "value": true, "operator": "=="},
+        {"name": "bPosition", "value": "table", "operator":  "=="},
+        {"name": "cClear", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "bPosition", "value": "c"},
+        {"name": "cClear", "value": false}
+      ]
+    },
+    {
+      "name": "move_C_from_A_to_Table",
+      "duration": 1,
+      "requirements" : [
+        {"name": "cClear", "value": true, "operator": "=="},
+        {"name": "cPosition", "value": "a", "operator": "=="}
+      ],
+      "property_impacts" : [
+        {"name": "cPosition", "value": "table"},
+        {"name": "aClear", "value": true}
+      ]
+    },
+    {
+      "name": "move_C_from_A_to_B",
+      "duration": 1,
+      "requirements": [
+        {"name": "cClear", "value": true, "operator": "=="},
+        {"name": "cPosition", "value": "a", "operator":  "=="},
+        {"name": "bClear", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "cPosition", "value": "b"},
+        {"name": "bClear", "value": false},
+        {"name": "aClear", "value": true}
+      ]
+    },
+    {
+      "name": "move_C_from_B_to_Table",
+      "duration": 1,
+      "requirements": [
+        {"name": "cClear", "value": true, "operator": "=="},
+        {"name": "cPosition", "value": "b", "operator":  "=="}
+      ],
+      "property_impacts": [
+        {"name": "cPosition", "value": "table"},
+        {"name": "bClear", "value": true}
+      ]
+    },
+    {
+      "name": "move_C_from_B_to_A",
+      "duration": 1,
+      "requirements": [
+        {"name": "cClear", "value": true, "operator": "=="},
+        {"name": "cPosition", "value": "b", "operator":  "=="},
+        {"name": "aClear", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "cPosition", "value": "b"},
+        {"name": "aClear", "value": false},
+        {"name": "bClear", "value": true}
+      ]
+    },
+    {
+      "name": "move_C_from_Table_to_A",
+      "duration": 1,
+      "requirements": [
+        {"name": "cClear", "value": true, "operator": "=="},
+        {"name": "cPosition", "value": "table", "operator":  "=="},
+        {"name": "aClear", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "cPosition", "value": "b"},
+        {"name": "aClear", "value": false}
+      ]
+    },
+    {
+      "name": "move_C_from_Table_to_B",
+      "duration": 1,
+      "requirements": [
+        {"name": "cClear", "value": true, "operator": "=="},
+        {"name": "cPosition", "value": "table", "operator":  "=="},
+        {"name": "bClear", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "cPosition", "value": "b"},
+        {"name": "bClear", "value": false}
+      ]
+    }
+  ],
+  "optimizations": [
+
+  ],
+  "perturbations": [
+
+  ]
+}

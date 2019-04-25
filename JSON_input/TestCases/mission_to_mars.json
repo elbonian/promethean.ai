@@ -1,0 +1,221 @@
+{
+  "initial_state": {
+    "properties": [
+      {"name": "agent", "value": "rocket"},
+      {"name": "location", "value": "Earth"},
+      {"name": "speed", "value": 0},
+      {"name": "battery", "value": 0},
+      {"name": "rocketFuel", "value": 100},
+      {"name": "boosterFuel", "value": 100},
+      {"name": "solarPanelsExtended", "value": false},
+      {"name": "landingGearExtended", "value": false},
+      {"name": "parachuteAttached", "value": true},
+      {"name": "seismometerAttached", "value": true},
+      {"name": "coverAttached", "value": true},
+      {"name": "heatProbeAttached", "value": true}
+    ]
+  },
+  "goal_state": {
+    "requirements": [
+      {"name": "agent", "value": "lander", "operator": "=="},
+      {"name": "location", "value": "Mars ground", "operator": "=="},
+      {"name": "speed", "value": 0, "operator": "=="},
+      {"name": "solarPanelsExtended", "value": true, "operator": "=="},
+      {"name": "landingGearExtended", "value": true, "operator": "=="},
+      {"name": "parachuteAttached", "value": false, "operator": "=="},
+      {"name": "seismometerAttached", "value": false, "operator": "=="},
+      {"name": "coverAttached", "value": false, "operator": "=="},
+      {"name": "heatProbeAttached", "value": false, "operator": "=="}
+    ]
+  },
+  "tasks": [
+    {
+      "name": "charge_battery",
+      "duration": 10,
+      "requirements": [
+        {"name": "agent", "value": "lander", "operator": "=="},
+        {"name": "solarPanelsExtended", "value": true, "operator": "=="},
+        {"name": "battery", "value": 90, "operator": "<="}
+      ],
+      "property_impacts": [
+        {"name": "battery", "value": 10, "type": "delta"}
+      ]
+    },
+    {
+      "name": "extend_solar_panels",
+      "duration": 1,
+      "requirements": [
+        {"name": "agent", "value": "lander", "operator": "=="},
+        {"name": "solarPanelsExtended", "value": false, "operator": "=="},
+        {"name": "speed", "value": 0, "operator": "=="},
+        {"name": "location", "value": "Mars ground", "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "solarPanelsExtended", "value": true}
+      ]
+    },
+    {
+      "name": "accelerate_rocket",
+      "duration": 10,
+      "requirements": [
+        {"name": "agent", "value": "rocket", "operator": "=="},
+        {"name": "rocketFuel", "value": 10, "operator": ">="}
+      ],
+      "property_impacts": [
+        {"name": "speed", "value": 1000, "type": "delta"},
+        {"name": "rocketFuel", "value": -10, "type": "delta"}
+      ]
+    },
+    {
+      "name": "drop_boosters",
+      "duration": 1,
+      "requirements": [
+        {"name": "location", "value": "Earth", "operator": "=="},
+        {"name": "speed", "value": 10000, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "location", "value": "interplanetary space"},
+        {"name": "rocketFuel", "value": 0},
+        {"name": "agent", "value": "cruise stage"}
+      ]
+    },
+    {
+      "name": "cruise",
+      "duration": 280800,
+      "requirements": [
+        {"name": "agent", "value": "cruise stage", "operator": "=="},
+        {"name": "location", "value": "interplanetary space", "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "agent", "value": "landing capsule"},
+        {"name": "location", "value": "Mars atmosphere"}
+      ]
+    },
+    {
+      "name": "decelerate_with_parachute",
+      "duration": 5,
+      "requirements": [
+        {"name": "agent", "value": "landing capsule", "operator": "=="},
+        {"name": "location", "value": "Mars atmosphere", "operator": "=="},
+        {"name": "parachuteAttached", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "parachuteAttached", "value": false},
+        {"name": "speed", "value": -9000, "type": "delta"},
+        {"name": "agent", "value": "lander"}
+      ]
+    },
+    {
+      "name": "extend_landing_gear",
+      "duration": 1,
+      "requirements": [
+        {"name": "agent", "value": "lander", "operator": "=="},
+        {"name": "speed", "value": 0, "operator": ">"},
+        {"name": "landingGearExtended", "value": false, "operator": "=="},
+        {"name": "location", "value": "Mars atmosphere", "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "landingGearExtended", "value": true}
+      ]
+    },
+    {
+      "name": "decelerate_with_thrusters",
+      "duration": 2,
+      "requirements": [
+        {"name": "agent", "value": "lander", "operator": "=="},
+        {"name": "speed", "value": 0, "operator": ">"},
+        {"name": "boosterFuel", "value": 0, "operator": ">"},
+        {"name": "location", "value": "Mars atmosphere", "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "speed", "value": -100, "type": "delta"},
+        {"name": "boosterFuel", "value": -10, "type": "delta"}
+      ]
+    },
+    {
+      "name": "land",
+      "duration": 1,
+      "requirements": [
+        {"name": "agent", "value": "lander", "operator": "=="},
+        {"name": "speed", "value": 0, "operator": "=="},
+        {"name": "landingGearExtended", "value": true, "operator": "=="},
+        {"name": "location", "value": "Mars atmosphere", "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "location", "value": "Mars ground"}
+      ]
+    },
+    {
+      "name": "charge_battery",
+      "duration": 10,
+      "requirements": [
+        {"name": "agent", "value": "lander", "operator": "=="},
+        {"name": "battery", "value": 100, "operator": "<"},
+        {"name": "solarPanelsExtended", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "battery", "value": 10, "type": "delta"}
+      ]
+    },
+    {
+      "name": "place_seismometer",
+      "duration": 10,
+      "requirements": [
+        {"name": "agent", "value": "lander", "operator": "=="},
+        {"name": "battery", "value": 10, "operator": ">="},
+        {"name": "seismometerAttached", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "battery", "value": -10, "type": "delta"},
+        {"name": "seismometerAttached", "value": false}
+      ]
+    },
+    {
+      "name": "place_heat_probe",
+      "duration": 10,
+      "requirements": [
+        {"name": "agent", "value": "lander", "operator": "=="},
+        {"name": "battery", "value": 10, "operator": ">="},
+        {"name": "heatProbeAttached", "value": true, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "battery", "value": -10, "type": "delta"},
+        {"name": "heatProbeAttached", "value": false}
+      ]
+    },
+    {
+      "name": "place_seismometer_cover",
+      "duration": 10,
+      "requirements": [
+        {"name": "agent", "value": "lander", "operator": "=="},
+        {"name": "battery", "value": 10, "operator": ">="},
+        {"name": "coverAttached", "value": true, "operator": "=="},
+        {"name": "seismometerAttached", "value": false, "operator": "=="}
+      ],
+      "property_impacts": [
+        {"name": "battery", "value": -10, "type": "delta"},
+        {"name": "coverAttached", "value": false}
+      ]
+    }
+  ],
+  "optimizations": [
+    {
+      "name": "time",
+      "weight": 1,
+      "type": "min"
+    },
+    {
+      "name": "rocketFuel",
+      "weight": 1,
+      "type": "max"
+    },
+    {
+      "name": "boosterFuel",
+      "weight": 1,
+      "type": "max"
+    }
+  ],
+  "perturbations": [
+
+  ]
+}
