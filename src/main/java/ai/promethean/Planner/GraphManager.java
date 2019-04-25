@@ -16,7 +16,6 @@ public class GraphManager {
     private StaticOptimizations optimizations;
     private MinMaxPriorityQueue<StateTemplate> frontier = MinMaxPriorityQueue.orderedBy(new FrontierComparator()).create();
     private long stopTime;
-    private double originalHeuristicDist;
 
     /**
      * Instantiates a new Graph manager.
@@ -31,7 +30,7 @@ public class GraphManager {
         this.goalState = goalState;
         this.taskDict = taskDict;
         this.optimizations = optimizations;
-        this.originalHeuristicDist = Heuristic.h_value(initState, goalState, new Task(1, "Blank Task"));
+        TaskWeight.initialHeuristic = Heuristic.h_value(initState, goalState, new Task(1, "Blank Task"));
     }
 
     public boolean frontierIsEmpty() {
@@ -106,7 +105,7 @@ public class GraphManager {
         List<StateTemplate> templates = new ArrayList<>();
 
         for (Task task : tasks) {
-            Double g_value = TaskWeight.calculateTaskWeight(task, optimizations, originalHeuristicDist) + state.getgValue();
+            Double g_value = TaskWeight.calculateTaskWeight(task, optimizations) + state.getgValue();
             double h_value = Heuristic.h_value(state,goalState,task);
             double f_value = g_value + Math.pow(h_value,3.0);
             templates.add(new StateTemplate(state, task, f_value, g_value, h_value));
