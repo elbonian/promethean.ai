@@ -1,0 +1,352 @@
+{
+    "initial_state": {"properties": [
+        {
+            "name": "altitude",
+            "value": 70
+        },
+        {
+            "name": "isHappy",
+            "value": false
+        },
+        {
+            "name": "doorOpen",
+            "value": false
+        },
+        {
+            "name": "battery",
+            "value": 100
+        },
+        {
+            "name": "bool2",
+            "value": true
+        },
+        {
+            "name": "altitude2",
+            "value": 1000
+        },
+        {
+            "name": "dataCollected",
+            "value": 0
+        },
+        {
+            "name": "Battery",
+            "value": 85.8
+        },
+        {
+            "name": "solarPanelsOpen",
+            "value": false
+        },
+        {
+            "name": "bool1",
+            "value": false
+        },
+        {
+            "name": "numProp1",
+            "value": 11.1
+        },
+        {
+            "name": "numProp2",
+            "value": 234
+        },
+        {
+            "name": "numProp3",
+            "value": 1230
+        },
+        {
+            "name": "numProp4",
+            "value": 11.1
+        }
+    ]},
+    "goal_state": {"requirements": [
+        {
+            "name": "battery",
+            "value": 80,
+            "operator": ">="
+        },
+        {
+            "name": "solarPanelsOpen",
+            "value": true,
+            "operator": "=="
+        },
+        {
+            "name": "isHappy",
+            "value": true,
+            "operator": "=="
+        },
+        {
+            "name": "altitude",
+            "value": 120,
+            "operator": "=="
+        },
+        {
+            "name": "dataCollected",
+            "value": 75,
+            "operator": ">="
+        },
+        {
+            "name": "doorOpen",
+            "value": false,
+            "operator": "=="
+        },
+        {
+            "name": "altitude2",
+            "value": 873,
+            "operator": ">="
+        },
+        {
+            "name": "bool1",
+            "value": true,
+            "operator": "=="
+        },
+        {
+            "name": "bool2",
+            "value": false,
+            "operator": "=="
+        },
+        {
+            "name": "numProp1",
+            "value": 5.74,
+            "operator": ">="
+        },
+        {
+            "name": "numProp2",
+            "value": 125,
+            "operator": "<="
+        },
+        {
+            "name": "numProp3",
+            "value": 50,
+            "operator": "<="
+        },
+        {
+            "name": "numProp4",
+            "value": 121,
+            "operator": ">="
+        }
+    ]},
+    "perturbations": [],
+    "tasks": [
+        {
+            "duration": 46,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "battery",
+                "type": "delta",
+                "value": -20
+            }],
+            "name": "battery_delta_task"
+        },
+        {
+            "duration": 24,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "solarPanelsOpen",
+                "type": "assignment",
+                "value": true
+            }],
+            "name": "solarPanelsOpen_assignment_task"
+        },
+        {
+            "duration": 24,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "isHappy",
+                "type": "assignment",
+                "value": true
+            }],
+            "name": "isHappy_assignment_task"
+        },
+        {
+            "duration": 29,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "altitude",
+                "type": "delta",
+                "value": 50
+            }],
+            "name": "altitude_delta_task"
+        },
+        {
+            "duration": 21,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "dataCollected",
+                "type": "delta",
+                "value": 75
+            }],
+            "name": "dataCollected_delta_task"
+        },
+        {
+            "duration": 5,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "doorOpen",
+                "type": "assignment",
+                "value": false
+            }],
+            "name": "doorOpen_assignment_task"
+        },
+        {
+            "duration": 21,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "altitude2",
+                "type": "delta",
+                "value": -127
+            }],
+            "name": "altitude2_delta_task"
+        },
+        {
+            "duration": 24,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "bool1",
+                "type": "assignment",
+                "value": true
+            }],
+            "name": "bool1_assignment_task"
+        },
+        {
+            "duration": 43,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "bool2",
+                "type": "assignment",
+                "value": false
+            }],
+            "name": "bool2_assignment_task"
+        },
+        {
+            "duration": 25,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "numProp1",
+                "type": "delta",
+                "value": -5.359999999999999
+            }],
+            "name": "numProp1_delta_task"
+        },
+        {
+            "duration": 2,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "numProp2",
+                "type": "delta",
+                "value": -109
+            }],
+            "name": "numProp2_delta_task"
+        },
+        {
+            "duration": 5,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "numProp3",
+                "type": "delta",
+                "value": -118
+            }],
+            "name": "numProp3_delta_task"
+        },
+        {
+            "duration": 12,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "numProp4",
+                "type": "delta",
+                "value": 150
+            }],
+            "name": "numProp4_delta_task"
+        },
+        {
+            "duration": 12,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "numProp4",
+                "type": "delta",
+                "value": -150
+            }],
+            "name": "numProp4_delta_task_minus"
+        },
+        {
+            "duration": 46,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "battery",
+                "type": "delta",
+                "value": -10
+            }],
+            "name": "battery_delta_task000"
+        },
+        {
+            "duration": 24,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "solarPanelsOpen",
+                "type": "assignment",
+                "value": false
+            }],
+            "name": "solarPanelsOpen_assignment_task000"
+        },
+        {
+            "duration": 24,
+            "requirements": [],
+            "property_impacts": [{
+                "name": "isHappy",
+                "type": "assignment",
+                "value": false
+            }],
+            "name": "isHappy_assignment_task000"
+        }
+    ],
+    "optimizations": [
+        {
+            "name": "Duration",
+            "weight": 0.4,
+            "type": "min"
+        },
+        {
+            "name": "altitude",
+            "weight": 0.4,
+            "type": "max"
+        },
+        {
+            "name": "battery",
+            "weight": 0.7,
+            "type": "min"
+        },
+        {
+            "name": "altitude2",
+            "weight": 0.5,
+            "type": "min"
+        },
+        {
+            "name": "dataCollected",
+            "weight": 0.2,
+            "type": "min"
+        },
+        {
+            "name": "Battery",
+            "weight": 0.3,
+            "type": "min"
+        },
+        {
+            "name": "numProp4",
+            "weight": 0.7,
+            "type": "min"
+        },
+        {
+            "name": "numProp3",
+            "weight": 0.6,
+            "type": "max"
+        },
+        {
+            "name": "numProp2",
+            "weight": 0.1,
+            "type": "min"
+        },
+        {
+            "name": "numProp1",
+            "weight": 0.2,
+            "type": "max"
+        }
+    ]
+}

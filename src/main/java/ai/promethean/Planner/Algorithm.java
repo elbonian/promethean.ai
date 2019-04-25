@@ -15,5 +15,5 @@ public interface Algorithm {
      *
      * @return the system state
      */
-    SystemState run(SystemState initState, GoalState goalState, TaskDictionary tasks, StaticOptimizations optimizations);
+    SystemState run(SystemState initState, GoalState goalState, TaskDictionary tasks, StaticOptimizations optimizations, double stopTime, boolean activateCLF);
 }

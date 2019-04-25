@@ -24,7 +24,7 @@ public class OptimizationTest {
     void checkunSorted(){
         oList.addOptimization(o);
         oList.addOptimization(o1);
-        assertTrue(oList.getOptimizations().get(0).getPriority()==10);
+        assertTrue(oList.getOptimizations().get(0).getWeight()==10);
     }
 
     @Test
@@ -32,7 +32,7 @@ public class OptimizationTest {
         oList.addOptimization(o);
         oList.addOptimization(o1);
         oList.sortOptimizations();
-        assertTrue(oList.getOptimizations().get(0).getPriority()==5);
+        assertTrue(oList.getOptimizations().get(0).getWeight()==5);
     }
 
 }

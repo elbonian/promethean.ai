@@ -25,7 +25,7 @@
       ],
       "property_impacts": [
         {"name": "doorOpen", "type": "assignment","value": true},
-        {"name": "Fuel","type": "delta", "value":-10.0}
+        {"name": "Fuel","type": "delta", "value":-30.0}
       ]
     },
     {
@@ -45,7 +45,7 @@
   "optimizations": [
     {
       "name": "Fuel",
-      "priority": 1,
+      "weight": 1.0,
       "type": "maximization"
     }
   ]

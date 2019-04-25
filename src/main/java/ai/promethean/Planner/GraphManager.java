@@ -1,11 +1,10 @@
 package ai.promethean.Planner;
 
 import ai.promethean.DataModel.*;
+import com.google.common.collect.MinMaxPriorityQueue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
-
 /**
  * The type Graph manager.
  */
@@ -15,7 +14,8 @@ public class GraphManager {
     private GoalState goalState;
     private TaskDictionary taskDict;
     private StaticOptimizations optimizations;
-    private PriorityQueue<StateTemplate> frontier = new PriorityQueue<StateTemplate>(1, new FrontierComparator());
+    private MinMaxPriorityQueue<StateTemplate> frontier = MinMaxPriorityQueue.orderedBy(new FrontierComparator()).create();
+    private long stopTime;
 
     /**
      * Instantiates a new Graph manager.
@@ -30,6 +30,7 @@ public class GraphManager {
         this.goalState = goalState;
         this.taskDict = taskDict;
         this.optimizations = optimizations;
+        TaskWeight.initialHeuristic = Heuristic.h_value(initState, goalState, new Task(1, "Blank Task"));
     }
 
     public boolean frontierIsEmpty() {
@@ -72,10 +73,10 @@ public class GraphManager {
      * @param g_value       the g value of the new state
      * @return the system state
      */
-    public SystemState createState(SystemState previousState, Task task, Double g_value) {
+    public SystemState createState(SystemState previousState, Task task, Double g_value, double h_value) {
         PropertyMap prev_properties = previousState.getPropertyMap();
 
-        SystemState nextState = new SystemState(previousState.getTime() + task.getDuration());
+        SystemState nextState = new SystemState(previousState.getTime() + task.getDuration(), h_value);
         nextState.setgValue(g_value);
         nextState.setPreviousState(previousState);
         nextState.setPreviousTask(task);
@@ -90,7 +91,6 @@ public class GraphManager {
                 nextState.addProperty(previousProperty);
             }
         }
-
         return nextState;
     }
 
@@ -105,9 +105,10 @@ public class GraphManager {
         List<StateTemplate> templates = new ArrayList<>();
 
         for (Task task : tasks) {
-            Double g_value = Heuristic.g_value(state, task, optimizations);
-            Double f_value = Heuristic.f_value(state, goalState, g_value);
-            templates.add(new StateTemplate(state, task, f_value, g_value));
+            Double g_value = TaskWeight.calculateTaskWeight(task, optimizations) + state.getgValue();
+            double h_value = Heuristic.h_value(state,goalState,task);
+            double f_value = g_value + Math.pow(h_value,3.0);
+            templates.add(new StateTemplate(state, task, f_value, g_value, h_value));
         }
 
         return templates;
@@ -123,12 +124,34 @@ public class GraphManager {
     }
 
     /**
+     *
+     * @param currentState the state in question
+     * @return true if the previous state has a lower heuristic value than the given state
+     */
+    public boolean checkCLF(SystemState currentState) {
+        if (currentState.getPreviousState() == null) {
+            return true;
+        } else if (currentState.gethValue() < currentState.getPreviousState().gethValue()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Retrieve the best stateTemplate from the frontier and return a State
      *
      * @return the best next state
      */
     public SystemState poll() {
+        while (frontier.size() > 2000000) {
+            frontier.removeLast();
+        }
         StateTemplate template = frontier.poll();
-        return createState(template.getPreviousState(), template.getTask(), template.getG());
+        return createState(template.getPreviousState(), template.getTask(), template.getG(), template.getH());
     }
+
+    public void setStopTime(long time) { stopTime = time; }
+
+    public long getStopTime() { return stopTime; }
 }

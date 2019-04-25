@@ -70,15 +70,31 @@ public class CLI {
         PlanOptions options = parsePlanOptions(args);
         if (!options.inFile.isEmpty()) {
             if (options.execute) {
-                api.executePlan(options.inFile, true);
+                api.executePlan( options.inFile,
+                            true,
+                            "JSON_output/Plans",
+                            "JSON_output/SystemStates",
+                            100,
+                            true);
             } else {
-                Plan plan = api.generatePlanFromJSON(options.inFile, true);
+                Plan plan = api.generatePlanFromJSON( options.inFile,
+                                                true,
+                                                100,
+                                                true);
             }
         } else if (!options.inString.isEmpty()) {
             if (options.execute) {
-                api.executePlan(options.inFile, false);
+                api.executePlan( options.inFile,
+                        false,
+                        "JSON_output/Plans/",
+                        "JSON_output/SystemStates",
+                        100,
+                        true);
             } else {
-                Plan plan = api.generatePlanFromJSON(options.inFile, false);
+                Plan plan = api.generatePlanFromJSON( options.inFile,
+                                                    false,
+                                                    100,
+                                                    true);
             }
         } else {
             api.throwCLIError("No input JSON provided");

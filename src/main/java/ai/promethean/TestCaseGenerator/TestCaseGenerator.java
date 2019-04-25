@@ -1,6 +1,5 @@
 package ai.promethean.TestCaseGenerator;
 import ai.promethean.DataModel.*;
-import com.google.gson.JsonObject;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -128,14 +127,18 @@ public class TestCaseGenerator {
     private ArrayList<Task> createCriticalPathTasks(ArrayList<PropertyDelta> deltas) {
         ArrayList<Task> tasks = new ArrayList<>();
         // Always create a task that charges the battery
-        if(stateProps.containsProperty("Battery")) {
+        if(stateProps.containsProperty("Battery") || stateProps.containsProperty("battery")) {
             Task charge = new Task(ThreadLocalRandom.current().nextInt(1, 21), "charge");
-            charge.addProperty("Battery", 10.0, "delta");
+            if (stateProps.containsProperty("battery")) {
+                charge.addProperty("battery", 10.0, "delta");
+            } else {
+                charge.addProperty("Battery", 10.0, "delta");
+            }
             tasks.add(charge);
         }
         for(PropertyDelta delta: deltas) {
             // Skip making a Task for the battery since we already did
-            if(delta.getName().equals("Battery")) {
+            if(delta.getName().equals("Battery") || delta.getName().equals("battery")) {
                 continue;
             }
             Object delta_value = delta.getValue();
@@ -174,8 +177,14 @@ public class TestCaseGenerator {
             Task new_task = new Task(randomIntInRange(1, 50));
             // I can't find a way to select random elements from the props ArrayList without dups w/o deleting them from list when done?
             List<Property> temp_props = stateProps.getProperties();
-            // How many properties to include in randomly generated tasks? 1 - 5
-            int num_props = randomIntInRange(1, temp_props.size() % 5);
+            // How many properties to include in randomly generated tasks?
+            int max_generated_properties;
+            if(temp_props.size() > 5) {
+                max_generated_properties = 5;
+            } else {
+                max_generated_properties = temp_props.size();
+            }
+            int num_props = randomIntInRange(0, max_generated_properties);
             // Randomly grab properties from the input state properties
             for(int j = 0; j < num_props; j++) {
                 int randomIndex = randomIntInRange(temp_props.size());
@@ -204,7 +213,11 @@ public class TestCaseGenerator {
                 // Is this needed? My head hurts.
                 temp_props.remove(randomIndex);
             }
-            new_task.addRequirement("Battery", randomDoubleInRange(15.0, 40.0), ">=");
+            if (stateProps.containsProperty("Battery")) {
+                new_task.addRequirement("Battery", randomDoubleInRange(15.0, 40.0), ">=");
+            } else if (stateProps.containsProperty("battery")) {
+                new_task.addRequirement("battery", randomDoubleInRange(15.0, 40.0), ">=");
+            }
             tasksList.add(new_task);
         }
         return tasksList;
@@ -212,31 +225,27 @@ public class TestCaseGenerator {
 
     /**
      * Generate optimizations for the test case
-     * @param numOps The number of optimizations to generate, after adding the battery optimization
      * @return ArrayList of Optimization objects
      */
-    public ArrayList<Optimization> generateOptimizations(int numOps) {
+    public ArrayList<Optimization> generateOptimizations() {
         ArrayList<Optimization> ops = new ArrayList<>();
-        Optimization battery_op = new Optimization("Battery", "max", 0);
-        ops.add(battery_op);
+        ops.add(new Optimization("Duration", "min", randomDoubleInRange(0.0, 1.0)));
 
         // Duplicate input_state property list to randomly select from w/o repeats
         List<Property> temp_props = stateProps.getProperties();
-        for(int i = 0; i < numOps; i++) {
-            int randomIndex = randomIntInRange(temp_props.size());
-            Property random_prop = temp_props.get(randomIndex);
-            // Flip coin to decide whether the op is max or min
-            String op_type;
-            if(randomIntInRange(100) % 2 == 1) {
-                op_type = "min";
+        for(Property prop : temp_props) {
+            if (prop instanceof NumericalProperty) {
+                // Flip coin to decide whether the op is max or min
+                String op_type;
+                if (randomIntInRange(100) % 2 == 1) {
+                    op_type = "min";
+                } else {
+                    op_type = "max";
+                }
+                Optimization new_op = new Optimization(prop.getName(), op_type, randomDoubleInRange(0.0, 1.0));
+                ops.add(new_op);
+                // Remove the affected property so we don't optimize it twice
             }
-            else {
-                op_type = "max";
-            }
-            Optimization new_op = new Optimization(random_prop.getName(), op_type, i+1);
-            ops.add(new_op);
-            // Remove the affected property so we don't optimize it twice
-            temp_props.remove(randomIndex);
         }
         return ops;
     }
@@ -296,9 +305,16 @@ public class TestCaseGenerator {
         }
         else {
             Task charge = new Task(ThreadLocalRandom.current().nextInt(1, 21), "charge");
-            charge.addProperty("Battery", 10.0, "delta");
+            if (stateProps.containsProperty("battery")) {
+                charge.addProperty("battery", 10.0, "delta");
+            } else {
+                charge.addProperty("Battery", 10.0, "delta");
+            }
             tasks.add(charge);
             critical_path.add(charge);
+        }
+        if (inputState.getProperty("Battery") == null && inputState.getProperty("battery") == null) {
+            inputState.addProperty("Battery", randomDoubleInRange(50.0,100.0));
         }
         ArrayList<Task> full_plan = createRemainingTasks(critical_path);
         return full_plan;
@@ -375,7 +391,7 @@ public class TestCaseGenerator {
         for(Optimization input_op: ops) {
             JSONObject this_op = new JSONObject();
             this_op.put("name", input_op.getName());
-            this_op.put("priority", input_op.getPriority());
+            this_op.put("weight", input_op.getWeight());
             this_op.put("type", input_op.getType());
             optimizations.put(this_op);
         }

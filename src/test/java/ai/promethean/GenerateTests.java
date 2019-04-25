@@ -1,4 +1,4 @@
-package ai.promethian;
+package ai.promethean;
 
 import java.io.IOException;
 import java.util.*;
@@ -36,8 +36,8 @@ public class GenerateTests {
 
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, true);
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, false);
-        TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 100, true);
-        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 100, false, "100_tasks_nocrit");
+        // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 100, true);
+        TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 100, false, "100_tasks_nocrit");
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 500, true, "500_tasks");
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 500, false, "500_tasks_nocrit");
         // TestCaseGenerator test_case = new TestCaseGenerator(start, goal, 1000, true, "1000_tasks");
@@ -48,7 +48,7 @@ public class GenerateTests {
         // **** Test case generation... Comment out to stop generating the files
 
         ArrayList<Task> generated_tasks = test_case.generateTestCase();
-        ArrayList<Optimization> optimizations = test_case.generateOptimizations(3);
+        ArrayList<Optimization> optimizations = test_case.generateOptimizations();
 
         try {
             test_case.testCaseToJSON(generated_tasks, optimizations, 3);

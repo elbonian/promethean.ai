@@ -12,8 +12,7 @@
   "goal_state": {
     "requirements": [
       {"name": "wheelsDown", "value": true, "operator": "=="},
-      {"name": "doorOpen", "value": true, "operator": "=="},
-      {"name": "Altitude", "value": 0.000001, "operator": ">="}
+      {"name": "doorOpen", "value": true, "operator": "=="}
     ]
   },
   "tasks": [
@@ -41,36 +40,12 @@
         {"name": "Fuel","type": "delta", "value":-10.0}
 
       ]
-    },
-    {
-      "name" : "Altitude",
-      "duration": 10,
-      "requirements":[
-        {"name": "Fuel","value":60.0, "operator": ">"}
-      ],
-      "property_impacts": [
-        {"name": "Altitude", "type": "delta","value": 0.000001},
-        {"name": "Fuel","type": "delta", "value":-10.0}
-
-      ]
-    },
-    {
-      "name" : "AltitudeMinus",
-      "duration": 10,
-      "requirements":[
-        {"name": "Fuel","value":60.0, "operator": ">"}
-      ],
-      "property_impacts": [
-        {"name": "Altitude", "type": "delta","value": -0.000001},
-        {"name": "Fuel","type": "delta", "value":-10.0}
-
-      ]
     }
   ],
   "optimizations": [
     {
       "name": "Fuel",
-      "weight": 0.54,
+      "weight": 1.0,
       "type": "maximization"
     }
   ],
@@ -86,9 +61,9 @@
       "property_impacts": [{"name": "speed","type": "delta","value": 1}]
     },
     {
-      "name": "delay",
+      "name": "Fuel Tank Destroyed",
       "time": 15,
-      "property_impacts": [{"name":  "time","type": "delta","value": 10}]
+      "property_impacts": [{"name":  "Fuel","type": "assignment","value": -1000}]
     }
   ]
 }

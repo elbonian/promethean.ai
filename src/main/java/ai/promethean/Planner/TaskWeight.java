@@ -1,42 +1,56 @@
 package ai.promethean.Planner;
 
-import ai.promethean.DataModel.NumericalProperty;
-import ai.promethean.DataModel.Property;
-import ai.promethean.DataModel.StaticOptimizations;
-import ai.promethean.DataModel.Task;
+import ai.promethean.DataModel.*;
 
 public class TaskWeight {
 
     private TaskWeight() {}
+    public static double initialHeuristic;
 
+    /**
+     *
+     * @param task the current task
+     * @param optimizations any optimizations given to the planner
+     * @return a Task edge weight based on the property impacts of the task and optimizations of those properties
+     */
     public static Double calculateTaskWeight(Task task, StaticOptimizations optimizations) {
-        Double squaredSum = 0.0;
-        int optimizationsLength = optimizations.size();
+        double taskWeight = 0.0;
+        int numNumericalProperties = 0;
+        int numNonNumericalProperties = 0;
 
-        if (optimizations.getOptimization("Duration") != null) {
-            squaredSum += OptimizationWeight.weightedPropertyValue(
-                        optimizations.getOptimization("Duration"),
-                        task.getDuration() + 0.0,
-                        optimizationsLength);
-        } else {
-            squaredSum += task.getDuration();
+        Optimization timeOp = optimizations.getOptimization("Duration");
+        if (timeOp != null) {
+            taskWeight += task.getDuration() * timeOp.getWeight();
+            numNumericalProperties += 1;
+        } else if (optimizations.size() == 0) {
+            taskWeight += task.getDuration();
+            numNumericalProperties += 1;
         }
 
         for (Property property : task.getProperties()) {
             if (property instanceof NumericalProperty) {
-                if (optimizations.getOptimization(property.getName()) != null) {
-                    squaredSum += OptimizationWeight.weightedPropertyValue(
-                                optimizations.getOptimization(property.getName()),
-                                ((NumericalProperty) property).getValue(),
-                                optimizationsLength);
-                } else {
-                    squaredSum += ((NumericalProperty) property).getValue();
+                Optimization propertyOptimization = optimizations.getOptimization(property.getName());
+                if (propertyOptimization != null) {
+                    if (propertyOptimization.getType().equals("max") && (((NumericalProperty) property).getValue() > 0) ||
+                            propertyOptimization.getType().equals("min") && (((NumericalProperty) property).getValue() < 0)) {
+                        taskWeight += (-1*Math.abs( ((NumericalProperty) property).getValue() )) * propertyOptimization.getWeight();
+                        numNumericalProperties += 1;
+                    } else {
+                        taskWeight += Math.abs( ((NumericalProperty) property).getValue() ) * propertyOptimization.getWeight();
+                        numNumericalProperties += 1;
+                    }
                 }
             } else {
-                squaredSum += 1.0;
+                numNonNumericalProperties += 1;
             }
         }
 
-        return Math.sqrt(squaredSum);
+        Double totalAverage = taskWeight/(numNumericalProperties + numNonNumericalProperties);
+        taskWeight += totalAverage * numNonNumericalProperties;
+
+        // This ensures our Heuristic remains admissible
+        taskWeight += TaskWeight.initialHeuristic;
+
+        return taskWeight;
     }
 }

@@ -23,7 +23,7 @@ public class JSONParser implements ParserInterface{
 
     private static final String FIELD_NAME = "name";
     private static final String FIELD_OPERATOR = "operator";
-    private static final String FIELD_PRIORITY= "priority";
+    private static final String FIELD_WEIGHT= "weight";
     private static final String FIELD_VALUE = "value";
     private static final String FIELD_DURATION = "duration";
     private static final String FIELD_REQUIREMENTS = "requirements";
@@ -93,26 +93,26 @@ public class JSONParser implements ParserInterface{
                         JsonObject optimization = op.getAsJsonObject();
                         if (!(optimization.get(FIELD_NAME)==null || !optimization.get(FIELD_NAME).getAsJsonPrimitive().isString())) {
                             String name = optimization.get(FIELD_NAME).getAsString();
-                            if (!(optimization.get(FIELD_PRIORITY)==null ||!optimization.get(FIELD_PRIORITY).getAsJsonPrimitive().isNumber())) {
-                                int priority = optimization.get(FIELD_PRIORITY).getAsInt();
+                            if (!(optimization.get(FIELD_WEIGHT)==null ||!optimization.get(FIELD_WEIGHT).getAsJsonPrimitive().isNumber())) {
+                                double weight = optimization.get(FIELD_WEIGHT).getAsDouble();
 
                                 //Captures any type containing min (Case Indifferent)
                                 if(optimization.get("type")==null){
                                     api.throwParserError("JSON Optimization type must be non-null");
                                 }
                                 if (optimization.get("type").getAsString().toLowerCase().contains("min")) {
-                                    Optimization o = new Optimization(name, "min", priority);
+                                    Optimization o = new Optimization(name, "min", weight);
                                     optimizationList.addOptimization(o);
 
                                     //Captures any type containing max (Case insensitive)
                                 } else if (optimization.get("type").getAsString().toLowerCase().contains("max")) {
-                                    Optimization o = new Optimization(name, "max", priority);
+                                    Optimization o = new Optimization(name, "max", weight);
                                     optimizationList.addOptimization(o);
                                 } else {
                                     api.throwParserError("JSON Object Optimization type is invalid (must be a minimum or maximum)");
                                 }
                             } else {
-                                api.throwParserError("JSON Object Optimization Priority must be a number and non-null");
+                                api.throwParserError("JSON Object Optimization Weight must be a number and non-null");
                             }
                         } else {
                             api.throwParserError("JSON Optimization name must be a string and non-null");
