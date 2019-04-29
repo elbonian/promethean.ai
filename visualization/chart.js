@@ -7,7 +7,9 @@
  */
 
 // The readJSON function invokes the whole shebang
-readJSON("../../JSON_output/Plans/Plan-SunApr14171418MDT2019.json");
+// readJSON("../../JSON_output/Plans/Plan-SunApr14171418MDT2019.json");
+readJSON("../../JSON_output/Plans/Plan-mission_to_mars_expo.json");
+// readJSON("../../JSON_output/Plans/Plan-WedApr24194106MDT2019.json");
 
 function readJSON(path) {
     var xhr = new XMLHttpRequest();
@@ -35,7 +37,7 @@ function createChartFromStateLog(json_string) {
     window.gantt_chart_height = 450;
     var json = JSON.parse(json_string);
     window.init_state = json['initialState'];
-    window.goal_state = json['goalState'];
+    window.goal_state = json['endState'];
     window.plan = json['planBlockList'];
     // Used to stop the async function of animating the chart
     window.animation = false;
@@ -240,7 +242,6 @@ async function animateChart(state_dict, task_dict) {
         } else {
             ending_time = +states_array[i+1][0];
         }
-        console.log("adding ending time " + ending_time + " to " + state[0]);
         state_dict[state[0]]['ending'] = ending_time;
     }
     console.log("Animating the chart population");
@@ -318,8 +319,6 @@ async function animateChart(state_dict, task_dict) {
             // Create state for after previous task was completed
             var state_status;
             var tooltip_text;
-            console.log(new_state);
-            console.log(states_array);
             if(new_state['time'] == +states_array[states_array.length - 1][0]) {
                 state_status = "GOALSTATE";
                 tooltip_text = "Goal State";
@@ -336,6 +335,7 @@ async function animateChart(state_dict, task_dict) {
                     "tooltip": {'name': tooltip_text, 'beginning': new_state['time'], 'end': new_state['ending']},
                     "more": new_state}
             };
+            console.log("Adding task at Time: " + time);
             addTask(state_object);
         }
 
