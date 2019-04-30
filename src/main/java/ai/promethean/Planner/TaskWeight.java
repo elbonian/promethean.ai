@@ -13,12 +13,12 @@ public class TaskWeight {
      * @param optimizations any optimizations given to the planner
      * @return a Task edge weight based on the property impacts of the task and optimizations of those properties
      */
-    public static Double calculateTaskWeight(Task task, StaticOptimizations optimizations) {
+    public static double calculateTaskWeight(Task task, StaticOptimizations optimizations) {
         double taskWeight = 0.0;
         int numNumericalProperties = 0;
         int numNonNumericalProperties = 0;
 
-        Optimization timeOp = optimizations.getOptimization("Duration");
+        Optimization timeOp = optimizations.getOptimization("duration");
         if (timeOp != null) {
             taskWeight += task.getDuration() * timeOp.getWeight();
             numNumericalProperties += 1;
