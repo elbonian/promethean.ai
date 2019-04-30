@@ -1,0 +1,173 @@
+html {
+    overflow-y: scroll;
+}
+
+body {
+    background-color: #545454;
+}
+
+html,body,#wrapper {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+}
+
+.chart {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+}
+
+.axis path,.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.task-tooltip, .state-tooltip {
+    background: #eee;
+    box-shadow: 0 0 5px #999999;
+    color: #333;
+    font-size: 12px;
+    left: 130px;
+    padding: 10px;
+    position: absolute;
+    text-align: center;
+    top: 95px;
+    z-index: 10;
+    display: block;
+    opacity: 0;
+}
+
+.bar-state {
+    fill: #99401D;
+}
+
+.bar-state:hover {
+    fill: #B95F3B;
+    cursor: pointer;
+}
+
+.bar-init-state {
+    fill: #722304;
+}
+
+.bar-init-state:hover {
+    fill: #99401D;
+    cursor: pointer;
+}
+
+.bar-goal-state {
+    fill: #034F2A;
+}
+
+.bar-goal-state:hover {
+    fill: #146945;
+    cursor: pointer;
+}
+
+.bar-running {
+    fill: #184262;
+}
+
+.bar-running:hover {
+    fill: #2C5677;
+    cursor: pointer;
+}
+
+.bar-completed {
+    fill: #146945;
+}
+
+.bar-completed:hover {
+    fill: #297F5A;
+    cursor: pointer;
+}
+
+.bar-queued {
+    fill: #99641D;
+}
+
+.bar-queued:hover {
+    fill: #B9833B;
+    cursor: pointer;
+}
+
+.info-title {
+    text-decoration: underline;
+    font-size: 150%;
+}
+
+.clock-text {
+    font-size: 200%;
+}
+
+text.property:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+text.previous-task:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+text.property-impact:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+text.impacts-header {
+    text-decoration: underline;
+}
+
+text.previous-task-header {
+    text-decoration: underline;
+}
+
+text.property-header {
+    text-decoration: underline;
+}
+
+.x-axis path,
+.y-axis path,
+.x-axis line,
+.y-axis line {
+    fill: none;
+    stroke: #051d90;
+    shape-rendering: crispEdges;
+}
+
+path.line {
+    fill: none;
+    stroke: red;
+    stroke-width: 3px;
+}
+
+.chart {
+    background-color: #C5C5C5;
+    margin-left: 12px;
+    margin-top: 12px;
+    border-radius: 10px;
+}
+
+.taskInfo, .stateInfo {
+    background-color: #C5C5C5;
+    margin-right: 12px;
+    margin-left: 12px;
+    border-radius: 10px;
+
+}
+
+#property-graph {
+    background-color: #C5C5C5;
+    margin-top: 12px;
+    margin-right: 12px;
+    margin-left: 12px;
+    border-radius: 10px;
+}
+
+#clock {
+    background-color: #C5C5C5;
+    margin: 12px;
+    border-radius: 10px;
+}

@@ -11,7 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * A class to generate test cases (hopefully) with a given depth / complexity
+ * A class to generate test cases with a given depth / complexity
  */
 public class TestCaseGenerator {
     private SystemState inputState;
@@ -77,7 +77,6 @@ public class TestCaseGenerator {
                 String req_op = goalReq.getOperator();
                 Object req_val = goalReq.getValue();
                 if(req_val instanceof Double) {
-                    // I don't think this is a nice way to do this, with the type casting from Object
                     Double delta = (Double)req_val - (Double)init_prop.getValue();
                     // If we are looking at a delta for battery/fuel, we need a special NumericalDelta
                     // If init has fuel 100, and goal is fuel >= 80, we don't necessarily need to delta exactly -20
@@ -124,6 +123,13 @@ public class TestCaseGenerator {
         return computePropertyDeltas();
     }
 
+    /**
+     * Creates an ArrayList of Task objects which represent the critical path (optimal path from input to goal state)
+     *  to be used in generating a test case which has a guaranteed optimal path
+     *
+     * @param deltas ArrayList of PropertyDelta objects created in computerPropertyDeltas()
+     * @return ArrayList of Task objects of the critical path through the network
+     */
     private ArrayList<Task> createCriticalPathTasks(ArrayList<PropertyDelta> deltas) {
         ArrayList<Task> tasks = new ArrayList<>();
         // Always create a task that charges the battery
@@ -169,13 +175,19 @@ public class TestCaseGenerator {
         return createCriticalPathTasks(getPropertyDeltas());
     }
 
+    /**
+     * Given an optimal critical path, randomly generates more tasks to get the total number of tasks to the specified amount
+     *
+     * @param criticalPath ArrayList of Task objects from createCriticalPathTasks. Can be empty
+     * @return An ArrayList of Task objects, containing the argument number of tasks passed to the constructor
+     */
     private ArrayList<Task> createRemainingTasks(ArrayList<Task> criticalPath) {
         ArrayList<Task> tasksList = new ArrayList<>(criticalPath);
         // Create new tasks until there are the specified number of tasks
         for(int i = criticalPath.size(); i <= this.numTasks-1; i++) {
             // init new Task with random duration in range [1, 50]
             Task new_task = new Task(randomIntInRange(1, 50));
-            // I can't find a way to select random elements from the props ArrayList without dups w/o deleting them from list when done?
+            // There's no way to select random elements from the props ArrayList without dups w/o deleting them from list when done
             List<Property> temp_props = stateProps.getProperties();
             // How many properties to include in randomly generated tasks?
             int max_generated_properties;
@@ -210,7 +222,6 @@ public class TestCaseGenerator {
                     new_task.addProperty(affected_prop.getName(), delta, "delta");
                 }
                 // Remove the property we just affected so we don't affect the same property multiple times
-                // Is this needed? My head hurts.
                 temp_props.remove(randomIndex);
             }
             if (stateProps.containsProperty("Battery")) {
