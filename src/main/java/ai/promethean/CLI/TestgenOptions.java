@@ -8,7 +8,7 @@ import com.google.devtools.common.options.OptionsBase;
  */
 public class TestgenOptions extends OptionsBase {
     @Option(
-            name = "inFile",
+            name = "in-file",
             abbrev = 'i',
             help = "JSON input file for the test generator\nMust contain an initial state and a goal state\n",
             category = "testgen",
@@ -17,7 +17,7 @@ public class TestgenOptions extends OptionsBase {
     public String inFile;
 
     @Option(
-            name = "inString",
+            name = "in-string",
             help = "JSON string input for test generator\n",
             category = "testgen",
             defaultValue = ""
@@ -25,7 +25,7 @@ public class TestgenOptions extends OptionsBase {
     public String inString;
 
     @Option(
-            name = "numTasks",
+            name = "num-tasks",
             abbrev = 'n',
             help = "Number of tasks to generate for test case\n",
             category = "testgen",
@@ -79,7 +79,7 @@ public class TestgenOptions extends OptionsBase {
     @Option(
             name = "output",
             abbrev = 'o',
-            help = "Simulate execution after planning (including perturbations)\n",
+            help = "Output filename for generated test case\n",
             category = "testgen",
             defaultValue = "generated_test.json"
     )
