@@ -23,10 +23,6 @@ public class ExecutionManager {
         TaskDictionary taskDict = (TaskDictionary) planObjects.get("tasks");
         StaticOptimizations optimizations = (StaticOptimizations) planObjects.get("optimizations");
 
-        Logger.writeLog("Initial State: \n" + plan.getInitialState(), this.className);
-        Logger.writeLog("Runtime Goal State:: \n" + plan.getEndState(), this.className);
-        Logger.writeLog("Plan: \n" + plan.getPlanBlockList(), this.className);
-
         Stack<SystemState> stateList= new Stack<SystemState>();
         while (!planCompleted){
             ClockObserver.addState(plan.getInitialState());

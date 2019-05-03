@@ -31,14 +31,20 @@ public class Planner {
                      StaticOptimizations optimizations,
                      double stopTime,
                      boolean activateCLF) {
+        Logger.writeLog("Running planning algorithm.", "Planner");
         SystemState runtimeEndState = this.algorithm.run(initialState, goalState, tasks, optimizations, stopTime, activateCLF);
         if (runtimeEndState != null) {
+            Plan plan;
             if (goalState.meetsGoal(runtimeEndState)) {
-                return new Plan(runtimeEndState, true);
+                plan = new Plan(runtimeEndState, true);
             } else {
                 Logger.writeLog("Time Limit Exceeded. Goal state was not found. Creating Plan for states explored until termination.", "Planner");
-                return new Plan(runtimeEndState, false);
+                plan = new Plan(runtimeEndState, false);
             }
+            Logger.writeLog("Initial State: \n" + plan.getInitialState(), "Planner");
+            Logger.writeLog("Runtime Goal State:: \n" + plan.getEndState(), "Planner");
+            Logger.writeLog("Plan: \n" + plan.getPlanBlockList(), "Planner");
+            return plan;
         }
         Logger.writeLog("There is no possible plan from initial state to goal state.", "Planner");
         return null;

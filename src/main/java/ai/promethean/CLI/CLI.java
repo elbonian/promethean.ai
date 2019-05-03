@@ -1,18 +1,13 @@
 package ai.promethean.CLI;
 
 import ai.promethean.API.API;
-import ai.promethean.API.CLIError;
 import ai.promethean.DataModel.GoalState;
 import ai.promethean.DataModel.Optimization;
 import ai.promethean.DataModel.SystemState;
 import ai.promethean.DataModel.Task;
 import ai.promethean.Logger.Logger;
 import ai.promethean.Parser.JSONParser;
-import ai.promethean.Planner.Plan;
 import ai.promethean.TestCaseGenerator.TestCaseGenerator;
-import com.google.devtools.common.options.Option;
-import com.google.devtools.common.options.Options;
-import com.google.devtools.common.options.OptionsBase;
 import com.google.devtools.common.options.OptionsParser;
 
 import java.io.IOException;
@@ -137,7 +132,7 @@ public class CLI {
                         options.clf);
             }
         } else {
-            API.throwCLIError("No input JSON provided");
+            API.throwCLIError("No input JSON provided (-i)");
         }
     }
 
@@ -150,7 +145,7 @@ public class CLI {
         TestgenOptions options = parseTestgenOptions(args);
         CLI.setVerbosity(options);
         if (options.numTasks < 1) {
-            API.throwCLIError("Invalid number of tasks provided: " + options.numTasks);
+            API.throwCLIError("Invalid number of tasks provided (-n): " + options.numTasks);
         }
 
         Map<String, Object> objects;
@@ -159,7 +154,7 @@ public class CLI {
         } else if (!options.inString.isEmpty()) {
             objects = parser.parse(options.inString, false);
         } else {
-            API.throwCLIError("No input JSON provided");
+            API.throwCLIError("No input JSON provided (-i)");
             return;
         }
 
