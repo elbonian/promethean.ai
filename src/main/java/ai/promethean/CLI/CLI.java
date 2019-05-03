@@ -2,12 +2,22 @@ package ai.promethean.CLI;
 
 import ai.promethean.API.API;
 import ai.promethean.API.CLIError;
+import ai.promethean.DataModel.GoalState;
+import ai.promethean.DataModel.Optimization;
+import ai.promethean.DataModel.SystemState;
+import ai.promethean.DataModel.Task;
 import ai.promethean.Logger.Logger;
+import ai.promethean.Parser.JSONParser;
 import ai.promethean.Planner.Plan;
+import ai.promethean.TestCaseGenerator.TestCaseGenerator;
 import com.google.devtools.common.options.Option;
 import com.google.devtools.common.options.Options;
 import com.google.devtools.common.options.OptionsBase;
 import com.google.devtools.common.options.OptionsParser;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * CLI is an example of how to create a commmand line tool to interact
@@ -40,7 +50,11 @@ public class CLI {
      * Outputs a manual of commands and their descriptions
      */
     private static void writeShortManual() {
-        System.out.println("systemcli manual");
+        System.out.println("\nPromethean CLI v1.0.0");
+        System.out.println("Commands:");
+        System.out.println("\tplan - create (and optionally execute) a plan given input json");
+        System.out.println("\ttestgen - generate a test input file given initial and goal states");
+        System.out.println("Run <command> --help to see all options\n");
     }
 
     /**
@@ -132,8 +146,43 @@ public class CLI {
      * @param args - requires at lease an input file or string
      */
     private static void testgen(String[] args) {
+        JSONParser parser = new JSONParser();
         TestgenOptions options = parseTestgenOptions(args);
         CLI.setVerbosity(options);
+        if (options.numTasks < 1) {
+            API.throwCLIError("Invalid number of tasks provided: " + options.numTasks);
+        }
+
+        Map<String, Object> objects;
+        if (!options.inFile.isEmpty()) {
+            objects = parser.parse(options.inFile, true);
+        } else if (!options.inString.isEmpty()) {
+            objects = parser.parse(options.inString, false);
+        } else {
+            API.throwCLIError("No input JSON provided");
+            return;
+        }
+
+        if (objects.get("initialState") == null || objects.get("goalState") == null) {
+            API.throwCLIError("Both an initial state and a goal state must be provided.");
+        }
+
+        TestCaseGenerator generator = new TestCaseGenerator(
+                (SystemState) objects.get("initialState"),
+                (GoalState) objects.get("goalState"),
+                options.numTasks,
+                options.optimalPlan,
+                options.output
+        );
+
+        ArrayList<Task> tasks = generator.generateTestCase();
+        ArrayList<Optimization> ops = generator.generateOptimizations();
+        try{
+            generator.testCaseToJSON(tasks, ops, options.perturbations);
+        } catch (IOException e){
+            API.throwCLIError("Failed to write testCase to JSON");
+        }
+
     }
 
 }

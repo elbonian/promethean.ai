@@ -10,16 +10,16 @@ public class PlanOptions extends OptionsBase {
     @Option(
             name = "in-file",
             abbrev = 'i',
-            help = "JSON input file for planning system",
-            category = "inputs",
+            help = "JSON input file for planning system\nMust contain at least an initial state, a goal state, and list of tasks\n",
+            category = "plan",
             defaultValue = ""
     )
     public String inFile;
 
     @Option(
             name = "in-string",
-            help = "JSON string input for planning system",
-            category = "inputs",
+            help = "JSON string input for planning system\n",
+            category = "plan",
             defaultValue = ""
     )
     public String inString;
@@ -27,8 +27,8 @@ public class PlanOptions extends OptionsBase {
     @Option(
             name = "verbose",
             abbrev = 'v',
-            help = "enable logging",
-            category = "modifiers",
+            help = "Enables logging\n",
+            category = "plan",
             defaultValue = "false"
     )
     public boolean verbose;
@@ -36,16 +36,16 @@ public class PlanOptions extends OptionsBase {
     @Option(
             name = "logs",
             abbrev = 'l',
-            help = "write logs to specific file",
-            category = "directs",
+            help = "Write logs to specific directory\n",
+            category = "plan",
             defaultValue = "Logs"
     )
     public String logs;
 
     @Option(
             name = "print-logs",
-            help = "print any logs to the command line (enables verbose by default)",
-            category = "modifiers",
+            help = "Print any logs to the command line (enables verbose by default)\n",
+            category = "plan",
             defaultValue = "false"
     )
     public boolean printLogs;
@@ -53,24 +53,24 @@ public class PlanOptions extends OptionsBase {
     @Option(
             name = "execute",
             abbrev = 'x',
-            help = "simulate execution after planning",
-            category = "modifiers",
+            help = "Simulate execution after planning (including perturbations)\n",
+            category = "plan",
             defaultValue = "false"
     )
     public boolean execute;
 
     @Option(
             name = "plan-output",
-            help = "directory to write generated plans (planner)",
-            category = "directs",
+            help = "Directory to write generated plans (planner) \n",
+            category = "plan",
             defaultValue = "JSON_output/Plans"
     )
     public String planOutput;
 
     @Option(
             name = "states-output",
-            help = "directory to write simulated states (exec agent)",
-            category = "directs",
+            help = "Directory to write simulated states (exec agent)\n",
+            category = "plan",
             defaultValue = "JSON_output/SystemStates"
     )
     public String statesOutput;
@@ -78,16 +78,16 @@ public class PlanOptions extends OptionsBase {
     @Option(
             name = "stop",
             abbrev = 's',
-            help = "maximum runtime in seconds (defaults to inf)",
-            category = "modifiers",
+            help = "Maximum runtime in seconds\n",
+            category = "plan",
             defaultValue = "100"
     )
     public double stop;
 
     @Option(
             name = "clf",
-            help = "if clf is enabled, the planner will not consider the stoptime until backtracking occurs",
-            category = "modifiers",
+            help = "If clf is enabled, the planner will not consider the stoptime until backtracking occurs\n",
+            category = "plan",
             defaultValue = "true"
     )
     public boolean clf;
