@@ -11,7 +11,6 @@ public class LoggerTest {
 
     @Test
     void testErrorLogging(){
-        API api = new API();
 
         BooleanProperty bp = new BooleanProperty("bool", true);
         BooleanProperty impact = new BooleanProperty("impact", false);
@@ -20,19 +19,19 @@ public class LoggerTest {
         // But I can still check if logging the errors affects how errors are thrown
         for (int i = 0; i < 2; i++) {
             assertThrows(CLIError.class, () ->{
-                api.throwCLIError("test CLI error");
+                API.throwCLIError("test CLI error");
             });
 
             assertThrows(OutputError.class, () -> {
-                api.throwOutputError("test output error");
+                API.throwOutputError("test output error");
             });
 
             assertThrows(ParserError.class, () ->{
-                api.throwParserError("test parser error");
+                API.throwParserError("test parser error");
             });
 
             assertThrows(PlannerError.class, () -> {
-                api.throwPlannerError("test planner error");
+                API.throwPlannerError("test planner error");
             });
 
             assertThrows(IllegalArgumentException.class, () ->{

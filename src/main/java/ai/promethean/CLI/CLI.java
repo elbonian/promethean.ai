@@ -14,7 +14,6 @@ import com.google.devtools.common.options.OptionsParser;
  * with the system via the API
  */
 public class CLI {
-    private static API api = new API();
 
     /**
      * The main running function of the CLI. Checks for command types.
@@ -33,7 +32,7 @@ public class CLI {
             case "testgen":
                 testgen(args);
                 break;
-            default: api.throwCLIError("Invalid command: " + args[0]);
+            default: API.throwCLIError("Invalid command: " + args[0]);
         }
     }
 
@@ -95,36 +94,36 @@ public class CLI {
         CLI.setVerbosity(options);
         if (!options.inFile.isEmpty()) {
             if (options.execute) {
-                api.executePlan( options.inFile,
+                API.executePlan( options.inFile,
                         true,
                         options.planOutput,
                         options.statesOutput,
                         options.stop,
-                        true);
+                        options.clf);
             } else {
-                api.generatePlanFromJSON( options.inFile,
+                API.generatePlanFromJSON( options.inFile,
                         true,
                         options.planOutput,
                         options.stop,
-                        true);
+                        options.clf);
             }
         } else if (!options.inString.isEmpty()) {
             if (options.execute) {
-                api.executePlan( options.inFile,
+                API.executePlan( options.inFile,
                         false,
                         options.planOutput,
                         options.statesOutput,
                         options.stop,
-                        true);
+                        options.clf);
             } else {
-                api.generatePlanFromJSON( options.inFile,
+                API.generatePlanFromJSON( options.inFile,
                         false,
                         options.planOutput,
                         options.stop,
-                        true);
+                        options.clf);
             }
         } else {
-            api.throwCLIError("No input JSON provided");
+            API.throwCLIError("No input JSON provided");
         }
     }
 

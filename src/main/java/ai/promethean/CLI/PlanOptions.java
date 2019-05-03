@@ -82,7 +82,15 @@ public class PlanOptions extends OptionsBase {
             category = "modifiers",
             defaultValue = "100"
     )
-    public int stop;
+    public double stop;
+
+    @Option(
+            name = "clf",
+            help = "if clf is enabled, the planner will not consider the stoptime until backtracking occurs",
+            category = "modifiers",
+            defaultValue = "true"
+    )
+    public boolean clf;
 
 }
 
