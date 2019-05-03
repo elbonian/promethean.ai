@@ -7,7 +7,7 @@ To run the CLI:
    
 ### CLI user guide
 #### Commands:
-###### plan - create (and optionally execute) a plan given input json
+#### plan - create (and optionally execute) a plan given input json
 
 `-i, --in-file “path/to/file.json”`
 - JSON input file for planning system. Must contain at least an initial state, a goal state, and list of tasks
@@ -39,7 +39,7 @@ To run the CLI:
 `--states-output`
 - Directory to write simulated states (exec agent)
 
-###### testgen - generate a test input file given initial and goal states
+#### testgen - generate a test input file given initial and goal states
 `-i, --in-file “path/to/file.json”`
 - JSON input file for the test generator. Must contain an initial state and a goal state
 
