@@ -51,6 +51,14 @@ public class TestgenOptions extends OptionsBase {
     public String logs;
 
     @Option(
+            name = "print-logs",
+            help = "print any logs to the command line (enables verbose by default)",
+            category = "modifiers",
+            defaultValue = "false"
+    )
+    public boolean printLogs;
+
+    @Option(
             name = "output",
             abbrev = 'o',
             help = "directory to write outputs",

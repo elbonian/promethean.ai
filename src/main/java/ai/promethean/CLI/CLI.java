@@ -2,7 +2,11 @@ package ai.promethean.CLI;
 
 import ai.promethean.API.API;
 import ai.promethean.API.CLIError;
+import ai.promethean.Logger.Logger;
 import ai.promethean.Planner.Plan;
+import com.google.devtools.common.options.Option;
+import com.google.devtools.common.options.Options;
+import com.google.devtools.common.options.OptionsBase;
 import com.google.devtools.common.options.OptionsParser;
 
 /**
@@ -62,39 +66,62 @@ public class CLI {
         return parser.getOptions(TestgenOptions.class);
     }
 
+    private static void setVerbosity(PlanOptions options) {
+        Logger.directoryName = options.logs;
+        if (options.printLogs) {
+            Logger.logFlag = true;
+            Logger.printFlag = true;
+        } else if (options.verbose) {
+            Logger.logFlag = true;
+        }
+    }
+
+    private static void setVerbosity(TestgenOptions options) {
+        Logger.directoryName = options.logs;
+        if (options.printLogs) {
+            Logger.logFlag = true;
+            Logger.printFlag = true;
+        } else if (options.verbose) {
+            Logger.logFlag = true;
+        }
+    }
+
     /**
      * The main method of the Plan command
      * @param args - requires at least an input file or string
      */
     private static void plan(String[] args) {
         PlanOptions options = parsePlanOptions(args);
+        CLI.setVerbosity(options);
         if (!options.inFile.isEmpty()) {
             if (options.execute) {
                 api.executePlan( options.inFile,
-                            true,
-                            "JSON_output/Plans",
-                            "JSON_output/SystemStates",
-                            100,
-                            true);
+                        true,
+                        options.planOutput,
+                        options.statesOutput,
+                        options.stop,
+                        true);
             } else {
-                Plan plan = api.generatePlanFromJSON( options.inFile,
-                                                true,
-                                                100,
-                                                true);
+                api.generatePlanFromJSON( options.inFile,
+                        true,
+                        options.planOutput,
+                        options.stop,
+                        true);
             }
         } else if (!options.inString.isEmpty()) {
             if (options.execute) {
                 api.executePlan( options.inFile,
                         false,
-                        "JSON_output/Plans/",
-                        "JSON_output/SystemStates",
-                        100,
+                        options.planOutput,
+                        options.statesOutput,
+                        options.stop,
                         true);
             } else {
-                Plan plan = api.generatePlanFromJSON( options.inFile,
-                                                    false,
-                                                    100,
-                                                    true);
+                api.generatePlanFromJSON( options.inFile,
+                        false,
+                        options.planOutput,
+                        options.stop,
+                        true);
             }
         } else {
             api.throwCLIError("No input JSON provided");
@@ -106,7 +133,8 @@ public class CLI {
      * @param args - requires at lease an input file or string
      */
     private static void testgen(String[] args) {
-        System.out.println("testgen");
+        TestgenOptions options = parseTestgenOptions(args);
+        CLI.setVerbosity(options);
     }
 
 }

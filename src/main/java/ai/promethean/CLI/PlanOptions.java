@@ -8,7 +8,7 @@ import com.google.devtools.common.options.OptionsBase;
  */
 public class PlanOptions extends OptionsBase {
     @Option(
-            name = "inFile",
+            name = "in-file",
             abbrev = 'i',
             help = "JSON input file for planning system",
             category = "inputs",
@@ -17,7 +17,7 @@ public class PlanOptions extends OptionsBase {
     public String inFile;
 
     @Option(
-            name = "inString",
+            name = "in-string",
             help = "JSON string input for planning system",
             category = "inputs",
             defaultValue = ""
@@ -38,9 +38,17 @@ public class PlanOptions extends OptionsBase {
             abbrev = 'l',
             help = "write logs to specific file",
             category = "directs",
-            defaultValue = ""
+            defaultValue = "Logs"
     )
     public String logs;
+
+    @Option(
+            name = "print-logs",
+            help = "print any logs to the command line (enables verbose by default)",
+            category = "modifiers",
+            defaultValue = "false"
+    )
+    public boolean printLogs;
 
     @Option(
             name = "execute",
@@ -52,20 +60,27 @@ public class PlanOptions extends OptionsBase {
     public boolean execute;
 
     @Option(
-            name = "output",
-            abbrev = 'o',
-            help = "directory to write outputs",
+            name = "plan-output",
+            help = "directory to write generated plans (planner)",
             category = "directs",
-            defaultValue = ""
+            defaultValue = "JSON_output/Plans"
     )
-    public String output;
+    public String planOutput;
+
+    @Option(
+            name = "states-output",
+            help = "directory to write simulated states (exec agent)",
+            category = "directs",
+            defaultValue = "JSON_output/SystemStates"
+    )
+    public String statesOutput;
 
     @Option(
             name = "stop",
             abbrev = 's',
             help = "maximum runtime in seconds (defaults to inf)",
             category = "modifiers",
-            defaultValue = "-1"
+            defaultValue = "100"
     )
     public int stop;
 
