@@ -20,7 +20,7 @@ public class TestCaseGenerator {
     private List<Condition> goalReqs;
     private ArrayList<Task> tasks = new ArrayList<>();
     private int numTasks = 15;
-    private String filename = null;
+    private String filename = "generated_test";
     private Boolean generateOptimalPath;
 
     /**
@@ -409,7 +409,6 @@ public class TestCaseGenerator {
 
         // ***** Generate perturbations *****
         ArrayList<Perturbation> perts = generatePerturbations(num_perts);
-        System.out.println(perts);
         for(Perturbation pert: perts) {
             JSONObject this_pert = new JSONObject();
             this_pert.put("name", pert.getName());
@@ -434,15 +433,10 @@ public class TestCaseGenerator {
         obj.put("perturbations", perturbations);
 
         String filepath;
-        if(filename == null) {
-            filepath = "JSON_input/TestCases/generated_test.json";
-        }
-        else {
-            filepath = "JSON_input/TestCases/" + filename + ".json";
-        }
+        filepath = "JSON_input/TestCases/" + filename;
         try(FileWriter file = new FileWriter(filepath)) {
             file.write(obj.toString(4));
-            System.out.println("Successfully Copied JSON Object to File...");
+            System.out.println("Generated JSON test case to " + filepath);
         }
     }
 

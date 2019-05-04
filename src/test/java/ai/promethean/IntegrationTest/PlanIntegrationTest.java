@@ -9,17 +9,16 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlanIntegrationTest {
-    API api = new API();
 
     @Test
     void generatePlanNoError() {
-        api.executePlan("JSON_input/InputFiles/Test.json", true, 5, true);
+        API.executePlan("JSON_input/InputFiles/Test.json", true, 5, true);
     }
 
     @Test
     void generatePlanHasPlan() {
-        Map<String, Object> objects= api.parseInput("JSON_input/InputFiles/Test.json", true);
-        Plan plan = api.generatePlanFromParsedObjects(objects, 5, true);
+        Map<String, Object> objects= API.parseInput("JSON_input/InputFiles/Test.json", true);
+        Plan plan = API.generatePlanFromParsedObjects(objects, 5, true);
         assertNotNull(plan);
     }
 

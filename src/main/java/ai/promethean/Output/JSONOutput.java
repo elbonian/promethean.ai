@@ -33,8 +33,7 @@ public class JSONOutput implements Output {
             fileName = fileName.replace(":", "");
             mapper.writeValue(new File(fileName), o);
         }catch(IOException io){
-            API api= new API();
-            api.throwOutputError("Invalid Output File Path: "+ io);
+            API.throwOutputError("Invalid Output File Path: "+ io);
         }
     }
 

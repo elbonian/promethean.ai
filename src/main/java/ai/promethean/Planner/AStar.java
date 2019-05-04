@@ -4,6 +4,7 @@ import ai.promethean.DataModel.GoalState;
 import ai.promethean.DataModel.StaticOptimizations;
 import ai.promethean.DataModel.SystemState;
 import ai.promethean.DataModel.TaskDictionary;
+import ai.promethean.Logger.Logger;
 
 import static oracle.jrockit.jfr.events.Bits.longValue;
 
@@ -35,6 +36,9 @@ public class AStar implements Algorithm {
             }
             graph.addNeighborsToFrontier(currentState);
             if (clfActive && !graph.checkCLF(currentState)) {
+                if (activateCLF) {
+                    Logger.writeLog("CLF failed: Initializing stop time", "AStar");
+                }
                 clfActive = false;
                 graph.setStopTime( System.currentTimeMillis() + longValue(minutesAllowed*60*1000 ));
             }

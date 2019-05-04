@@ -159,18 +159,6 @@
       ]
     },
     {
-      "name": "charge_battery",
-      "duration": 10,
-      "requirements": [
-        {"name": "agent", "value": "lander", "operator": "=="},
-        {"name": "battery", "value": 100, "operator": "<"},
-        {"name": "solarPanelsExtended", "value": true, "operator": "=="}
-      ],
-      "property_impacts": [
-        {"name": "battery", "value": 10, "type": "delta"}
-      ]
-    },
-    {
       "name": "place_seismometer",
       "duration": 10,
       "requirements": [
@@ -214,21 +202,26 @@
   "optimizations": [
     {
       "name": "time",
-      "weight": 1,
+      "weight": 0.8,
       "type": "min"
     },
     {
       "name": "rocketFuel",
-      "weight": 1,
+      "weight": 0.1,
       "type": "max"
     },
     {
       "name": "boosterFuel",
-      "weight": 1,
+      "weight": 0.1,
       "type": "max"
     }
+
   ],
   "perturbations": [
-
+    {
+      "name": "Parachute Failure",
+      "time": 280905,
+      "property_impacts": [{"name": "speed","type": "delta","value": 200}]
+    }
   ]
 }

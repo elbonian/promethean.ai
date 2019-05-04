@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'ai.promethean'
-version 'v1.0.0'
+version 'v1.0.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
