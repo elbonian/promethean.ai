@@ -1,0 +1,34 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/Task",
+    "definitions": {
+        "Task": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "duration": {
+                    "type": "integer"
+                },
+                "requirements": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../Condition_schema.json#/Condition"
+                    }
+                },
+                "property_impacts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../Property_schema.json#/Property"
+                    }
+                }
+            },
+            "required": [
+                "duration"
+            ],
+            "title": "Task"
+        }
+    }
+}

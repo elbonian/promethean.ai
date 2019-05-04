@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/Perturbation",
+    "definitions": {
+        "State": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "time": {
+                    "type": "integer"
+                },
+                "property_impacts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../Property_schema.json#/Property"
+                    }
+                }
+            },
+            "required": [
+                "time"
+            ],
+            "title": "Perturbation"
+        }
+    }
+}

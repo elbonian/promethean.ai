@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/InitState",
+    "definitions": {
+        "InitState": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "properties": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../Property_schema.json#/Property"
+                    }
+                }
+            },
+            "title": "InitState"
+        }
+    }
+}

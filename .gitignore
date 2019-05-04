@@ -1,0 +1,13 @@
+bin/
+out/
+*.idea
+*.iml
+*.class
+
+.DS_Store
+build/
+.gradle
+.scannerwork
+
+Logs/
+
